@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Room</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <p *ngFor="let message of messages">
+        <strong>{{message.from}}:</strong>
+        <span>{{message.msg}}</span>
+    </p>
+    <ion-input type="text" [(ngModel)]="msg"></ion-input>
+    <button ion-button (click)="sendMessage(msg)">Gửi</button>
+</ion-content>

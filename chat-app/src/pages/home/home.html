@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <button ion-item *ngFor="let room of rooms" (click)="openRoom(room)">
+          {{ 'Phòng '+room }}
+        </button>
+    </ion-list>
+</ion-content>
