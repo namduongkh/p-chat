@@ -8,9 +8,14 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <!-- <ion-list>
         <button ion-item *ngFor="let room of rooms" (click)="openRoom(room)">
           {{ 'Phòng '+room }}
         </button>
-    </ion-list>
+    </ion-list> -->
+    <pre>
+        {{user.name}}
+    </pre>
+    <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>
+    <button ion-button (click)="login(name)">Login</button>
 </ion-content>

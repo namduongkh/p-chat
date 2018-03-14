@@ -2,9 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -15,6 +12,32 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SocketService } from '../services/socket.service';
+
+//Store
+import { StoreModule, ActionReducer, MetaReducer, ActionReducerMap } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StorageSyncEffects, storageSync } from 'ngrx-store-ionic-storage';
+import { EffectsModule } from '@ngrx/effects';
+
+import Reducers from '../reducers';
+import { AppState } from '../reducers/AppState';
+
+export const reducers: ActionReducerMap<AppState> = Reducers;
+
+export const storageSyncReducer = storageSync({
+  keys: ['user'],
+  // ignoreActions: [],
+  hydratedStateKey: 'hydrated',
+  onSyncError: (err) => {
+    console.log(err);
+  }
+});
+
+export function storageMetaReducer(reducer: ActionReducer<any>): ActionReducer<any, any> {
+  return storageSyncReducer(reducer);
+}
+
+export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
 
 @NgModule({
   declarations: [
@@ -27,10 +50,15 @@ import { SocketService } from '../services/socket.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    StoreModule.provideStore({
-      //reducers
+    // StoreModule.forRoot(Reducers),
+    StoreModule.forRoot(Reducers, {
+      metaReducers,
+      initialState: {
+        hydrated: false
+      }
     }),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+    EffectsModule.forRoot([StorageSyncEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

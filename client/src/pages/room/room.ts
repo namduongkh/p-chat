@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+// import { NavController, NavParams } from 'ionic-angular';
 import { SocketService } from '../../services/socket.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class RoomPage {
   room: any;
   msg: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, @Inject(SocketService) private socket: SocketService) {
+  constructor(@Inject(SocketService) private socket: SocketService) {
     // this.room = this.navParams.get('room');
     // SocketService.joinRoom(this.room);
 
