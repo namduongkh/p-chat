@@ -1,20 +1,5 @@
 webpackJsonp([0],{
 
-/***/ 135:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionType; });
-var ActionType = {
-    COUNT_INCREMENT: 'COUNT_INCREMENT',
-    COUNT_DECREMENT: 'COUNT_DECREMENT',
-    COUNT_RESET: 'COUNT_RESET',
-    USER_CHANGE: 'USER_CHANGE'
-};
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
 /***/ 152:
 /***/ (function(module, exports) {
 
@@ -55,9 +40,8 @@ webpackEmptyAsyncContext.id = 197;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_socket_service__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(250);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -71,58 +55,39 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 
-
+// import { catchError, map, tap } from 'rxjs/operators';
 
 
 var HomePage = (function () {
-    function HomePage(socket, store) {
-        var _this = this;
-        this.socket = socket;
+    // user: any = {};
+    function HomePage(auth, store) {
+        this.auth = auth;
         this.store = store;
-        this.user = {};
-        store.pipe(Object(__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
-            _this.user = user;
-        });
+        // this.user = auth.user || {};
     }
-    // openRoom(room) {
-    //   this.navCtrl.push(RoomPage, { room: room });
-    // }
-    HomePage.prototype.login = function (name) {
-        if (name) {
-            var user = {
-                name: name,
-                socketId: this.socket.io.id
-            };
-            this.store.dispatch({ type: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* ActionType */].USER_LOGIN, user: user });
-        }
-        // console.log('socket', this.socket.io);
-        // this.store.dispatch({ type: ActionType.USER_LOGIN, name });
-    };
-    HomePage.prototype.logout = function (name) {
-        // this.store.dispatch({ type: ActionType.USER_LOGOUT, name });
-    };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Home</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <!-- <ion-list>\n        <button ion-item *ngFor="let room of rooms" (click)="openRoom(room)">\n          {{ \'Phòng \'+room }}\n        </button>\n    </ion-list> -->\n    <pre>\n        {{user.name}}\n    </pre>\n    <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>\n    <button ion-button (click)="login(name)">Login</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Home</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div *ngIf="auth.user && auth.user.name">\n        <h3>Xin chào <strong>{{auth.user.name}}</strong>!</h3>\n        <div>Socket id: {{auth.user.socketId}}</div>\n        <button ion-button (click)="auth.logout()" full>Đăng xuất</button>\n    </div>\n    <div *ngIf="!auth.user || !auth.user.name">\n        <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>\n        <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>\n    </div>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/
         }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_3__services_socket_service__["a" /* SocketService */])),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__services_socket_service__["a" /* SocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_socket_service__["a" /* SocketService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */]) === "function" && _b || Object])
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */]])
     ], HomePage);
     return HomePage;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 242:
+/***/ 250:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_socket_service__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__socket_service__ = __webpack_require__(69);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -137,77 +102,74 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 
 
-var RoomPage = (function () {
-    function RoomPage(socket) {
-        // this.room = this.navParams.get('room');
-        // SocketService.joinRoom(this.room);
+
+
+var AuthService = (function () {
+    function AuthService(socket, store) {
+        var _this = this;
         this.socket = socket;
-        this.messages = [];
-        this.socket.io.on('new-message', function (data) {
-            data.id = this.messages.length + 1;
-            this.messages.push(data);
-            console.log('new-message', data, this.messages);
-        }.bind(this));
-        this.socket.io.emit('login', { name: 'Phong' }, function (data) {
-            console.log('login data', data);
-        });
-    }
-    ;
-    RoomPage.prototype.sendMessage = function (msg) {
-        this.socket.io.emit('send-message', {
-            room: this.room,
-            data: {
-                from: this.socket.io.id,
-                msg: msg
+        this.store = store;
+        store.pipe(Object(__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
+            _this.user = user || {};
+            if (_this.user.socketId && !_this.socket.io) {
+                _this.socket.connect();
+                _this.socket.onConnect(function () {
+                    _this.dispatchLogin(_this.user);
+                });
             }
         });
-        this.msg = null;
+    }
+    AuthService.prototype.dispatchLogin = function (user) {
+        var _this = this;
+        this.socket.loginUser(user, function (result) {
+            _this.store.dispatch({ type: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* ActionType */].USER_LOGIN, user: result });
+        });
     };
-    RoomPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-room',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/
-        }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]])
-    ], RoomPage);
-    return RoomPage;
+    ;
+    AuthService.prototype.login = function (name) {
+        var _this = this;
+        if (name) {
+            var user_1 = { name: name };
+            if (!this.socket || !this.socket.io || !this.socket.io.id) {
+                this.socket.connect();
+                this.socket.onConnect(function () {
+                    _this.dispatchLogin(user_1);
+                });
+            }
+            else {
+                this.dispatchLogin(user_1);
+            }
+        }
+    };
+    AuthService.prototype.logout = function () {
+        this.socket.disconnect();
+        this.store.dispatch({ type: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* ActionType */].USER_LOGOUT });
+    };
+    AuthService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_3__socket_service__["a" /* SocketService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__socket_service__["a" /* SocketService */], __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */]])
+    ], AuthService);
+    return AuthService;
 }());
 
-//# sourceMappingURL=room.js.map
+//# sourceMappingURL=auth.service.js.map
 
 /***/ }),
 
-/***/ 243:
+/***/ 251:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocketService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_socket_io_client__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionType; });
+var ActionType = {
+    COUNT_INCREMENT: 'COUNT_INCREMENT',
+    COUNT_DECREMENT: 'COUNT_DECREMENT',
+    COUNT_RESET: 'COUNT_RESET',
+    USER_LOGIN: 'USER_LOGIN',
+    USER_LOGOUT: 'USER_LOGOUT',
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var SocketService = (function () {
-    function SocketService() {
-        this.io = __WEBPACK_IMPORTED_MODULE_0_socket_io_client__('http://localhost:8888');
-    }
-    SocketService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [])
-    ], SocketService);
-    return SocketService;
-}());
-
-//# sourceMappingURL=socket.service.js.map
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -217,7 +179,7 @@ var SocketService = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(83);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -274,7 +236,7 @@ var ListPage = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListUserPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_socket_service__ = __webpack_require__(69);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -284,20 +246,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 
+// import { NavController, NavParams } from 'ionic-angular';
 
+// import { AuthService } from '../../services/auth.service';
 var ListUserPage = (function () {
-    function ListUserPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
+    function ListUserPage(socket) {
+        this.socket = socket;
+        this.users = [];
+        this.getUserList();
+        this.onUserListChange();
     }
+    ListUserPage.prototype.getUserList = function () {
+        this.socket.emit('user:list', function (result) {
+            // console.log('user:list', result);
+            this.users = result;
+        }.bind(this));
+    };
+    ListUserPage.prototype.onUserListChange = function () {
+        this.socket.on('user:list-change', function () {
+            this.getUserList();
+        }.bind(this));
+    };
     ListUserPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>List User</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
+            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>List User</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <button ion-item *ngFor="let user of users">\n            <div>\n                <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n            </div>\n            <div>{{user.socketId}}</div>\n        </button>\n    </ion-list>\n    <!-- <button ion-button full (click)="getUserList()">Fetch</button> -->\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]])
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]) === "function" && _a || Object])
     ], ListUserPage);
     return ListUserPage;
+    var _a;
 }());
 
 //# sourceMappingURL=list-user.js.map
@@ -322,28 +304,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export onSyncError */
+/* unused harmony export reducers */
 /* unused harmony export storageSyncReducer */
 /* unused harmony export storageMetaReducer */
 /* unused harmony export metaReducers */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_room_room__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_room_room__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_list_user_list_user__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_socket_service__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngrx_store__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ngrx_store_devtools__ = __webpack_require__(368);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ngrx_store_ionic_storage__ = __webpack_require__(372);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_ngrx_store_ionic_storage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ngrx_effects__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__reducers__ = __webpack_require__(472);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_socket_service__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_auth_service__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ngrx_store__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ngrx_store_devtools__ = __webpack_require__(369);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ngrx_store_ionic_storage__ = __webpack_require__(373);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_ngrx_store_ionic_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ngrx_effects__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__reducers__ = __webpack_require__(473);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -361,20 +344,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 //Store
 
 
 
 
 
-function onSyncError(err) {
-    console.log(err);
-}
-var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_13_ngrx_store_ionic_storage__["storageSync"])({
-    // keys: ['collection'],   // Only sync the `collection` state
+var reducers = __WEBPACK_IMPORTED_MODULE_16__reducers__["a" /* default */];
+var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_14_ngrx_store_ionic_storage__["storageSync"])({
+    keys: ['user'],
     // ignoreActions: [],
     hydratedStateKey: 'hydrated',
-    onSyncError: onSyncError // If a sync fails
+    onSyncError: function (err) {
+        console.log(err);
+    }
 });
 function storageMetaReducer(reducer) {
     return storageSyncReducer(reducer);
@@ -398,14 +382,14 @@ var AppModule = (function () {
                     links: []
                 }),
                 // StoreModule.forRoot(Reducers),
-                __WEBPACK_IMPORTED_MODULE_11__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_15__reducers__["a" /* default */], {
+                __WEBPACK_IMPORTED_MODULE_12__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_16__reducers__["a" /* default */], {
                     metaReducers: metaReducers,
                     initialState: {
                         hydrated: false
                     }
                 }),
-                __WEBPACK_IMPORTED_MODULE_14__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_13_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
-                __WEBPACK_IMPORTED_MODULE_12__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument()
+                __WEBPACK_IMPORTED_MODULE_15__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_14_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
+                __WEBPACK_IMPORTED_MODULE_13__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument()
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
@@ -419,6 +403,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__["a" /* SplashScreen */],
                 __WEBPACK_IMPORTED_MODULE_10__services_socket_service__["a" /* SocketService */],
+                __WEBPACK_IMPORTED_MODULE_11__services_auth_service__["a" /* AuthService */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] }
             ]
         })
@@ -436,7 +421,7 @@ var AppModule = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(241);
@@ -502,26 +487,72 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 359:
+/***/ 365:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 472:
+/***/ 368:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_CountReducer__ = __webpack_require__(473);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__details_UserReducer__ = __webpack_require__(474);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_socket_service__ = __webpack_require__(69);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 
+// import { NavController, NavParams } from 'ionic-angular';
 
-/* harmony default export */ __webpack_exports__["a"] = ({
-    count: __WEBPACK_IMPORTED_MODULE_0__details_CountReducer__["a" /* CountReducer */],
-    user: __WEBPACK_IMPORTED_MODULE_1__details_UserReducer__["a" /* UserReducer */]
-});
-//# sourceMappingURL=index.js.map
+var RoomPage = (function () {
+    function RoomPage(socket) {
+        // this.room = this.navParams.get('room');
+        // SocketService.joinRoom(this.room);
+        this.socket = socket;
+        this.messages = [];
+        this.socket.io.on('new-message', function (data) {
+            data.id = this.messages.length + 1;
+            this.messages.push(data);
+            console.log('new-message', data, this.messages);
+        }.bind(this));
+        this.socket.io.emit('login', { name: 'Phong' }, function (data) {
+            console.log('login data', data);
+        });
+    }
+    ;
+    RoomPage.prototype.sendMessage = function (msg) {
+        this.socket.io.emit('send-message', {
+            room: this.room,
+            data: {
+                from: this.socket.io.id,
+                msg: msg
+            }
+        });
+        this.msg = null;
+    };
+    RoomPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-room',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/
+        }),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]])
+    ], RoomPage);
+    return RoomPage;
+}());
+
+//# sourceMappingURL=room.js.map
 
 /***/ }),
 
@@ -529,23 +560,14 @@ var MyApp = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = CountReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(474);
+// import { CountReducer } from './details/CountReducer';
 
-function CountReducer(state, action) {
-    if (state === void 0) { state = 0; }
-    switch (action.type) {
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].COUNT_INCREMENT:
-            return state + 1;
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].COUNT_DECREMENT:
-            return state - 1;
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].COUNT_RESET:
-            return 0;
-        default:
-            return state;
-    }
-}
-//# sourceMappingURL=CountReducer.js.map
+/* harmony default export */ __webpack_exports__["a"] = ({
+    // count: CountReducer,
+    user: __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__["a" /* UserReducer */]
+});
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -554,22 +576,101 @@ function CountReducer(state, action) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = UserReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(251);
 
 function getFromAction(action) {
     return action;
 }
 function UserReducer(state, action) {
     switch (action.type) {
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_CHANGE:
-            console.log('action', action);
-            state = getFromAction(action).name;
+        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGIN:
+            state = getFromAction(action).user;
+            return state;
+        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGOUT:
+            state = undefined;
             return state;
         default:
             return state;
     }
 }
 //# sourceMappingURL=UserReducer.js.map
+
+/***/ }),
+
+/***/ 69:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocketService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_socket_io_client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SocketService = (function () {
+    function SocketService() {
+        this.emit = function () {
+            var argv = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                argv[_i] = arguments[_i];
+            }
+            if (this.io) {
+                return (_a = this.io).emit.apply(_a, argv);
+            }
+            return function () { };
+            var _a;
+        };
+        this.on = function () {
+            var argv = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                argv[_i] = arguments[_i];
+            }
+            if (this.io) {
+                return (_a = this.io).on.apply(_a, argv);
+            }
+            return function () { };
+            var _a;
+        };
+    }
+    SocketService.prototype.connect = function () {
+        this.io = __WEBPACK_IMPORTED_MODULE_0_socket_io_client__('http://localhost:8888');
+        return this.io;
+    };
+    SocketService.prototype.disconnect = function () {
+        if (this.io) {
+            this.io.disconnect();
+        }
+        return this.io;
+    };
+    SocketService.prototype.onConnect = function (cb) {
+        if (this.io) {
+            this.io.on('connect', cb);
+        }
+    };
+    SocketService.prototype.loginUser = function (user, cb) {
+        if (this.io) {
+            this.io.emit('user:login', user, function (result) {
+                cb(result);
+            });
+        }
+    };
+    SocketService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [])
+    ], SocketService);
+    return SocketService;
+}());
+
+//# sourceMappingURL=socket.service.js.map
 
 /***/ })
 

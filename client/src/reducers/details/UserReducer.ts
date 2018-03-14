@@ -10,6 +10,9 @@ export function UserReducer(state, action: Action) {
         case ActionType.USER_LOGIN:
             state = getFromAction(action).user;
             return state;
+        case ActionType.USER_LOGOUT:
+            state = undefined;
+            return state;
         default:
             return state;
     }

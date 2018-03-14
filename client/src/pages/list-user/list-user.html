@@ -8,5 +8,13 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-list>
+        <button ion-item *ngFor="let user of users">
+            <div>
+                <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>
+            </div>
+            <div>{{user.socketId}}</div>
+        </button>
+    </ion-list>
+    <!-- <button ion-button full (click)="getUserList()">Fetch</button> -->
 </ion-content>

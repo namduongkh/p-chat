@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SocketService } from '../services/socket.service';
+import { AuthService } from '../services/auth.service';
 
 //Store
 import { StoreModule, ActionReducer, MetaReducer, ActionReducerMap } from '@ngrx/store';
@@ -72,6 +73,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     StatusBar,
     SplashScreen,
     SocketService,
+    AuthService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

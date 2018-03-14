@@ -6,7 +6,46 @@ export class SocketService {
 
     public io;
 
-    constructor() {
+    constructor() { }
+
+    public connect() {
         this.io = io('http://localhost:8888');
+        return this.io;
     }
+
+    public disconnect() {
+        if (this.io) {
+            this.io.disconnect();
+        }
+        return this.io;
+    }
+
+    public onConnect(cb) {
+        if (this.io) {
+            this.io.on('connect', cb);
+        }
+    }
+
+    public loginUser(user, cb) {
+        if (this.io) {
+            this.io.emit('user:login', user, function (result) {
+                cb(result);
+            });
+        }
+    }
+
+    public emit = function (...argv) {
+        if (this.io) {
+            return this.io.emit(...argv);
+        }
+        return function () { };
+    }
+
+    public on = function (...argv) {
+        if (this.io) {
+            return this.io.on(...argv);
+        }
+        return function () { };
+    }
+
 }

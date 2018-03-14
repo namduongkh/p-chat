@@ -8,14 +8,13 @@
 </ion-header>
 
 <ion-content>
-    <!-- <ion-list>
-        <button ion-item *ngFor="let room of rooms" (click)="openRoom(room)">
-          {{ 'Phòng '+room }}
-        </button>
-    </ion-list> -->
-    <pre>
-        {{user.name}}
-    </pre>
-    <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>
-    <button ion-button (click)="login(name)">Login</button>
+    <div *ngIf="auth.user && auth.user.name">
+        <h3>Xin chào <strong>{{auth.user.name}}</strong>!</h3>
+        <div>Socket id: {{auth.user.socketId}}</div>
+        <button ion-button (click)="auth.logout()" full>Đăng xuất</button>
+    </div>
+    <div *ngIf="!auth.user || !auth.user.name">
+        <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>
+        <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>
+    </div>
 </ion-content>

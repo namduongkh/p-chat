@@ -1,3 +1,5 @@
+const SocketController = require('./controllers/socket.controller');
+
 module.exports = function(app) {
 
     app.io.on('connection', function(socket) {
@@ -5,14 +7,23 @@ module.exports = function(app) {
 
         socket.on('disconnect', function() {
             console.log('-- Client Disconnected:', socket.id);
+            SocketController.userLogout(socket.id);
+            SocketController.userListChange(socket);
         });
     });
 
-    app.io.route('login', function(req, res) {
-        app.io.emit('new-message', {
-            from: 'system',
-            msg: req.socket.id + ' has joined!'
-        });
-        res.send('Logined!');
+    app.io.route('user', {
+        login: function(req, res) {
+            let user = {
+                ...req.data
+            }
+            user.socketId = req.socket.id;
+            SocketController.userLogin(user);
+            SocketController.userListChange(req.socket);
+            res.json(user);
+        },
+        list: function(req, res) {
+            res.json(SocketController.userList(req.socket.id));
+        }
     });
 }
