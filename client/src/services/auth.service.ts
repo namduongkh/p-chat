@@ -4,12 +4,14 @@ import { Store, select } from '@ngrx/store';
 import { ActionType } from '../actions';
 import { AppState } from '../reducers/AppState';
 import { SocketService } from './socket.service';
+import { UserService } from './user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
     public user;
 
-    constructor(@Inject(SocketService) private socket: SocketService, private store: Store<AppState>) {
+    constructor(@Inject(SocketService) private socket: SocketService, private store: Store<AppState>, @Inject(UserService) private userSvc: UserService) {
         store.pipe(select('user')).subscribe(user => {
             this.user = user || {};
             if (this.user.socketId && !this.socket.io) {
@@ -28,6 +30,8 @@ export class AuthService {
     };
 
     public login(name) {
+        this.userSvc.login(name);
+
         if (name) {
             let user = { name };
             if (!this.socket || !this.socket.io || !this.socket.io.id) {

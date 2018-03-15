@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SocketService } from '../services/socket.service';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 //Store
 import { StoreModule, ActionReducer, MetaReducer, ActionReducerMap } from '@ngrx/store';
@@ -22,6 +23,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import Reducers from '../reducers';
 import { AppState } from '../reducers/AppState';
+import { HttpClientModule } from '@angular/common/http';
 
 export const reducers: ActionReducerMap<AppState> = Reducers;
 
@@ -59,7 +61,8 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
       }
     }),
     EffectsModule.forRoot([StorageSyncEffects]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,6 +77,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     SplashScreen,
     SocketService,
     AuthService,
+    UserService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
