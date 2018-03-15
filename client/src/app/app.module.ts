@@ -13,12 +13,15 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RoomPage } from '../pages/room/room';
 import { ListUserPage } from '../pages/list-user/list-user';
+import { ConversationPage } from '../pages/conversation/conversation';
+import { MessageService } from '../services/message.service';
 // End components
 
 // Services
 import { SocketService } from '../services/socket.service';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { ConversationService } from '../services/conversation.service';
 // End services
 
 //Store
@@ -53,7 +56,8 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     HomePage,
     ListPage,
     RoomPage,
-    ListUserPage
+    ListUserPage,
+    ConversationPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     HomePage,
     ListPage,
     RoomPage,
-    ListUserPage
+    ListUserPage,
+    ConversationPage
   ],
   providers: [
     StatusBar,
@@ -83,6 +88,8 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     SocketService,
     AuthService,
     UserService,
+    ConversationService,
+    MessageService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

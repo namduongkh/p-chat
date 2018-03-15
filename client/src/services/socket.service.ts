@@ -48,4 +48,15 @@ export class SocketService {
         return function () { };
     }
 
+    public joinRoom(room, cb = function () { }) {
+        if (this.io) {
+            this.io.emit('room:join', { room }, cb);
+        }
+    }
+
+    public leaveRoom(room, cb = function () { }) {
+        if (this.io) {
+            this.io.emit('room:leave', { room }, cb);
+        }
+    }
 }

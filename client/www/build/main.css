@@ -25677,3 +25677,23 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-bottom));
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
+
+[full-height] {
+  height: 100%;
+}
+
+[border-top] {
+  border-top: 1px solid #ddd;
+}
+
+[no-padding-left] {
+  padding-left: 0;
+}
+
+[no-margin-left] {
+  margin-left: 0;
+}
+
+#conversation-footer .message-input {
+  margin: 0;
+}

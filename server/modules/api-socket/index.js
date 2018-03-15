@@ -26,4 +26,6 @@ module.exports = function(app) {
             res.json(SocketController.userList(req.socket.id));
         }
     });
+
+    app.io.route('room', SocketController.room);
 };

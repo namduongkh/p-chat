@@ -11,7 +11,7 @@ export class AuthService {
     public user;
 
     constructor(@Inject(SocketService) private socket: SocketService, private store: Store<AppState>, private userSvc: UserService) {
-        store.pipe(select('user')).subscribe(user => {
+        this.store.pipe(select('user')).subscribe(user => {
             this.user = user || {};
             if (this.user.socketId && !this.socket.io) {
                 this.connectSocket(this.user);

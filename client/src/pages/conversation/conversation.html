@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+        <ion-title>
+            <span *ngFor="let user of detail.users">{{user.name}}</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content id="mod-conversation">
+    <div class="message-wrapper">
+        <div *ngFor="let message of messages" (click)="message.showTime = !message.showTime">
+            <strong>{{message.from.name}}:</strong>
+            <span>{{message.content}}</span>
+            <div *ngIf="message.showTime">
+                <em>({{message.created | date:'dd/MM/yyyy HH:mm:ss'}})</em>
+            </div>
+        </div>
+    </div>
+    <div class="send-wrapper">
+
+    </div>
+
+</ion-content>
+<ion-footer id="conversation-footer">
+    <ion-grid no-padding no-margin>
+        <ion-row no-padding no-margin>
+            <ion-col col-10 border-top>
+                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Nhập nội dung..." (keyup.enter)="sendMessage(message)"></ion-input>
+            </ion-col>
+            <ion-col col-2 no-padding no-margin>
+                <button no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

@@ -22,4 +22,15 @@ exports.userList = function(socketId) {
 
 exports.userListChange = function(socket) {
     socket.broadcast.emit('user:list-change');
-}
+};
+
+exports.room = {
+    join: function(req, res) {
+        req.socket.join(req.data.room);
+        res.send('Has joined ' + req.data.room);
+    },
+    leave: function(req, res) {
+        req.socket.leave(req.data.room);
+        res.send('Has leaved ' + req.data.room);
+    },
+};

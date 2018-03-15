@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-list>
-        <button ion-item *ngFor="let user of users">
+        <button ion-item *ngFor="let user of users" (click)="createConversation(user._id)">
             <div>
                 <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>
             </div>
