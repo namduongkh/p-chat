@@ -8,6 +8,8 @@ module.exports = function(app) {
     // Kết nối mongoDB
     require('./mongo');
 
+    require('./middleware')(app);
+
     // Nạp các model
     _.each(glob.sync(BASE_PATH + '/models/*.model.js'), (file) => {
         require(file);
@@ -20,4 +22,5 @@ module.exports = function(app) {
 
     // Cấu hình các đường dẫn tĩnh
     app.use(express.static(path.join(BASE_PATH, 'public')));
+
 };

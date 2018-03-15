@@ -1,30 +1,22 @@
 import { Component, Inject } from '@angular/core';
-// import { NavController, NavParams } from 'ionic-angular';
-import { SocketService } from '../../services/socket.service';
-// import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../reducers/AppState';
 
 @Component({
   selector: 'page-list-user',
   templateUrl: 'list-user.html'
 })
 export class ListUserPage {
-  users = [];
-  constructor(@Inject(SocketService) private socket: SocketService) {
-    this.getUserList();
-    this.onUserListChange();
-  }
+  users: any = [];
+  user: any = {};
 
-  getUserList() {
-    this.socket.emit('user:list', function (result) {
-      // console.log('user:list', result);
-      this.users = result;
-    }.bind(this));
+  constructor(private store: Store<AppState>, private userSvc: UserService) {
+    store.pipe(select('user')).subscribe(user => {
+      this.user = user || {};
+      this.userSvc.userList(this.user._id).subscribe((users) => {
+        this.users = users || [];
+      });
+    });
   }
-
-  onUserListChange() {
-    this.socket.on('user:list-change', function () {
-      this.getUserList();
-    }.bind(this));
-  }
-
 }

@@ -1,14 +1,9 @@
-import { Action } from '@ngrx/store';
 import { ActionType } from '../../actions';
 
-function getFromAction(action) {
-    return action;
-}
-
-export function UserReducer(state, action: Action) {
+export function UserReducer(state, action) {
     switch (action.type) {
         case ActionType.USER_LOGIN:
-            state = getFromAction(action).user;
+            state = action.user;
             return state;
         case ActionType.USER_LOGOUT:
             state = undefined;

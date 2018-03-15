@@ -1,29 +1,33 @@
+// Angular & Ionic Core
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+// End angular & ionic
 
+// Components
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RoomPage } from '../pages/room/room';
 import { ListUserPage } from '../pages/list-user/list-user';
+// End components
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
+// Services
 import { SocketService } from '../services/socket.service';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+// End services
 
 //Store
 import { StoreModule, ActionReducer, MetaReducer, ActionReducerMap } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StorageSyncEffects, storageSync } from 'ngrx-store-ionic-storage';
 import { EffectsModule } from '@ngrx/effects';
-
 import Reducers from '../reducers';
 import { AppState } from '../reducers/AppState';
-import { HttpClientModule } from '@angular/common/http';
 
 export const reducers: ActionReducerMap<AppState> = Reducers;
 
@@ -41,6 +45,7 @@ export function storageMetaReducer(reducer: ActionReducer<any>): ActionReducer<a
 }
 
 export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
+// End Store
 
 @NgModule({
   declarations: [
@@ -52,6 +57,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     // StoreModule.forRoot(Reducers),
     StoreModule.forRoot(Reducers, {
@@ -62,7 +68,6 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     }),
     EffectsModule.forRoot([StorageSyncEffects]),
     StoreDevtoolsModule.instrument(),
-    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

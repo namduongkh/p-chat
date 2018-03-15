@@ -1,20 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observer } from 'rxjs/Observer';
-import { Injectable, Inject } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
     apiUrl = 'http://localhost:8888/api';
 
-    constructor(@Inject(HttpClient) private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
     login(name) {
-        console.log(this.apiUrl + '/hello');
-        this.http.get(this.apiUrl + '/hello');
+        return this.http.post(this.apiUrl + '/user/login', { name });
+    }
+
+    userList(myId) {
+        return this.http.get(this.apiUrl + '/user/list', {
+            params: {
+                myId
+            }
+        });
     }
 }
