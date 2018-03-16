@@ -25697,3 +25697,29 @@ ion-navbar.toolbar {
 #conversation-footer .message-input {
   margin: 0;
 }
+
+#conversation-content .not-you {
+  text-align: left;
+}
+
+#conversation-content .not-you .message-content {
+  background-color: #eee;
+}
+
+#conversation-content .it-you {
+  text-align: right;
+}
+
+#conversation-content .it-you .message-content {
+  background-color: limegreen;
+  color: #fff;
+}
+
+#conversation-content .message-content {
+  display: inline-block;
+  border-radius: 100px;
+  padding: 5px 10px;
+  margin: 1px;
+  max-width: 80%;
+  min-width: 24px;
+}

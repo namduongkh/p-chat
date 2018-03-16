@@ -57,7 +57,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     ListPage,
     RoomPage,
     ListUserPage,
-    ConversationPage
+    ConversationPage,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +80,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     ListPage,
     RoomPage,
     ListUserPage,
-    ConversationPage
+    ConversationPage,
   ],
   providers: [
     StatusBar,

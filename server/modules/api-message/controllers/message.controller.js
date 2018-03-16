@@ -10,10 +10,12 @@ exports.list = function(req, res) {
         options.conversation = conversationId;
     }
     Message.find(options)
+        .sort("-created")
+        .limit(20)
         .populate('from', 'name')
         .lean()
         .then(messages => {
-            res.json(messages);
+            res.json(_.reverse(messages));
         });
 };
 

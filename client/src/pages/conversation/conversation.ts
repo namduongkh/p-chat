@@ -1,14 +1,17 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { NavParams } from "ionic-angular";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { NavParams, Content } from "ionic-angular";
 import { ConversationService } from "../../services/conversation.service";
 import { MessageService } from "../../services/message.service";
 import { SocketService } from "../../services/socket.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
     selector: 'page-conversation',
     templateUrl: 'conversation.html',
 })
 export class ConversationPage implements OnInit, OnDestroy {
+    @ViewChild(Content) content: Content;
+
     detail: any = { users: [] };
     messages: any = [];
     message: string;
@@ -17,7 +20,8 @@ export class ConversationPage implements OnInit, OnDestroy {
         private navParams: NavParams,
         private conversationSvc: ConversationService,
         private messageSvc: MessageService,
-        private socket: SocketService) {
+        private socket: SocketService,
+        private auth: AuthService) {
     }
 
     ngOnInit() {
@@ -26,7 +30,7 @@ export class ConversationPage implements OnInit, OnDestroy {
             this.detail = detail;
             this.joinConversation(this.detail._id);
             this.messageSvc.getMessages(this.detail._id).subscribe(list => {
-                this.messages = list || [];
+                this.pushMessage(list, true);
             });
         });
     }
@@ -42,7 +46,6 @@ export class ConversationPage implements OnInit, OnDestroy {
             return;
         }
         this.messageSvc.newMessage(this.detail._id, message).subscribe(result => {
-            // this.messages.push(result);
             this.message = null;
         });
     }
@@ -50,8 +53,19 @@ export class ConversationPage implements OnInit, OnDestroy {
     joinConversation(id) {
         this.socket.joinRoom(id, () => {
             this.socket.on('message:new', function (data) {
-                this.messages.push(data);
+                this.pushMessage(data);
             }.bind(this));
         });
+    }
+
+    pushMessage(data, noPush) {
+        if (noPush) {
+            this.messages = data || [];
+        } else {
+            this.messages.push(data);
+        }
+        setTimeout(() => {
+            this.content.scrollToBottom();
+        }, 250);
     }
 }

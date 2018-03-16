@@ -9,21 +9,17 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content id="mod-conversation">
-    <div class="message-wrapper">
-        <div *ngFor="let message of messages" (click)="message.showTime = !message.showTime">
-            <strong>{{message.from.name}}:</strong>
+<ion-content id="conversation-content" padding>
+    <div *ngFor="let message of messages" (click)="message.showTime = !message.showTime" [ngClass]="{'not-you': message.from._id != auth.user._id, 'it-you': message.from._id == auth.user._id}">
+        <div class="message-content">
             <span>{{message.content}}</span>
             <div *ngIf="message.showTime">
                 <em>({{message.created | date:'dd/MM/yyyy HH:mm:ss'}})</em>
             </div>
         </div>
     </div>
-    <div class="send-wrapper">
-
-    </div>
-
 </ion-content>
+
 <ion-footer id="conversation-footer">
     <ion-grid no-padding no-margin>
         <ion-row no-padding no-margin>
