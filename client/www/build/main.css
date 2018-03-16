@@ -25694,8 +25694,31 @@ ion-navbar.toolbar {
   margin-left: 0;
 }
 
+[no-border] {
+  border: none;
+}
+
 #conversation-footer .message-input {
   margin: 0;
+}
+
+#conversation-footer .typing {
+  padding: 2px 5px;
+  background-color: #efefef;
+  display: inline;
+}
+
+#conversation-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+  min-height: 100%;
 }
 
 #conversation-content .not-you {
@@ -25703,7 +25726,7 @@ ion-navbar.toolbar {
 }
 
 #conversation-content .not-you .message-content {
-  background-color: #eee;
+  background-color: #efefef;
 }
 
 #conversation-content .it-you {

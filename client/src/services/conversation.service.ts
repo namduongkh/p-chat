@@ -7,7 +7,7 @@ import { CommonService } from './common.service';
 @Injectable()
 export class ConversationService extends CommonService {
     constructor(private http: HttpClient, public store: Store<AppState>) {
-        super(store, 'conversation');
+        super(store, 'conversation', http);
     }
 
     create(users) {
@@ -20,5 +20,13 @@ export class ConversationService extends CommonService {
             myId = this.user._id;
         }
         return this.http.post(this.apiUrl + '/detail', { conversationId, myId });
+    }
+
+    list(myId) {
+        // let myId;
+        // if (this.user && this.user._id) {
+        //     myId = this.user._id;
+        // }
+        return this.http.get(this.apiUrl + '/list', { params: { myId } });
     }
 }

@@ -3,18 +3,22 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>List User</ion-title>
+        <ion-title>Kết nối</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <button ion-item *ngFor="let user of users" (click)="createConversation(user._id)">
-            <div>
-                <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>
-            </div>
-            <div>ID: {{user._id}}</div>
+    <ion-list *ngIf="invitations && invitations.length">
+        <ion-list-header>Lời mời kết bạn</ion-list-header>
+        <button ion-item *ngFor="let invitation of invitations" (click)="answerInvitation($event, invitation._id)">
+            <strong>{{invitation.from.name}}</strong>
+            <div><em>Đã gửi lời mời kết bạn</em></div>
         </button>
     </ion-list>
-    <!-- <button ion-button full (click)="getUserList()">Fetch</button> -->
+    <ion-list>
+        <ion-list-header>Có thể bạn biết</ion-list-header>
+        <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">
+            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>
+        </button>
+    </ion-list>
 </ion-content>

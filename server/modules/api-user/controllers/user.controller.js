@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 const User = mongoose.model('User');
+const Friendship = mongoose.model('Friendship');
 
 exports.login = function(req, res) {
     let { name } = req.body;
@@ -18,10 +20,30 @@ exports.userList = [
     function(req, res, next) {
         let { myId } = req.query;
         if (myId && myId != 'undefined') {
-            User.findOne({ _id: myId })
+            Friendship.find({
+                    $or: [{
+                        from: myId
+                    }, {
+                        to: myId
+                    }],
+                    type: 'accepted'
+                })
+                .sort('-created')
+                .populate({
+                    path: 'users',
+                    select: 'name',
+                    match: {
+                        _id: { $ne: myId }
+                    }
+                })
                 .lean()
-                .then(user => {
-                    req.pre.user = {...user, isYou: true }
+                .then(friendships => {
+                    let friends = [myId];
+                    _.each(friendships, friendship => {
+                        // console.log(friendship);
+                        friends.push(friendship.users[0]._id);
+                    });
+                    req.pre.friends = friends;
                     next();
                 });
         } else {
@@ -31,15 +53,15 @@ exports.userList = [
     function(req, res) {
         let { myId } = req.query;
         let options = {};
-        if (myId && myId != 'undefined') {
-            options._id = { $ne: myId };
+        // if (myId && myId != 'undefined') {
+        //     options._id = { $ne: myId };
+        // }
+        if (req.pre.friends && req.pre.friends.length) {
+            options._id = { $nin: req.pre.friends };
         }
         User.find(options)
             .lean()
             .then(users => {
-                if (req.pre.user) {
-                    users.unshift(req.pre.user)
-                }
                 res.json(users);
             });
     }

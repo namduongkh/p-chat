@@ -14,17 +14,29 @@
     margin-left: 0;
 }
 
+[no-border] {
+    border: none;
+}
+
 #conversation-footer {
     .message-input {
         margin: 0;
     }
+    .typing {
+        padding: 2px 5px;
+        background-color: #efefef;
+        display: inline;
+    }
 }
 
 #conversation-content {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100%;
     .not-you {
         text-align: left;
         .message-content {
-            background-color: #eee;
+            background-color: #efefef;
         }
     }
     .it-you {

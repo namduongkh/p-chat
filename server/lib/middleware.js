@@ -27,4 +27,9 @@ module.exports = function(app) {
 
         next();
     });
+
+    app.use(function(req, res, next) {
+        req.configManager = app.configManager; 
+        next();
+    });
 };

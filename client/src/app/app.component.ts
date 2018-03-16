@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -6,6 +6,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { ListUserPage } from '../pages/list-user/list-user';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../reducers/AppState';
+import { AuthService } from '../services/auth.service';
+import { LoginPage } from '../pages/login/login';
+import { FriendPage } from '../pages/friend/friend';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +22,14 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  user: any = {};
+
+  constructor(public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private store: Store<AppState>,
+    @Inject(AuthService) private auth: AuthService) {
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -26,6 +38,24 @@ export class MyApp {
       { title: 'List', component: ListPage },
       { title: 'List User', component: ListUserPage },
     ];
+
+    this.store.pipe(select('user')).subscribe((user: { _id }) => {
+      this.user = user || {};
+      if (this.user && this.user._id) {
+        this.pages = [
+          { title: 'Hội thoại', component: HomePage },
+          // { title: 'List', component: ListPage },
+          { title: 'Bạn bè', component: FriendPage },
+          { title: 'Kết nối', component: ListUserPage },
+        ];
+        this.rootPage = HomePage;
+      } else {
+        this.pages = [
+          { title: 'Đăng nhập', component: LoginPage },
+        ];
+        this.rootPage = LoginPage;
+      }
+    });
   }
 
   initializeApp() {

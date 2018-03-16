@@ -46,3 +46,26 @@ exports.detail = function(req, res) {
             });
     }
 };
+
+exports.list = function(req, res) {
+    let { myId } = req.query;
+    if (myId && myId != 'undefined') {
+        Conversation.find({
+                users: myId
+            })
+            .sort('-modified -created')
+            .lean()
+            .populate('users')
+            .then(convs => {
+                convs = _.map(convs, conv => {
+                    conv.users = _.remove(conv.users, item => {
+                        return item._id != myId;
+                    });
+                    return conv;
+                });
+                res.json(convs);
+            });
+    } else {
+        res.json([]);
+    }
+};

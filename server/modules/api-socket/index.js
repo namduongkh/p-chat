@@ -27,5 +27,5 @@ module.exports = function(app) {
         }
     });
 
-    app.io.route('room', SocketController.room);
+    app.io.route('room', SocketController.room(app));
 };

@@ -9,25 +9,33 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content id="conversation-content" padding>
-    <div *ngFor="let message of messages" (click)="message.showTime = !message.showTime" [ngClass]="{'not-you': message.from._id != auth.user._id, 'it-you': message.from._id == auth.user._id}">
-        <div class="message-content">
-            <span>{{message.content}}</span>
-            <div *ngIf="message.showTime">
-                <em>({{message.created | date:'dd/MM/yyyy HH:mm:ss'}})</em>
+<ion-content padding>
+    <div id="conversation-content">
+        <div margin-bottom></div>
+        <div class="message-list">
+            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{'not-you': message.from._id != auth.user._id, 'it-you': message.from._id == auth.user._id}">
+                <div class="message-content">
+                    <span>{{message.content}}</span>
+                </div>
+                <div *ngIf="showTimeId == message._id" margin-bottom>
+                    <em>({{message.created | date:'dd/MM/yyyy HH:mm:ss'}})</em>
+                </div>
             </div>
         </div>
     </div>
 </ion-content>
 
 <ion-footer id="conversation-footer">
+    <div *ngIf="typingUsers && typingUsers.length" class="typing">
+        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>
+    </div>
     <ion-grid no-padding no-margin>
         <ion-row no-padding no-margin>
             <ion-col col-10 border-top>
-                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Nhập nội dung..." (keyup.enter)="sendMessage(message)"></ion-input>
+                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)"></ion-input>
             </ion-col>
             <ion-col col-2 no-padding no-margin>
-                <button no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>
+                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>
             </ion-col>
         </ion-row>
     </ion-grid>

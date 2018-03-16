@@ -24,13 +24,23 @@ exports.userListChange = function(socket) {
     socket.broadcast.emit('user:list-change');
 };
 
-exports.room = {
-    join: function(req, res) {
-        req.socket.join(req.data.room);
-        res.send('Has joined ' + req.data.room);
-    },
-    leave: function(req, res) {
-        req.socket.leave(req.data.room);
-        res.send('Has leaved ' + req.data.room);
-    },
+exports.room = (app) => {
+    return {
+        join: function(req, res) {
+            req.socket.join(req.data.room);
+            res.send('Has joined ' + req.data.room);
+        },
+        leave: function(req, res) {
+            req.socket.leave(req.data.room);
+            res.send('Has leaved ' + req.data.room);
+        },
+        typing: function(req, res) {
+            let eventName = req.data.status ? 'message:is-typing' : 'message:stop-typing';
+            app.io.in(req.data.conversationId).emit(eventName, {
+                userId: req.data.userId,
+                userName: req.data.userName
+            });
+            res.send('Typing');
+        }
+    }
 };

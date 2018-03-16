@@ -1,15 +1,1263 @@
 webpackJsonp([0],{
 
-/***/ 133:
+/***/ 143:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(58);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UserService = (function () {
+    function UserService(http) {
+        this.http = http;
+        this.apiUrl = 'http://localhost:8888/api/user';
+    }
+    UserService.prototype.login = function (name) {
+        return this.http.post(this.apiUrl + '/login', { name: name });
+    };
+    UserService.prototype.userList = function (myId) {
+        return this.http.get(this.apiUrl + '/list', {
+            params: {
+                myId: myId
+            }
+        });
+    };
+    UserService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
+    ], UserService);
+    return UserService;
+}());
+
+//# sourceMappingURL=user.service.js.map
+
+/***/ }),
+
+/***/ 144:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_store__ = __webpack_require__(24);
+
+var CommonService = (function () {
+    function CommonService(store, afterFix, http) {
+        var _this = this;
+        this.store = store;
+        this.user = {};
+        this.apiUrl = 'http://localhost:8888/api';
+        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_0__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
+            _this.user = user || {};
+            _this.myId = _this.user._id;
+        });
+        this.apiUrl += '/' + afterFix;
+    }
+    CommonService.prototype.intercept = function (req, next) {
+        console.log('request', req);
+        return next.handle(req);
+    };
+    return CommonService;
+}());
+
+//# sourceMappingURL=common.service.js.map
+
+/***/ }),
+
+/***/ 145:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_socket_service__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(380);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var ConversationPage = (function () {
+    function ConversationPage(navParams, conversationSvc, messageSvc, socket, auth) {
+        this.navParams = navParams;
+        this.conversationSvc = conversationSvc;
+        this.messageSvc = messageSvc;
+        this.socket = socket;
+        this.auth = auth;
+        this.detail = { users: [] };
+        this.messages = [];
+        this.isTyping = false;
+        this.typingUsers = [];
+    }
+    ConversationPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.conversationSvc.detail(this.navParams.get('conversationId')).subscribe(function (detail) {
+            // console.log('detail', detail);
+            _this.detail = detail;
+            _this.joinConversation(_this.detail._id);
+            _this.messageSvc.getMessages(_this.detail._id).subscribe(function (list) {
+                _this.pushMessage(list, true);
+            });
+            _this.onTyping();
+        });
+    };
+    ConversationPage.prototype.ngOnDestroy = function () {
+        var _this = this;
+        this.socket.leaveRoom(this.detail._id, function () {
+            console.log('leave room ', _this.detail._id);
+        });
+    };
+    ConversationPage.prototype.onTyping = function () {
+        this.socket.on('message:is-typing', function (data) {
+            if (data.userId != this.auth.user._id) {
+                this.typingUsers[data.userId] = data.userName;
+            }
+            console.log('this.typingUsers', this.typingUsers);
+        }.bind(this));
+        this.socket.on('message:stop-typing', function (data) {
+            delete this.typingUsers[data.userId];
+        }.bind(this));
+    };
+    ConversationPage.prototype.sendMessage = function (message) {
+        var _this = this;
+        if (!message || !message.length) {
+            return;
+        }
+        this.messageSvc.newMessage(this.detail._id, message).subscribe(function (result) {
+            _this.message = null;
+            _this.changeMessage(null, null);
+        });
+    };
+    ConversationPage.prototype.joinConversation = function (id) {
+        var _this = this;
+        this.socket.joinRoom(id, function () {
+            _this.socket.on('message:new', function (data) {
+                this.pushMessage(data);
+            }.bind(_this));
+            _this.socket.on('message:remove', function (messages) {
+                // console.log('messages', messages);
+                this.removeMessages(messages);
+            }.bind(_this));
+        });
+    };
+    ConversationPage.prototype.pushMessage = function (data, noPush) {
+        if (noPush) {
+            this.messages = data || [];
+        }
+        else {
+            this.messages.push(data);
+        }
+        this.scrollBottom();
+    };
+    ConversationPage.prototype.scrollBottom = function () {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.content) {
+                _this.content.scrollToBottom();
+            }
+        }, 250);
+    };
+    ConversationPage.prototype.removeMessages = function (messages) {
+        var _this = this;
+        if (messages === void 0) { messages = []; }
+        __WEBPACK_IMPORTED_MODULE_6_lodash__["each"](messages, function (messageId) {
+            for (var i in _this.messages) {
+                if (_this.messages[i]._id == messageId) {
+                    _this.messages.splice(i, 1);
+                    break;
+                }
+            }
+        });
+        this.scrollBottom();
+    };
+    ConversationPage.prototype.changeMessage = function (event, message) {
+        if (message && message.length) {
+            this.changeIsTyping(true);
+        }
+        else {
+            this.changeIsTyping(false);
+        }
+    };
+    ConversationPage.prototype.changeIsTyping = function (newValue) {
+        if (newValue !== this.isTyping) {
+            this.socket.emit('room:typing', {
+                status: newValue,
+                userId: this.auth.user._id,
+                userName: this.auth.user.name,
+                conversationId: this.detail._id
+            });
+        }
+        this.isTyping = newValue;
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
+    ], ConversationPage.prototype, "content", void 0);
+    ConversationPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-conversation',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]])
+    ], ConversationPage);
+    return ConversationPage;
+}());
+
+//# sourceMappingURL=conversation.js.map
+
+/***/ }),
+
+/***/ 146:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FriendshipService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var FriendshipService = (function (_super) {
+    __extends(FriendshipService, _super);
+    function FriendshipService(store, http) {
+        var _this = _super.call(this, store, 'friendship', http) || this;
+        _this.store = store;
+        _this.http = http;
+        return _this;
+    }
+    FriendshipService.prototype.list = function () {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.get(this.apiUrl + '/list', {
+            params: {
+                myId: myId
+            }
+        });
+    };
+    FriendshipService.prototype.invite = function (friendId) {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.post(this.apiUrl + '/invite', {
+            myId: myId,
+            friendId: friendId
+        });
+    };
+    FriendshipService.prototype.accept = function (friendshipId) {
+        return this.http.post(this.apiUrl + '/accept', {
+            friendshipId: friendshipId
+        });
+    };
+    FriendshipService.prototype.unfriend = function (friendshipId) {
+        return this.http.post(this.apiUrl + '/unfriend', {
+            friendshipId: friendshipId
+        });
+    };
+    FriendshipService.prototype.invitations = function () {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.get(this.apiUrl + '/invitations', {
+            params: {
+                myId: myId
+            }
+        });
+    };
+    FriendshipService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], FriendshipService);
+    return FriendshipService;
+}(__WEBPACK_IMPORTED_MODULE_0__common_service__["a" /* CommonService */]));
+
+//# sourceMappingURL=friendship.service.js.map
+
+/***/ }),
+
+/***/ 162:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 162;
+
+/***/ }),
+
+/***/ 207:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 207;
+
+/***/ }),
+
+/***/ 251:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_auth_service__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_conversation_service__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__conversation_conversation__ = __webpack_require__(145);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+// import { RoomPage } from '../room/room';
+// import { catchError, map, tap } from 'rxjs/operators';
+
+
+
+
+var HomePage = (function () {
+    function HomePage(auth, conversationSvc, navCtrl, store) {
+        var _this = this;
+        this.auth = auth;
+        this.conversationSvc = conversationSvc;
+        this.navCtrl = navCtrl;
+        this.store = store;
+        this.conversations = [];
+        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_2__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
+            if (user && user._id) {
+                _this.conversationSvc.list(user._id).subscribe(function (lists) {
+                    _this.conversations = lists || [];
+                });
+            }
+        });
+    }
+    HomePage.prototype.openConversation = function (id) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__conversation_conversation__["a" /* ConversationPage */], { conversationId: id });
+    };
+    HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-home',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Hội thoại</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="conversations && conversations.length">\n        <button ion-item *ngFor="let conv of conversations" (click)="openConversation(conv._id)">\n            <strong *ngFor="let user of conv.users">{{user.name}}</strong>\n        </button>\n    </ion-list>\n    <button *ngIf="conversations && !conversations.length" ion-button color="dark" clear full disabled>Chưa có cuộc hội thoại</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/
+        }),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_3__services_auth_service__["a" /* AuthService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__services_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_conversation_service__["a" /* ConversationService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+    ], HomePage);
+    return HomePage;
+}());
+
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 260:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionType; });
+var ActionType = {
+    COUNT_INCREMENT: 'COUNT_INCREMENT',
+    COUNT_DECREMENT: 'COUNT_DECREMENT',
+    COUNT_RESET: 'COUNT_RESET',
+    USER_LOGIN: 'USER_LOGIN',
+    USER_LOGOUT: 'USER_LOGOUT',
+};
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 273:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var MessageService = (function (_super) {
+    __extends(MessageService, _super);
+    function MessageService(store, http) {
+        var _this = _super.call(this, store, 'message', http) || this;
+        _this.store = store;
+        _this.http = http;
+        return _this;
+    }
+    MessageService.prototype.getMessages = function (conversationId) {
+        return this.http.get(this.apiUrl + '/list', {
+            params: { conversationId: conversationId }
+        });
+    };
+    MessageService.prototype.newMessage = function (conversationId, content) {
+        return this.http.post(this.apiUrl + '/new', {
+            from: this.myId,
+            conversation: conversationId,
+            content: content
+        });
+    };
+    MessageService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], MessageService);
+    return MessageService;
+}(__WEBPACK_IMPORTED_MODULE_0__common_service__["a" /* CommonService */]));
+
+//# sourceMappingURL=message.service.js.map
+
+/***/ }),
+
+/***/ 274:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ListPage = (function () {
+    function ListPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        // If we navigated to this page, we will have an item available as a nav param
+        this.selectedItem = navParams.get('item');
+        // Let's populate this page with some filler content for funzies
+        this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
+            'american-football', 'boat', 'bluetooth', 'build'];
+        this.items = [];
+        for (var i = 1; i < 11; i++) {
+            this.items.push({
+                title: 'Item ' + i,
+                note: 'This is item #' + i,
+                icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+            });
+        }
+    }
+    ListPage_1 = ListPage;
+    ListPage.prototype.itemTapped = function (event, item) {
+        // That's right, we're pushing to ourselves!
+        this.navCtrl.push(ListPage_1, {
+            item: item
+        });
+    };
+    ListPage = ListPage_1 = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-list',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+    ], ListPage);
+    return ListPage;
+    var ListPage_1;
+}());
+
+//# sourceMappingURL=list.js.map
+
+/***/ }),
+
+/***/ 275:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListUserPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__conversation_conversation__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user_handle_popover__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_friendship_service__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__answer_invitation__ = __webpack_require__(277);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var ListUserPage = (function () {
+    function ListUserPage(navCtrl, store, userSvc, conversationSvc, popoverCtrl, friendshipSvc, alertCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.store = store;
+        this.userSvc = userSvc;
+        this.conversationSvc = conversationSvc;
+        this.popoverCtrl = popoverCtrl;
+        this.friendshipSvc = friendshipSvc;
+        this.alertCtrl = alertCtrl;
+        this.users = [];
+        this.invitations = [];
+        this.user = {};
+        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_2__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
+            _this.user = user || {};
+            _this.userSvc.userList(_this.user._id).subscribe(function (users) {
+                _this.users = users || [];
+            });
+            _this.friendshipSvc.invitations().subscribe(function (list) {
+                _this.invitations = list || [];
+            });
+        });
+    }
+    ListUserPage.prototype.createConversation = function (userId) {
+        var _this = this;
+        if (userId && this.user._id && userId != this.user._id) {
+            this.conversationSvc.create([this.user._id, userId]).subscribe(function (conversation) {
+                if (conversation && conversation._id) {
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__conversation_conversation__["a" /* ConversationPage */], {
+                        conversationId: conversation._id
+                    });
+                }
+            });
+        }
+    };
+    ListUserPage.prototype.inviteFriend = function (userId) {
+        var _this = this;
+        this.friendshipSvc.invite(userId).subscribe(function (result) {
+            // console.log('result', result);
+            _this.alertCtrl.create({
+                title: 'Thông báo!',
+                subTitle: result.message,
+                buttons: ['OK']
+            }).present();
+        });
+    };
+    ListUserPage.prototype.presentPopover = function (myEvent, userId) {
+        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_6__user_handle_popover__["a" /* UserHandlePopover */], {
+            action: function (actionName) {
+                switch (actionName) {
+                    case 'conversation':
+                        return this.createConversation(userId);
+                    case 'invite':
+                        return this.inviteFriend(userId);
+                }
+            }.bind(this)
+        });
+        popover.present({
+            ev: myEvent
+        });
+    };
+    ListUserPage.prototype.answerInvitation = function (myEvent, invitationId) {
+        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_8__answer_invitation__["a" /* AnswerInvitationPopover */], {
+            action: function (actionName) {
+                var _this = this;
+                // switch (actionName) {
+                //   case 'yes':
+                //     return this.createConversation(userId);
+                //   case 'no':
+                //     return this.inviteFriend(userId);
+                // }
+                this.friendshipSvc[actionName](invitationId).subscribe(function (result) {
+                    _this.alertCtrl.create({
+                        title: 'Thông báo!',
+                        subTitle: result.message,
+                        buttons: ['OK']
+                    }).present();
+                });
+            }.bind(this)
+        });
+        popover.present({
+            ev: myEvent
+        });
+    };
+    ListUserPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="invitations && invitations.length">\n        <ion-list-header>Lời mời kết bạn</ion-list-header>\n        <button ion-item *ngFor="let invitation of invitations" (click)="answerInvitation($event, invitation._id)">\n            <strong>{{invitation.from.name}}</strong>\n            <div><em>Đã gửi lời mời kết bạn</em></div>\n        </button>\n    </ion-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["g" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */],
+            __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__["a" /* ConversationService */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["j" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_7__services_friendship_service__["a" /* FriendshipService */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["a" /* AlertController */]])
+    ], ListUserPage);
+    return ListUserPage;
+}());
+
+//# sourceMappingURL=list-user.js.map
+
+/***/ }),
+
+/***/ 276:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserHandlePopover; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UserHandlePopover = (function () {
+    function UserHandlePopover(viewCtrl) {
+        this.viewCtrl = viewCtrl;
+        // console.log('viewCtrl', this.viewCtrl);
+    }
+    UserHandlePopover.prototype.action = function (actionName) {
+        this.viewCtrl.data.action(actionName);
+        this.viewCtrl.dismiss();
+    };
+    UserHandlePopover = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            template: "\n        <button ion-button full clear no-margin (click)=\"action('invite')\">K\u1EBFt b\u1EA1n</button>\n        <button ion-button full clear no-margin border-top (click)=\"action('conversation')\">H\u1ED9i tho\u1EA1i ngay</button>\n    "
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
+    ], UserHandlePopover);
+    return UserHandlePopover;
+}());
+
+//# sourceMappingURL=user-handle.popover.js.map
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnswerInvitationPopover; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AnswerInvitationPopover = (function () {
+    function AnswerInvitationPopover(viewCtrl) {
+        this.viewCtrl = viewCtrl;
+        // console.log('viewCtrl', this.viewCtrl);
+    }
+    AnswerInvitationPopover.prototype.action = function (actionName) {
+        this.viewCtrl.data.action(actionName);
+        this.viewCtrl.dismiss();
+    };
+    AnswerInvitationPopover = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            template: "\n        <button ion-button full clear no-margin (click)=\"action('accept')\">\u0110\u1ED3ng \u00FD</button>\n        <button ion-button full clear no-margin border-top (click)=\"action('unfiend')\">H\u1EE7y y\u00EAu c\u1EA7u</button>\n    "
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
+    ], AnswerInvitationPopover);
+    return AnswerInvitationPopover;
+}());
+
+//# sourceMappingURL=answer-invitation.js.map
+
+/***/ }),
+
+/***/ 278:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(59);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var LoginPage = (function () {
+    function LoginPage(auth) {
+        this.auth = auth;
+    }
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-login',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/login/login.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Đăng nhập</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-input placeholder="Tên đăng nhập..." type="text" [(ngModel)]="name" (keyup.enter)="auth.login(name)"></ion-input>\n    <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/login/login.html"*/
+        }),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 279:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FriendPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__ = __webpack_require__(146);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var FriendPage = (function () {
+    function FriendPage(friendshipSvc) {
+        this.friendshipSvc = friendshipSvc;
+        this.list = [];
+    }
+    FriendPage.prototype.ngOnInit = function () {
+        var _this = this;
+        this.friendshipSvc.list().subscribe(function (list) {
+            _this.list = list || [];
+        });
+    };
+    FriendPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <button ion-item *ngFor="let friend of list" (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */]])
+    ], FriendPage);
+    return FriendPage;
+}());
+
+//# sourceMappingURL=friend.js.map
+
+/***/ }),
+
+/***/ 299:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(306);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 306:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export reducers */
+/* unused harmony export storageSyncReducer */
+/* unused harmony export storageMetaReducer */
+/* unused harmony export metaReducers */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_list_list__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_room_room__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_message_service__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_login_login__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_socket_service__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_user_service__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_conversation_service__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ngrx_effects__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__reducers__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_friendship_service__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__ = __webpack_require__(277);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+// Angular & Ionic Core
+
+
+
+
+
+
+// End angular & ionic
+// Components
+
+
+
+
+
+
+
+
+
+
+// End components
+// Services
+
+
+
+
+// End services
+//Store
+
+
+
+
+
+
+
+var reducers = __WEBPACK_IMPORTED_MODULE_24__reducers__["a" /* default */];
+var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__["storageSync"])({
+    keys: ['user'],
+    // ignoreActions: [],
+    hydratedStateKey: 'hydrated',
+    onSyncError: function (err) {
+        console.log(err);
+    }
+});
+function storageMetaReducer(reducer) {
+    return storageSyncReducer(reducer);
+}
+var metaReducers = [storageMetaReducer];
+// End Store
+var AppModule = (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_8__pages_list_list__["a" /* ListPage */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_room_room__["a" /* RoomPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__["a" /* ListUserPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__["a" /* ConversationPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_login_login__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__["a" /* FriendPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
+                    links: []
+                }),
+                // StoreModule.forRoot(Reducers),
+                __WEBPACK_IMPORTED_MODULE_20__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_24__reducers__["a" /* default */], {
+                    metaReducers: metaReducers,
+                    initialState: {
+                        hydrated: false
+                    }
+                }),
+                __WEBPACK_IMPORTED_MODULE_23__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
+                __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument(),
+            ],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicApp */]],
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_8__pages_list_list__["a" /* ListPage */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_room_room__["a" /* RoomPage */],
+                __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__["a" /* ListUserPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__["a" /* ConversationPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_login_login__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__["a" /* FriendPage */],
+                __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_16__services_socket_service__["a" /* SocketService */],
+                __WEBPACK_IMPORTED_MODULE_17__services_auth_service__["a" /* AuthService */],
+                __WEBPACK_IMPORTED_MODULE_18__services_user_service__["a" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_19__services_conversation_service__["a" /* ConversationService */],
+                __WEBPACK_IMPORTED_MODULE_12__services_message_service__["a" /* MessageService */],
+                __WEBPACK_IMPORTED_MODULE_25__services_friendship_service__["a" /* FriendshipService */],
+                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicErrorHandler */] }
+            ]
+        })
+    ], AppModule);
+    return AppModule;
+}());
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ 352:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_list_user_list_user__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_auth_service__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_friend_friend__ = __webpack_require__(279);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+
+
+
+
+
+
+var MyApp = (function () {
+    function MyApp(platform, statusBar, splashScreen, store, auth) {
+        var _this = this;
+        this.platform = platform;
+        this.statusBar = statusBar;
+        this.splashScreen = splashScreen;
+        this.store = store;
+        this.auth = auth;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */];
+        this.user = {};
+        this.initializeApp();
+        // used for an example of ngFor and navigation
+        this.pages = [
+            { title: 'Home', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */] },
+            { title: 'List', component: __WEBPACK_IMPORTED_MODULE_5__pages_list_list__["a" /* ListPage */] },
+            { title: 'List User', component: __WEBPACK_IMPORTED_MODULE_6__pages_list_user_list_user__["a" /* ListUserPage */] },
+        ];
+        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_7__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
+            _this.user = user || {};
+            if (_this.user && _this.user._id) {
+                _this.pages = [
+                    { title: 'Hội thoại', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */] },
+                    // { title: 'List', component: ListPage },
+                    { title: 'Bạn bè', component: __WEBPACK_IMPORTED_MODULE_10__pages_friend_friend__["a" /* FriendPage */] },
+                    { title: 'Kết nối', component: __WEBPACK_IMPORTED_MODULE_6__pages_list_user_list_user__["a" /* ListUserPage */] },
+                ];
+                _this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */];
+            }
+            else {
+                _this.pages = [
+                    { title: 'Đăng nhập', component: __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */] },
+                ];
+                _this.rootPage = __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */];
+            }
+        });
+    }
+    MyApp.prototype.initializeApp = function () {
+        var _this = this;
+        this.platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            _this.statusBar.styleDefault();
+            _this.splashScreen.hide();
+        });
+    };
+    MyApp.prototype.openPage = function (page) {
+        // Reset the content nav to have just this page
+        // we wouldn't want the back button to show in this scenario
+        this.nav.setRoot(page.component);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
+    ], MyApp.prototype, "nav", void 0);
+    MyApp = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/'<ion-menu [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title>\n            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              {{p.title}}\n            </button>\n            <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/
+        }),
+        __param(4, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_8__services_auth_service__["a" /* AuthService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_7__ngrx_store__["h" /* Store */],
+            __WEBPACK_IMPORTED_MODULE_8__services_auth_service__["a" /* AuthService */]])
+    ], MyApp);
+    return MyApp;
+}());
+
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 377:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 381:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_socket_service__ = __webpack_require__(72);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+// import { NavController, NavParams } from 'ionic-angular';
+
+var RoomPage = (function () {
+    function RoomPage(socket) {
+        // this.room = this.navParams.get('room');
+        // SocketService.joinRoom(this.room);
+        this.socket = socket;
+        this.messages = [];
+        this.socket.io.on('new-message', function (data) {
+            data.id = this.messages.length + 1;
+            this.messages.push(data);
+            console.log('new-message', data, this.messages);
+        }.bind(this));
+        this.socket.io.emit('login', { name: 'Phong' }, function (data) {
+            console.log('login data', data);
+        });
+    }
+    ;
+    RoomPage.prototype.sendMessage = function (msg) {
+        this.socket.io.emit('send-message', {
+            room: this.room,
+            data: {
+                from: this.socket.io.id,
+                msg: msg
+            }
+        });
+        this.msg = null;
+    };
+    RoomPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'page-room',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/
+        }),
+        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]])
+    ], RoomPage);
+    return RoomPage;
+}());
+
+//# sourceMappingURL=room.js.map
+
+/***/ }),
+
+/***/ 486:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(487);
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    user: __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__["a" /* UserReducer */]
+});
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 487:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = UserReducer;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(260);
+
+function UserReducer(state, action) {
+    switch (action.type) {
+        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGIN:
+            state = action.user;
+            return state;
+        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGOUT:
+            state = undefined;
+            return state;
+        default:
+            return state;
+    }
+}
+//# sourceMappingURL=UserReducer.js.map
+
+/***/ }),
+
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__socket_service__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_service__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__socket_service__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_service__ = __webpack_require__(143);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -86,851 +1334,12 @@ var AuthService = (function () {
 
 /***/ }),
 
-/***/ 142:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(69);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var UserService = (function () {
-    function UserService(http) {
-        this.http = http;
-        this.apiUrl = 'http://localhost:8888/api/user';
-    }
-    UserService.prototype.login = function (name) {
-        return this.http.post(this.apiUrl + '/login', { name: name });
-    };
-    UserService.prototype.userList = function (myId) {
-        return this.http.get(this.apiUrl + '/list', {
-            params: {
-                myId: myId
-            }
-        });
-    };
-    UserService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
-    ], UserService);
-    return UserService;
-}());
-
-//# sourceMappingURL=user.service.js.map
-
-/***/ }),
-
-/***/ 143:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_service__ = __webpack_require__(271);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var ConversationService = (function (_super) {
-    __extends(ConversationService, _super);
-    function ConversationService(http, store) {
-        var _this = _super.call(this, store, 'conversation') || this;
-        _this.http = http;
-        _this.store = store;
-        return _this;
-    }
-    ConversationService.prototype.create = function (users) {
-        return this.http.post(this.apiUrl + '/create', { users: users });
-    };
-    ConversationService.prototype.detail = function (conversationId) {
-        var myId;
-        if (this.user && this.user._id) {
-            myId = this.user._id;
-        }
-        return this.http.post(this.apiUrl + '/detail', { conversationId: conversationId, myId: myId });
-    };
-    ConversationService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
-    ], ConversationService);
-    return ConversationService;
-}(__WEBPACK_IMPORTED_MODULE_3__common_service__["a" /* CommonService */]));
-
-//# sourceMappingURL=conversation.service.js.map
-
-/***/ }),
-
-/***/ 159:
-/***/ (function(module, exports) {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
-	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 159;
-
-/***/ }),
-
-/***/ 204:
-/***/ (function(module, exports) {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
-	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 204;
-
-/***/ }),
-
-/***/ 248:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(133);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
-
-var HomePage = (function () {
-    function HomePage(auth) {
-        this.auth = auth;
-    }
-    HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Home</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div *ngIf="auth.user && auth.user.name">\n        <h3>Xin chào <strong>{{auth.user.name}}</strong>!</h3>\n        <div>ID: {{auth.user._id}}</div>\n        <div>Socket id: {{auth.user.socketId}}</div>\n        <button ion-button (click)="auth.logout()" full>Đăng xuất</button>\n    </div>\n    <div *ngIf="!auth.user || !auth.user.name">\n        <ion-input placeholder="Name" type="text" [(ngModel)]="name"></ion-input>\n        <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>\n    </div>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/
-        }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]])
-    ], HomePage);
-    return HomePage;
-}());
-
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 257:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionType; });
-var ActionType = {
-    COUNT_INCREMENT: 'COUNT_INCREMENT',
-    COUNT_DECREMENT: 'COUNT_DECREMENT',
-    COUNT_RESET: 'COUNT_RESET',
-    USER_LOGIN: 'USER_LOGIN',
-    USER_LOGOUT: 'USER_LOGOUT',
-};
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ 269:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(51);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var ListPage = (function () {
-    function ListPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        // If we navigated to this page, we will have an item available as a nav param
-        this.selectedItem = navParams.get('item');
-        // Let's populate this page with some filler content for funzies
-        this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-            'american-football', 'boat', 'bluetooth', 'build'];
-        this.items = [];
-        for (var i = 1; i < 11; i++) {
-            this.items.push({
-                title: 'Item ' + i,
-                note: 'This is item #' + i,
-                icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-            });
-        }
-    }
-    ListPage_1 = ListPage;
-    ListPage.prototype.itemTapped = function (event, item) {
-        // That's right, we're pushing to ourselves!
-        this.navCtrl.push(ListPage_1, {
-            item: item
-        });
-    };
-    ListPage = ListPage_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
-    ], ListPage);
-    return ListPage;
-    var ListPage_1;
-}());
-
-//# sourceMappingURL=list.js.map
-
-/***/ }),
-
-/***/ 270:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListUserPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__conversation_conversation__ = __webpack_require__(272);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var ListUserPage = (function () {
-    function ListUserPage(navCtrl, store, userSvc, conversationSvc) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.store = store;
-        this.userSvc = userSvc;
-        this.conversationSvc = conversationSvc;
-        this.users = [];
-        this.user = {};
-        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_2__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
-            _this.user = user || {};
-            _this.userSvc.userList(_this.user._id).subscribe(function (users) {
-                _this.users = users || [];
-            });
-        });
-    }
-    ListUserPage.prototype.createConversation = function (userId) {
-        var _this = this;
-        if (userId && this.user._id && userId != this.user._id) {
-            this.conversationSvc.create([this.user._id, userId]).subscribe(function (conversation) {
-                if (conversation && conversation._id) {
-                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__conversation_conversation__["a" /* ConversationPage */], {
-                        conversationId: conversation._id
-                    });
-                }
-            });
-        }
-    };
-    ListUserPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>List User</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <button ion-item *ngFor="let user of users" (click)="createConversation(user._id)">\n            <div>\n                <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n            </div>\n            <div>ID: {{user._id}}</div>\n        </button>\n    </ion-list>\n    <!-- <button ion-button full (click)="getUserList()">Fetch</button> -->\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */], __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__["a" /* ConversationService */]])
-    ], ListUserPage);
-    return ListUserPage;
-}());
-
-//# sourceMappingURL=list-user.js.map
-
-/***/ }),
-
-/***/ 271:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ngrx_store__ = __webpack_require__(37);
-
-var CommonService = (function () {
-    function CommonService(store, afterFix) {
-        var _this = this;
-        this.store = store;
-        this.user = {};
-        this.apiUrl = 'http://localhost:8888/api';
-        this.store.pipe(Object(__WEBPACK_IMPORTED_MODULE_0__ngrx_store__["n" /* select */])('user')).subscribe(function (user) {
-            _this.user = user || {};
-            _this.myId = _this.user._id;
-        });
-        this.apiUrl += '/' + afterFix;
-    }
-    return CommonService;
-}());
-
-//# sourceMappingURL=common.service.js.map
-
-/***/ }),
-
-/***/ 272:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_socket_service__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(133);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var ConversationPage = (function () {
-    function ConversationPage(navParams, conversationSvc, messageSvc, socket, auth) {
-        this.navParams = navParams;
-        this.conversationSvc = conversationSvc;
-        this.messageSvc = messageSvc;
-        this.socket = socket;
-        this.auth = auth;
-        this.detail = { users: [] };
-        this.messages = [];
-    }
-    ConversationPage.prototype.ngOnInit = function () {
-        var _this = this;
-        this.conversationSvc.detail(this.navParams.get('conversationId')).subscribe(function (detail) {
-            // console.log('detail', detail);
-            _this.detail = detail;
-            _this.joinConversation(_this.detail._id);
-            _this.messageSvc.getMessages(_this.detail._id).subscribe(function (list) {
-                _this.pushMessage(list, true);
-            });
-        });
-    };
-    ConversationPage.prototype.ngOnDestroy = function () {
-        var _this = this;
-        this.socket.leaveRoom(this.detail._id, function () {
-            console.log('leave room ', _this.detail._id);
-        });
-    };
-    ConversationPage.prototype.sendMessage = function (message) {
-        var _this = this;
-        if (!message || !message.length) {
-            return;
-        }
-        this.messageSvc.newMessage(this.detail._id, message).subscribe(function (result) {
-            _this.message = null;
-        });
-    };
-    ConversationPage.prototype.joinConversation = function (id) {
-        var _this = this;
-        this.socket.joinRoom(id, function () {
-            _this.socket.on('message:new', function (data) {
-                this.pushMessage(data);
-            }.bind(_this));
-        });
-    };
-    ConversationPage.prototype.pushMessage = function (data, noPush) {
-        var _this = this;
-        if (noPush) {
-            this.messages = data || [];
-        }
-        else {
-            this.messages.push(data);
-        }
-        setTimeout(function () {
-            _this.content.scrollToBottom();
-        }, 250);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */])
-    ], ConversationPage.prototype, "content", void 0);
-    ConversationPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-conversation',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content id="conversation-content" padding>\n    <div *ngFor="let message of messages" (click)="message.showTime = !message.showTime" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n        <div class="message-content">\n            <span>{{message.content}}</span>\n            <div *ngIf="message.showTime">\n                <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Nhập nội dung..." (keyup.enter)="sendMessage(message)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
-            __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */],
-            __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */],
-            __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]])
-    ], ConversationPage);
-    return ConversationPage;
-}());
-
-//# sourceMappingURL=conversation.js.map
-
-/***/ }),
-
-/***/ 273:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var MessageService = (function (_super) {
-    __extends(MessageService, _super);
-    function MessageService(store, http) {
-        var _this = _super.call(this, store, 'message') || this;
-        _this.store = store;
-        _this.http = http;
-        return _this;
-    }
-    MessageService.prototype.getMessages = function (conversationId) {
-        return this.http.get(this.apiUrl + '/list', {
-            params: { conversationId: conversationId }
-        });
-    };
-    MessageService.prototype.newMessage = function (conversationId, content) {
-        return this.http.post(this.apiUrl + '/new', {
-            from: this.myId,
-            conversation: conversationId,
-            content: content
-        });
-    };
-    MessageService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
-    ], MessageService);
-    return MessageService;
-}(__WEBPACK_IMPORTED_MODULE_0__common_service__["a" /* CommonService */]));
-
-//# sourceMappingURL=message.service.js.map
-
-/***/ }),
-
-/***/ 293:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(300);
-
-
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 300:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export reducers */
-/* unused harmony export storageSyncReducer */
-/* unused harmony export storageMetaReducer */
-/* unused harmony export metaReducers */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_list_list__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_room_room__ = __webpack_require__(375);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_message_service__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_socket_service__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_auth_service__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_user_service__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_conversation_service__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ngrx_store__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ngrx_store_devtools__ = __webpack_require__(376);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ngrx_store_ionic_storage__ = __webpack_require__(380);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ngrx_store_ionic_storage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngrx_effects__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__reducers__ = __webpack_require__(480);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-// Angular & Ionic Core
-
-
-
-
-
-
-// End angular & ionic
-// Components
-
-
-
-
-
-
-
-// End components
-// Services
-
-
-
-
-// End services
-//Store
-
-
-
-
-
-var reducers = __WEBPACK_IMPORTED_MODULE_21__reducers__["a" /* default */];
-var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_19_ngrx_store_ionic_storage__["storageSync"])({
-    keys: ['user'],
-    // ignoreActions: [],
-    hydratedStateKey: 'hydrated',
-    onSyncError: function (err) {
-        console.log(err);
-    }
-});
-function storageMetaReducer(reducer) {
-    return storageSyncReducer(reducer);
-}
-var metaReducers = [storageMetaReducer];
-// End Store
-var AppModule = (function () {
-    function AppModule() {
-    }
-    AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_list_list__["a" /* ListPage */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_room_room__["a" /* RoomPage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__["a" /* ListUserPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__["a" /* ConversationPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
-                    links: []
-                }),
-                // StoreModule.forRoot(Reducers),
-                __WEBPACK_IMPORTED_MODULE_17__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_21__reducers__["a" /* default */], {
-                    metaReducers: metaReducers,
-                    initialState: {
-                        hydrated: false
-                    }
-                }),
-                __WEBPACK_IMPORTED_MODULE_20__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_19_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
-                __WEBPACK_IMPORTED_MODULE_18__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument(),
-            ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicApp */]],
-            entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_list_list__["a" /* ListPage */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_room_room__["a" /* RoomPage */],
-                __WEBPACK_IMPORTED_MODULE_10__pages_list_user_list_user__["a" /* ListUserPage */],
-                __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__["a" /* ConversationPage */],
-            ],
-            providers: [
-                __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_13__services_socket_service__["a" /* SocketService */],
-                __WEBPACK_IMPORTED_MODULE_14__services_auth_service__["a" /* AuthService */],
-                __WEBPACK_IMPORTED_MODULE_15__services_user_service__["a" /* UserService */],
-                __WEBPACK_IMPORTED_MODULE_16__services_conversation_service__["a" /* ConversationService */],
-                __WEBPACK_IMPORTED_MODULE_12__services_message_service__["a" /* MessageService */],
-                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicErrorHandler */] }
-            ]
-        })
-    ], AppModule);
-    return AppModule;
-}());
-
-//# sourceMappingURL=app.module.js.map
-
-/***/ }),
-
-/***/ 346:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_list_user_list_user__ = __webpack_require__(270);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen) {
-        this.platform = platform;
-        this.statusBar = statusBar;
-        this.splashScreen = splashScreen;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */];
-        this.initializeApp();
-        // used for an example of ngFor and navigation
-        this.pages = [
-            { title: 'Home', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */] },
-            { title: 'List', component: __WEBPACK_IMPORTED_MODULE_5__pages_list_list__["a" /* ListPage */] },
-            { title: 'List User', component: __WEBPACK_IMPORTED_MODULE_6__pages_list_user_list_user__["a" /* ListUserPage */] },
-        ];
-    }
-    MyApp.prototype.initializeApp = function () {
-        var _this = this;
-        this.platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            _this.statusBar.styleDefault();
-            _this.splashScreen.hide();
-        });
-    };
-    MyApp.prototype.openPage = function (page) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page.component);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
-    ], MyApp.prototype, "nav", void 0);
-    MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
-    ], MyApp);
-    return MyApp;
-}());
-
-//# sourceMappingURL=app.component.js.map
-
-/***/ }),
-
-/***/ 372:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 375:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_socket_service__ = __webpack_require__(71);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
-// import { NavController, NavParams } from 'ionic-angular';
-
-var RoomPage = (function () {
-    function RoomPage(socket) {
-        // this.room = this.navParams.get('room');
-        // SocketService.joinRoom(this.room);
-        this.socket = socket;
-        this.messages = [];
-        this.socket.io.on('new-message', function (data) {
-            data.id = this.messages.length + 1;
-            this.messages.push(data);
-            console.log('new-message', data, this.messages);
-        }.bind(this));
-        this.socket.io.emit('login', { name: 'Phong' }, function (data) {
-            console.log('login data', data);
-        });
-    }
-    ;
-    RoomPage.prototype.sendMessage = function (msg) {
-        this.socket.io.emit('send-message', {
-            room: this.room,
-            data: {
-                from: this.socket.io.id,
-                msg: msg
-            }
-        });
-        this.msg = null;
-    };
-    RoomPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-room',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/
-        }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]])
-    ], RoomPage);
-    return RoomPage;
-}());
-
-//# sourceMappingURL=room.js.map
-
-/***/ }),
-
-/***/ 480:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(481);
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    user: __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__["a" /* UserReducer */]
-});
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ 481:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = UserReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(257);
-
-function UserReducer(state, action) {
-    switch (action.type) {
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGIN:
-            state = action.user;
-            return state;
-        case __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* ActionType */].USER_LOGOUT:
-            state = undefined;
-            return state;
-        default:
-            return state;
-    }
-}
-//# sourceMappingURL=UserReducer.js.map
-
-/***/ }),
-
-/***/ 71:
+/***/ 72:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocketService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1012,7 +1421,75 @@ var SocketService = (function () {
 
 //# sourceMappingURL=socket.service.js.map
 
+/***/ }),
+
+/***/ 75:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_service__ = __webpack_require__(144);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ConversationService = (function (_super) {
+    __extends(ConversationService, _super);
+    function ConversationService(http, store) {
+        var _this = _super.call(this, store, 'conversation', http) || this;
+        _this.http = http;
+        _this.store = store;
+        return _this;
+    }
+    ConversationService.prototype.create = function (users) {
+        return this.http.post(this.apiUrl + '/create', { users: users });
+    };
+    ConversationService.prototype.detail = function (conversationId) {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.post(this.apiUrl + '/detail', { conversationId: conversationId, myId: myId });
+    };
+    ConversationService.prototype.list = function (myId) {
+        // let myId;
+        // if (this.user && this.user._id) {
+        //     myId = this.user._id;
+        // }
+        return this.http.get(this.apiUrl + '/list', { params: { myId: myId } });
+    };
+    ConversationService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+    ], ConversationService);
+    return ConversationService;
+}(__WEBPACK_IMPORTED_MODULE_3__common_service__["a" /* CommonService */]));
+
+//# sourceMappingURL=conversation.service.js.map
+
 /***/ })
 
-},[293]);
+},[299]);
 //# sourceMappingURL=main.js.map

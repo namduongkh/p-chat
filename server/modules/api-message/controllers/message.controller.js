@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Conversation = mongoose.model('Conversation');
 const Message = mongoose.model('Message');
 const _ = require('lodash');
+const cron = require('cron');
+const moment = require('moment');
 
 exports.list = function(req, res) {
     let { conversationId } = req.query;
@@ -24,6 +26,9 @@ exports.new = function(app) {
         new Message(req.body)
             .save()
             .then(message => {
+                Conversation.findByIdAndUpdate(message.conversation, {
+                    modified: new Date()
+                }, function(err, res) {});
                 return Message.findOne({ _id: message._id })
                     .lean()
                     .populate('from', 'name')
@@ -35,3 +40,31 @@ exports.new = function(app) {
             });
     };
 };
+
+exports.removeMessageJob = function(app) {
+    let expireSecond = app.configManager.get('messageExpireSecond');
+    new cron.CronJob({
+        cronTime: `*/5 * * * * *`,
+        onTick: function() {
+            // console.log('-- Đã trôi qua: ' + expireSecond + ' giây!')
+            Message.find({
+                    created: { $lte: moment().subtract(expireSecond, 's').toDate() }
+                })
+                .then(messages => {
+                    let conversationMessages = {};
+                    _.each(messages, (message) => {
+                        // console.log("Message", moment(message.created).format('DD/MM/YYYY HH:mm:ss'));
+                        if (!conversationMessages[message.conversation]) {
+                            conversationMessages[message.conversation] = [];
+                        }
+                        conversationMessages[message.conversation].push(message._id);
+                        message.remove();
+                    });
+                    _.forIn(conversationMessages, (item, key) => {
+                        app.io.in(key).emit('message:remove', item);
+                    });
+                });
+        },
+        start: true
+    });
+}

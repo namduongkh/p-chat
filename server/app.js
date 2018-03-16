@@ -1,10 +1,10 @@
 global.BASE_PATH = __dirname;
-global.configManager = require('kea-config');
-configManager.setup('./config');
 
 const app = require('express.oi')();
-const port = configManager.get('port');
+app.configManager = require('kea-config');
+app.configManager.setup('./config');
 
+const port = app.configManager.get('port');
 const server = app.http().io();
 
 app.io.session({

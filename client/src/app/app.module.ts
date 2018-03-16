@@ -15,6 +15,9 @@ import { RoomPage } from '../pages/room/room';
 import { ListUserPage } from '../pages/list-user/list-user';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { MessageService } from '../services/message.service';
+import { LoginPage } from '../pages/login/login';
+import { FriendPage } from '../pages/friend/friend';
+import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
 // End components
 
 // Services
@@ -31,6 +34,8 @@ import { StorageSyncEffects, storageSync } from 'ngrx-store-ionic-storage';
 import { EffectsModule } from '@ngrx/effects';
 import Reducers from '../reducers';
 import { AppState } from '../reducers/AppState';
+import { FriendshipService } from '../services/friendship.service';
+import { AnswerInvitationPopover } from '../pages/list-user/answer-invitation';
 
 export const reducers: ActionReducerMap<AppState> = Reducers;
 
@@ -58,6 +63,10 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     RoomPage,
     ListUserPage,
     ConversationPage,
+    LoginPage,
+    FriendPage,
+    UserHandlePopover,
+    AnswerInvitationPopover,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +90,10 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     RoomPage,
     ListUserPage,
     ConversationPage,
+    LoginPage,
+    FriendPage,
+    UserHandlePopover,
+    AnswerInvitationPopover,
   ],
   providers: [
     StatusBar,
@@ -90,6 +103,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     UserService,
     ConversationService,
     MessageService,
+    FriendshipService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

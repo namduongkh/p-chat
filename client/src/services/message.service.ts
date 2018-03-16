@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class MessageService extends CommonService {
     constructor(public store: Store<AppState>, private http: HttpClient) {
-        super(store, 'message');
+        super(store, 'message', http);
     }
 
     getMessages(conversationId) {

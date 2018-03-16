@@ -6,7 +6,7 @@ const _ = require('lodash');
 module.exports = function(app) {
 
     // Kết nối mongoDB
-    require('./mongo');
+    require('./mongo')(app);
 
     require('./middleware')(app);
 
