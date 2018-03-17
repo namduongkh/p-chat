@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 })
 export class ConversationPage implements OnInit, OnDestroy {
     @ViewChild(Content) content: Content;
+    @ViewChild('messageInput') messageInput;
 
     detail: any = { users: [] };
     messages: any = [];
@@ -38,6 +39,9 @@ export class ConversationPage implements OnInit, OnDestroy {
             });
             this.onTyping();
         });
+        this.messageInput.on('focus', function(){
+            console.log('focus');
+        });
     }
 
     ngOnDestroy() {
@@ -63,6 +67,7 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     sendMessage(message) {
+        this.messageInput.setFocus();
         if (!message || !message.length) {
             return;
         }

@@ -32,7 +32,7 @@
     <ion-grid no-padding no-margin>
         <ion-row no-padding no-margin>
             <ion-col col-10 border-top>
-                <ion-input class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)"></ion-input>
+                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)"></ion-input>
             </ion-col>
             <ion-col col-2 no-padding no-margin>
                 <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>
