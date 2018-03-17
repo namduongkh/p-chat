@@ -12,6 +12,7 @@
 <ion-content padding>
     <div id="conversation-content">
         <div margin-bottom></div>
+        <div text-right *ngIf="seen"><em>Đã xem</em></div>
         <div class="message-list">
             <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{'not-you': message.from._id != auth.user._id, 'it-you': message.from._id == auth.user._id}">
                 <div class="message-content">
@@ -32,7 +33,7 @@
     <ion-grid no-padding no-margin>
         <ion-row no-padding no-margin>
             <ion-col col-10 border-top>
-                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)"></ion-input>
+                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>
             </ion-col>
             <ion-col col-2 no-padding no-margin>
                 <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>

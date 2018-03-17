@@ -41,6 +41,12 @@ exports.room = (app) => {
                 userName: req.data.userName
             });
             res.send('Typing');
+        },
+        seen: function(req, res) {
+            app.io.in(req.data.conversationId).emit('message:seen', {
+                userId: req.data.userId,
+            });
+            res.send('Seen');
         }
     }
 };

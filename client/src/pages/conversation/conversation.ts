@@ -19,7 +19,9 @@ export class ConversationPage implements OnInit, OnDestroy {
     message: string;
     isTyping: boolean = false;
     typingUsers: any = [];
+    seen: boolean = false;
     timeoutScroll;
+    lastFromUser: string;
 
     constructor(
         private navParams: NavParams,
@@ -38,9 +40,6 @@ export class ConversationPage implements OnInit, OnDestroy {
                 this.pushMessage(list, true);
             });
             this.onTyping();
-        });
-        this.messageInput.on('focus', function(){
-            console.log('focus');
         });
     }
 
@@ -75,6 +74,7 @@ export class ConversationPage implements OnInit, OnDestroy {
             this.message = null;
             this.changeMessage(null, null);
             this.scrollBottom(true);
+            this.seen = false;
         });
     }
 
@@ -82,10 +82,17 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.socket.joinRoom(id, () => {
             this.socket.on('message:new', function (data) {
                 this.pushMessage(data);
+                this.lastFromUser = data.from._id;
+                this.checkSeen();
             }.bind(this));
             this.socket.on('message:remove', function (messages) {
                 // console.log('messages', messages);
                 this.removeMessages(messages);
+            }.bind(this));
+            this.socket.on('message:seen', function (data) {
+                if (this.lastFromUser == this.auth.user._id && this.auth.user._id !== data.userId) {
+                    this.seen = true;
+                }
             }.bind(this));
         });
     }
@@ -150,5 +157,19 @@ export class ConversationPage implements OnInit, OnDestroy {
             });
         }
         this.isTyping = newValue;
+    }
+
+    messageInputFocus() {
+        this.scrollBottom(true);
+        this.socket.emit('room:seen', {
+            userId: this.auth.user._id,
+            conversationId: this.detail._id
+        });
+    }
+
+    checkSeen() {
+        if (this.lastFromUser !== this.auth.user._id) {
+            this.seen = false;
+        }
     }
 }
