@@ -1,13 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 // import { RoomPage } from '../room/room';
 // import { catchError, map, tap } from 'rxjs/operators';
 
-import { Store, select } from '@ngrx/store';
-import { AuthService } from '../../services/auth.service';
 import { ConversationService } from '../../services/conversation.service';
 import { ConversationPage } from '../conversation/conversation';
-import { AppState } from '../../reducers/AppState';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'page-home',
@@ -16,18 +14,17 @@ import { AppState } from '../../reducers/AppState';
 export class HomePage {
   conversations: any = [];
 
-  constructor(@Inject(AuthService) private auth: AuthService,
+  constructor(public navParams: NavParams,
     private conversationSvc: ConversationService,
     private navCtrl: NavController,
-    private store: Store<AppState>) {
+    @Inject(AuthService) public auth: AuthService) {
 
-    this.store.pipe(select('user')).subscribe((user: { _id }) => {
-      if (user && user._id) {
-        this.conversationSvc.list(user._id).subscribe(lists => {
-          this.conversations = lists || [];
-        });
-      }
-    });
+    // console.log('HomePage auth', this.auth);
+    if (this.auth && this.auth.user && this.auth.user._id) {
+      this.conversationSvc.list(this.auth.user._id).subscribe(lists => {
+        this.conversations = lists || [];
+      });
+    }
   }
 
   openConversation(id) {

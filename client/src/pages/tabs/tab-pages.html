@@ -1,0 +1,26 @@
+<!-- <ion-tabs>
+    <ion-tab tabTitle="{{tabs.home[0]}}" tabsHideOnSubPages="true" [root]="tabs.home[1]"></ion-tab>
+    <ion-tab tabTitle="{{tabs.friend[0]}}" tabsHideOnSubPages="true" [root]="tabs.friend[1]"></ion-tab>
+    <ion-tab tabTitle="{{tabs.connect[0]}}" tabsHideOnSubPages="true" [root]="tabs.connect[1]"></ion-tab>
+    <ion-tab tabTitle="{{tabs.account[0]}}" tabsHideOnSubPages="true" [root]="tabs.account[1]"></ion-tab>
+</ion-tabs> -->
+
+<ion-menu [content]="content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title>
+            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+                  {{p.title}}
+                </button>
+            <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

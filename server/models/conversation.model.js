@@ -15,6 +15,10 @@ var ConversationSchema = new Schema({
     modified: {
         type: Date,
         default: Date.now
+    },
+    enable: {
+        type: Object,
+        default: {}
     }
 }, {
     versionKey: false // You should be aware of the outcome after set to false

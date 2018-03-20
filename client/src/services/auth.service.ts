@@ -8,12 +8,15 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-    public user;
+    public user: any = undefined;
 
-    constructor(@Inject(SocketService) private socket: SocketService, private store: Store<AppState>, private userSvc: UserService) {
+    constructor(@Inject(SocketService) private socket: SocketService,
+        private store: Store<AppState>,
+        private userSvc: UserService) {
+            
         this.store.pipe(select('user')).subscribe(user => {
             this.user = user || {};
-            if (this.user.socketId && !this.socket.io) {
+            if (this.user && this.user.socketId && !this.socket.io) {
                 this.connectSocket(this.user);
             }
         });

@@ -1,3 +1,7 @@
-<button ion-item (click)="handleUserItem(user)">
-    <strong>{{user.name}}</strong>
-</button>
+<ion-item (click)="handleUserItem(user)">
+    <ion-avatar item-start>
+        <img src="assets/imgs/logo.png">
+    </ion-avatar>
+    <h2>{{user.name}}</h2>
+    <p>Ugh. As if.</p>
+</ion-item>

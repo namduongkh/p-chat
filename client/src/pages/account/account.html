@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Tài khoản</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <h3>Xin chào {{auth.user.name}}!</h3>
+    <button ion-button full (click)="auth.logout()">Đăng xuất</button>
+</ion-content>

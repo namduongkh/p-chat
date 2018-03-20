@@ -15,10 +15,12 @@ import { RoomPage } from '../pages/room/room';
 import { ListUserPage } from '../pages/list-user/list-user';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { MessageService } from '../services/message.service';
-import { LoginPage } from '../pages/login/login';
+import { LoginPage } from '../pages/account/login';
 import { FriendPage } from '../pages/friend/friend';
 import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
 import { UserItem } from '../pages/list-user/user-item';
+import { TabPages } from '../pages/tabs/tabs';
+import { AccountPage } from '../pages/account/account';
 // End components
 
 // Services
@@ -64,11 +66,13 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     RoomPage,
     ListUserPage,
     ConversationPage,
-    LoginPage,
     FriendPage,
     UserHandlePopover,
     AnswerInvitationPopover,
     UserItem,
+    TabPages,
+    LoginPage,
+    AccountPage,
   ],
   imports: [
     BrowserModule,
@@ -94,8 +98,11 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     ConversationPage,
     LoginPage,
     FriendPage,
-    // UserHandlePopover,
-    // AnswerInvitationPopover,
+    UserHandlePopover,
+    AnswerInvitationPopover,
+    TabPages,
+    LoginPage,
+    AccountPage,
   ],
   providers: [
     StatusBar,

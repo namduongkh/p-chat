@@ -26,9 +26,14 @@ exports.new = function(app) {
         new Message(req.body)
             .save()
             .then(message => {
-                Conversation.findByIdAndUpdate(message.conversation, {
-                    modified: new Date()
-                }, function(err, res) {});
+                Conversation.findOne({
+                        _id: message.conversation
+                    })
+                    .then(conv => {
+                        conv.modified = new Date();
+                        conv.enable[message.from] = true;
+                        conv.save();
+                    });
                 return Message.findOne({ _id: message._id })
                     .lean()
                     .populate('from', 'name')

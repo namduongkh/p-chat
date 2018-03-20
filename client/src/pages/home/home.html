@@ -9,9 +9,10 @@
 
 <ion-content>
     <ion-list *ngIf="conversations && conversations.length">
-        <button ion-item *ngFor="let conv of conversations" (click)="openConversation(conv._id)">
+        <!-- <button ion-item *ngFor="let conv of conversations" (click)="openConversation(conv._id)">
             <strong *ngFor="let user of conv.users">{{user.name}}</strong>
-        </button>
+        </button> -->
+        <user-item *ngFor="let conv of conversations" [user]="conv.users[0]"></user-item>
     </ion-list>
     <button *ngIf="conversations && !conversations.length" ion-button color="dark" clear full disabled>Chưa có cuộc hội thoại</button>
 </ion-content>

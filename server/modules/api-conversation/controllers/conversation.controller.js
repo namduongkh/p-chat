@@ -7,7 +7,7 @@ exports.create = function(req, res) {
     if (users && users.length) {
         Conversation.findOne({
                 users: { $length: users.$length },
-                users: { $in: users }
+                users: { $all: users },
             })
             .lean()
             .then(conv => {
@@ -51,7 +51,8 @@ exports.list = function(req, res) {
     let { myId } = req.query;
     if (myId && myId != 'undefined') {
         Conversation.find({
-                users: myId
+                users: myId,
+                ['enable.' + myId]: true
             })
             .sort('-modified -created')
             .lean()

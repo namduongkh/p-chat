@@ -9,8 +9,9 @@ import { ListUserPage } from '../pages/list-user/list-user';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers/AppState';
 import { AuthService } from '../services/auth.service';
-import { LoginPage } from '../pages/login/login';
+import { LoginPage } from '../pages/account/login';
 import { FriendPage } from '../pages/friend/friend';
+import { TabPages } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,9 +19,9 @@ import { FriendPage } from '../pages/friend/friend';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = TabPages;
 
-  pages: Array<{ title: string, component: any }>;
+  // pages: Array<{ title: string, component: any }> = [];
 
   user: any = {};
 
@@ -28,31 +29,15 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private store: Store<AppState>,
-    @Inject(AuthService) private auth: AuthService) {
+    @Inject(AuthService) public auth: AuthService) {
 
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'List User', component: ListUserPage },
-    ];
 
     this.store.pipe(select('user')).subscribe((user: { _id }) => {
       this.user = user || {};
       if (this.user && this.user._id) {
-        this.pages = [
-          { title: 'Hội thoại', component: HomePage },
-          // { title: 'List', component: ListPage },
-          { title: 'Bạn bè', component: FriendPage },
-          { title: 'Kết nối', component: ListUserPage },
-        ];
-        this.rootPage = HomePage;
+        this.rootPage = TabPages;
       } else {
-        this.pages = [
-          { title: 'Đăng nhập', component: LoginPage },
-        ];
         this.rootPage = LoginPage;
       }
     });

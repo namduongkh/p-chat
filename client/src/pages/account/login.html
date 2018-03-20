@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Đăng nhập</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-input placeholder="Tên đăng nhập..." type="text" [(ngModel)]="name" (keyup.enter)="auth.login(name)"></ion-input>
+    <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>
+</ion-content>
