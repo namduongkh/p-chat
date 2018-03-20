@@ -18,6 +18,7 @@ import { MessageService } from '../services/message.service';
 import { LoginPage } from '../pages/login/login';
 import { FriendPage } from '../pages/friend/friend';
 import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
+import { UserItem } from '../pages/list-user/user-item';
 // End components
 
 // Services
@@ -67,6 +68,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     FriendPage,
     UserHandlePopover,
     AnswerInvitationPopover,
+    UserItem,
   ],
   imports: [
     BrowserModule,
@@ -92,8 +94,8 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     ConversationPage,
     LoginPage,
     FriendPage,
-    UserHandlePopover,
-    AnswerInvitationPopover,
+    // UserHandlePopover,
+    // AnswerInvitationPopover,
   ],
   providers: [
     StatusBar,

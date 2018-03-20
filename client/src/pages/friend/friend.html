@@ -10,8 +10,9 @@
 <ion-content>
     <ion-list>
         <ion-list-header>Tất cả bạn bè</ion-list-header>
-        <button ion-item *ngFor="let friend of list" (click)="createConversation(friend.users[0]._id)">
+        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">
             <strong>{{friend.users[0].name}}</strong>
-        </button>
+        </button> -->
+        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>
     </ion-list>
 </ion-content>

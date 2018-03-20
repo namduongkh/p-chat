@@ -522,7 +522,7 @@ var ListUserPage = (function () {
     };
     ListUserPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="invitations && invitations.length">\n        <ion-list-header>Lời mời kết bạn</ion-list-header>\n        <button ion-item *ngFor="let invitation of invitations" (click)="answerInvitation($event, invitation._id)">\n            <strong>{{invitation.from.name}}</strong>\n            <div><em>Đã gửi lời mời kết bạn</em></div>\n        </button>\n    </ion-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
+            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="invitations && invitations.length">\n        <ion-list-header>Lời mời kết bạn</ion-list-header>\n        <button ion-item *ngFor="let invitation of invitations" (click)="answerInvitation($event, invitation._id)">\n            <strong>{{invitation.from.name}}</strong>\n            <div><em>Đã gửi lời mời kết bạn</em></div>\n        </button>\n        <!-- <user-item *ngFor="let invitation of invitations" [user]="invitation.from"></user-item> -->\n    </ion-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <!-- <user-item *ngFor="let user of users" [user]="user"></user-item> -->\n        <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */],
@@ -715,7 +715,7 @@ var FriendPage = (function () {
     };
     FriendPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <button ion-item *ngFor="let friend of list" (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/
+            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button> -->\n        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/
         }),
         __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */],
@@ -769,18 +769,19 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_login_login__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_socket_service__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_user_service__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_conversation_service__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(382);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__ = __webpack_require__(386);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ngrx_effects__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__reducers__ = __webpack_require__(486);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_friendship_service__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_list_user_user_item__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_socket_service__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_user_service__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_conversation_service__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ngrx_store_devtools__ = __webpack_require__(382);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ngrx_store_ionic_storage__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23_ngrx_store_ionic_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ngrx_effects__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__reducers__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_friendship_service__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_list_user_answer_invitation__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -806,6 +807,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 // End components
 // Services
 
@@ -821,8 +823,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var reducers = __WEBPACK_IMPORTED_MODULE_24__reducers__["a" /* default */];
-var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__["storageSync"])({
+var reducers = __WEBPACK_IMPORTED_MODULE_25__reducers__["a" /* default */];
+var storageSyncReducer = Object(__WEBPACK_IMPORTED_MODULE_23_ngrx_store_ionic_storage__["storageSync"])({
     keys: ['user'],
     // ignoreActions: [],
     hydratedStateKey: 'hydrated',
@@ -850,7 +852,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_13__pages_login_login__["a" /* LoginPage */],
                 __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__["a" /* FriendPage */],
                 __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_list_user_user_item__["a" /* UserItem */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -859,14 +862,14 @@ var AppModule = (function () {
                     links: []
                 }),
                 // StoreModule.forRoot(Reducers),
-                __WEBPACK_IMPORTED_MODULE_20__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_24__reducers__["a" /* default */], {
+                __WEBPACK_IMPORTED_MODULE_21__ngrx_store__["j" /* StoreModule */].forRoot(__WEBPACK_IMPORTED_MODULE_25__reducers__["a" /* default */], {
                     metaReducers: metaReducers,
                     initialState: {
                         hydrated: false
                     }
                 }),
-                __WEBPACK_IMPORTED_MODULE_23__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_22_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
-                __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument(),
+                __WEBPACK_IMPORTED_MODULE_24__ngrx_effects__["EffectsModule"].forRoot([__WEBPACK_IMPORTED_MODULE_23_ngrx_store_ionic_storage__["StorageSyncEffects"]]),
+                __WEBPACK_IMPORTED_MODULE_22__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument(),
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicApp */]],
             entryComponents: [
@@ -878,18 +881,16 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_11__pages_conversation_conversation__["a" /* ConversationPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_login_login__["a" /* LoginPage */],
                 __WEBPACK_IMPORTED_MODULE_14__pages_friend_friend__["a" /* FriendPage */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_16__services_socket_service__["a" /* SocketService */],
-                __WEBPACK_IMPORTED_MODULE_17__services_auth_service__["a" /* AuthService */],
-                __WEBPACK_IMPORTED_MODULE_18__services_user_service__["a" /* UserService */],
-                __WEBPACK_IMPORTED_MODULE_19__services_conversation_service__["a" /* ConversationService */],
+                __WEBPACK_IMPORTED_MODULE_17__services_socket_service__["a" /* SocketService */],
+                __WEBPACK_IMPORTED_MODULE_18__services_auth_service__["a" /* AuthService */],
+                __WEBPACK_IMPORTED_MODULE_19__services_user_service__["a" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_20__services_conversation_service__["a" /* ConversationService */],
                 __WEBPACK_IMPORTED_MODULE_12__services_message_service__["a" /* MessageService */],
-                __WEBPACK_IMPORTED_MODULE_25__services_friendship_service__["a" /* FriendshipService */],
+                __WEBPACK_IMPORTED_MODULE_26__services_friendship_service__["a" /* FriendshipService */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicErrorHandler */] }
             ]
         })
@@ -1199,6 +1200,71 @@ function UserReducer(state, action) {
     }
 }
 //# sourceMappingURL=UserReducer.js.map
+
+/***/ }),
+
+/***/ 488:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserItem; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__conversation_conversation__ = __webpack_require__(76);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+var UserItem = (function () {
+    function UserItem(navCtrl, auth, conversationSvc) {
+        this.navCtrl = navCtrl;
+        this.auth = auth;
+        this.conversationSvc = conversationSvc;
+    }
+    UserItem.prototype.handleUserItem = function (user) {
+        var _this = this;
+        var userId = user._id;
+        if (userId && this.auth.user && this.auth.user._id && userId != this.auth.user._id) {
+            this.conversationSvc.create([this.auth.user._id, userId]).subscribe(function (conversation) {
+                if (conversation && conversation._id) {
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__conversation_conversation__["a" /* ConversationPage */], {
+                        conversationId: conversation._id
+                    });
+                }
+            });
+        }
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], UserItem.prototype, "user", void 0);
+    UserItem = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'user-item',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/user-item.html"*/'<button ion-item (click)="handleUserItem(user)">\n    <strong>{{user.name}}</strong>\n</button>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/user-item.html"*/
+        }),
+        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */])),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__["a" /* ConversationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__["a" /* ConversationService */]) === "function" && _c || Object])
+    ], UserItem);
+    return UserItem;
+    var _a, _b, _c;
+}());
+
+//# sourceMappingURL=user-item.js.map
 
 /***/ }),
 
@@ -1544,7 +1610,7 @@ var ConversationPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
     ], ConversationPage.prototype, "content", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('messageInput'),
@@ -1554,10 +1620,13 @@ var ConversationPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-conversation',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div text-right *ngIf="seen"><em>Đã xem</em></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]])
     ], ConversationPage);
     return ConversationPage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=conversation.js.map
