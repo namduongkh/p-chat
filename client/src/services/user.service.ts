@@ -19,6 +19,10 @@ export class UserService {
         return this.http.post(this.apiUrl + '/update', { ...update });
     }
 
+    info(params) {
+        return this.http.get(this.apiUrl + '/info', { params: params });
+    }
+
     userList(myId) {
         return this.http.get(this.apiUrl + '/list', {
             params: {

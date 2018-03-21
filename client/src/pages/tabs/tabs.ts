@@ -2,10 +2,9 @@ import { Component, Inject, ViewChild } from "@angular/core";
 import { HomePage } from "../home/home";
 import { FriendPage } from "../friend/friend";
 import { ListUserPage } from "../list-user/list-user";
-import { LoginPage } from "../account/login";
-import { NavParams, NavController, Nav } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
-import { AccountPage } from "../account/account";
+import { UserAccountPage } from "../user/account";
+import { Nav } from "ionic-angular";
 
 @Component({
     templateUrl: 'tab-pages.html',
@@ -13,7 +12,7 @@ import { AccountPage } from "../account/account";
 export class TabPages {
     @ViewChild(Nav) nav: Nav;
 
-    pages: Array<{ title: string, component: any }> = [];
+    pages: Array<{ title: string, component: any, params?: any }> = [];
 
     // tabs: any = {
     //     home: ['Hội thoại', HomePage],
@@ -24,13 +23,12 @@ export class TabPages {
 
     rootPage: any = HomePage;
 
-    constructor(@Inject(AuthService) private auth: AuthService,
-        private navCtlr: NavController) {
+    constructor(@Inject(AuthService) private auth: AuthService) {
         this.pages = [
             { title: 'Hội thoại', component: HomePage },
             { title: 'Bạn bè', component: FriendPage },
             { title: 'Kết nối', component: ListUserPage },
-            { title: 'Tài khoản', component: AccountPage },
+            { title: 'Tài khoản', component: UserAccountPage, params: { userId: this.auth.user._id } },
         ];
     }
 
@@ -42,6 +40,7 @@ export class TabPages {
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page.component);
+        let params = page.params || {};
+        this.nav.setRoot(page.component, params);
     }
 }

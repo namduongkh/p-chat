@@ -9,9 +9,9 @@ import { ListUserPage } from '../pages/list-user/list-user';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers/AppState';
 import { AuthService } from '../services/auth.service';
-import { LoginPage } from '../pages/account/login';
 import { FriendPage } from '../pages/friend/friend';
 import { TabPages } from '../pages/tabs/tabs';
+import { UserLoginPage } from '../pages/user/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -38,7 +38,7 @@ export class MyApp {
       if (this.user && this.user._id) {
         this.rootPage = TabPages;
       } else {
-        this.rootPage = LoginPage;
+        this.rootPage = UserLoginPage;
       }
     });
   }

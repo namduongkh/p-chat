@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const _ = require('lodash');
+const async = require('async');
+
 const User = mongoose.model('User');
 const Friendship = mongoose.model('Friendship');
 
@@ -123,3 +125,54 @@ exports.userList = [
             });
     }
 ];
+
+exports.info = function(req, res) {
+    let { userId, myId } = req.query;
+
+    if (userId && userId != 'undefined') {
+        async.parallel({
+            checkFriend: function(next) {
+                if (myId && myId != 'undefined' && myId != userId) {
+                    let users = [userId, myId];
+                    Friendship.findOne({
+                            users: { $length: users.length },
+                            users: { $all: users }
+                        })
+                        .lean()
+                        .then(friendship => {
+                            if (friendship) {
+                                next(null, friendship._id);
+                            } else {
+                                next(null, false);
+                            }
+                        });
+                } else {
+                    next(null, false);
+                }
+            },
+            getInfo: function(next) {
+                User.findOne({ _id: userId })
+                    .lean()
+                    .then(user => {
+                        if (user) {
+                            delete user.password;
+                            next(null, user);
+                        } else {
+                            next('Không tồn tại user');
+                        }
+                    });
+            }
+        }, function(err, results) {
+            if (err) {
+                res.json({ status: false, message: err });
+            } else {
+                let { checkFriend, getInfo } = results;
+                getInfo.friendshipId = checkFriend;
+                res.json({
+                    status: true,
+                    data: getInfo
+                });
+            }
+        });
+    }
+};

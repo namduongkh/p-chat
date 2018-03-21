@@ -8,7 +8,7 @@
 <ion-menu [content]="content">
     <ion-header>
         <ion-toolbar>
-            <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title>
+            <!-- <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title> -->
             <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>
         </ion-toolbar>
     </ion-header>

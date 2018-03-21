@@ -10,12 +10,6 @@ module.exports = function(app) {
             SocketController.userLogout(socket.id);
             // SocketController.userListChange(socket);
         });
-
-        socket.on('error', function(error) {
-            console.log('-- Client error:', error);
-            // SocketController.userLogout(socket.id);
-            // SocketController.userListChange(socket);
-        });
     });
 
     // app.io.route('user', {
@@ -25,7 +19,7 @@ module.exports = function(app) {
     //         }
     //         user.socketId = req.socket.id;
     //         SocketController.userLogin(user);
-    //         // SocketController.userListChange(req.socket);
+    //         SocketController.userListChange(req.socket);
     //         res.json(user);
     //     },
     //     list: function(req, res) {

@@ -10,18 +10,16 @@ const port = app.configManager.get('port');
 // const server = require('http').Server(app);
 // const io = require('socket.io')(server);
 
-app.http().io();
+const server = app.http().io();
 
-// const server = app.http().io();
-
-// app.io.session({
-//     secret: 'express.oi makes me happy',
-//     resave: false,
-//     saveUninitialized: true
-// });
+app.io.session({
+    secret: 'express.oi makes me happy',
+    resave: false,
+    saveUninitialized: true
+});
 
 require('./lib/bootstrap')(app);
 
-app.listen(port, function() {
+server.listen(port, function() {
     console.log('Server đang chạy cổng: %d', port);
 });

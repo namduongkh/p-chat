@@ -50,13 +50,14 @@ import { RoomPage } from '../pages/room/room';
 import { ListUserPage } from '../pages/list-user/list-user';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { MessageService } from '../services/message.service';
-import { LoginPage } from '../pages/account/login';
 import { FriendPage } from '../pages/friend/friend';
 import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
 import { UserItem } from '../pages/list-user/user-item';
 import { TabPages } from '../pages/tabs/tabs';
-import { AccountPage } from '../pages/account/account';
-import { RegisterPage } from '../pages/account/register';
+import { UserLoginPage } from '../pages/user/login';
+import { UserAccountPage } from '../pages/user/account';
+import { UserRegisterPage } from '../pages/user/register';
+import { UserEditPage } from '../pages/user/edit';
 // End components
 
 @NgModule({
@@ -72,9 +73,10 @@ import { RegisterPage } from '../pages/account/register';
     AnswerInvitationPopover,
     UserItem,
     TabPages,
-    LoginPage,
-    AccountPage,
-    RegisterPage,
+    UserLoginPage,
+    UserAccountPage,
+    UserRegisterPage,
+    UserEditPage,
   ],
   imports: [
     BrowserModule,
@@ -98,14 +100,14 @@ import { RegisterPage } from '../pages/account/register';
     RoomPage,
     ListUserPage,
     ConversationPage,
-    LoginPage,
     FriendPage,
     UserHandlePopover,
     AnswerInvitationPopover,
     TabPages,
-    LoginPage,
-    AccountPage,
-    RegisterPage,
+    UserLoginPage,
+    UserAccountPage,
+    UserRegisterPage,
+    UserEditPage,
   ],
   providers: [
     StatusBar,

@@ -25746,3 +25746,53 @@ ion-navbar.toolbar {
   max-width: 80%;
   min-width: 24px;
 }
+
+#mod-user-account-content .cover {
+  height: 100px;
+  background-color: red;
+}
+
+#mod-user-account-content .avatar-name {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: -35px;
+}
+
+#mod-user-account-content .avatar-name .avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
+  border: 1px solid #efefef;
+  margin: 0 10px;
+}
+
+#mod-user-account-content .avatar-name .name-content {
+  margin: 0 10px;
+}
+
+#mod-user-account-content .avatar-name .name-content .name {
+  text-shadow: 0px 0px 2px #111;
+  color: #fff;
+  margin: 8px 0 5px;
+}
+
+#mod-user-account-footer .action {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+#mod-user-account-footer .action button {
+  border-right: 1px solid #eee;
+}
+
+#mod-user-account-footer .action button:last-child {
+  border-right: unset;
+}

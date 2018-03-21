@@ -54,6 +54,7 @@ export class SocketService {
 
     public joinRoom(room, cb = function () { }) {
         if (this.io) {
+            console.log('room:join', { room });
             this.io.emit('room:join', { room }, cb);
         }
     }

@@ -14,7 +14,7 @@ exports.list = function(req, res) {
         .sort('-created')
         .populate({
             path: 'users',
-            select: 'name',
+            select: 'name bio avatar',
             match: populateUserMatch
         })
         .lean()
@@ -26,10 +26,15 @@ exports.list = function(req, res) {
 exports.invite = function(req, res) {
     let { myId, friendId } = req.body;
     if (myId && friendId) {
-        // let users = [myId, friendId];
+        let users = [myId, friendId];
         Friendship.findOne({
-                from: myId,
-                to: friendId,
+                $or: [{
+                    from: myId,
+                    to: friendId,
+                }, {
+                    users: { $length: users.length },
+                    users: { $all: users }
+                }]
             })
             .lean()
             .then(friendship => {
@@ -92,7 +97,7 @@ exports.invitations = function(req, res) {
                 type: 'inviting'
             })
             .select('from')
-            .populate('from', 'name')
+            .populate('from', 'name bio avatar')
             .lean()
             .then(invitations => {
                 res.json((invitations || []));

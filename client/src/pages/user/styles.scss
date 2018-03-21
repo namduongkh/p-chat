@@ -1,0 +1,40 @@
+#mod-user-account-content {
+    .cover {
+        height: 100px;
+        background-color: red;
+    }
+    .avatar-name {
+        display: flex;
+        // align-items: center;
+        margin-top: -35px;
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 70px;
+            border: 1px solid #efefef;
+            margin: 0 10px;
+        }
+        .name-content {
+            margin: 0 10px;
+            .name {
+                text-shadow: 0px 0px 2px #111;
+                color: #fff;
+                margin: 8px 0 5px;
+            }
+            .bio {}
+        }
+    }
+}
+
+#mod-user-account-footer {
+    .action {
+        display: flex;
+        justify-content: center;
+        button {
+            border-right: 1px solid #eee;
+            &:last-child {
+                border-right: unset;
+            }
+        }
+    }
+}
