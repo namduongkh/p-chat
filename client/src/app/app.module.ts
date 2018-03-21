@@ -7,22 +7,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 // End angular & ionic
 
-// Components
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { RoomPage } from '../pages/room/room';
-import { ListUserPage } from '../pages/list-user/list-user';
-import { ConversationPage } from '../pages/conversation/conversation';
-import { MessageService } from '../services/message.service';
-import { LoginPage } from '../pages/account/login';
-import { FriendPage } from '../pages/friend/friend';
-import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
-import { UserItem } from '../pages/list-user/user-item';
-import { TabPages } from '../pages/tabs/tabs';
-import { AccountPage } from '../pages/account/account';
-// End components
-
 // Services
 import { SocketService } from '../services/socket.service';
 import { AuthService } from '../services/auth.service';
@@ -58,6 +42,23 @@ export function storageMetaReducer(reducer: ActionReducer<any>): ActionReducer<a
 export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
 // End Store
 
+// Components
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { ListPage } from '../pages/list/list';
+import { RoomPage } from '../pages/room/room';
+import { ListUserPage } from '../pages/list-user/list-user';
+import { ConversationPage } from '../pages/conversation/conversation';
+import { MessageService } from '../services/message.service';
+import { LoginPage } from '../pages/account/login';
+import { FriendPage } from '../pages/friend/friend';
+import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
+import { UserItem } from '../pages/list-user/user-item';
+import { TabPages } from '../pages/tabs/tabs';
+import { AccountPage } from '../pages/account/account';
+import { RegisterPage } from '../pages/account/register';
+// End components
+
 @NgModule({
   declarations: [
     MyApp,
@@ -73,6 +74,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     TabPages,
     LoginPage,
     AccountPage,
+    RegisterPage,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +105,7 @@ export const metaReducers: MetaReducer<any, any>[] = [storageMetaReducer];
     TabPages,
     LoginPage,
     AccountPage,
+    RegisterPage,
   ],
   providers: [
     StatusBar,

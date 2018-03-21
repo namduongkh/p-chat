@@ -6,5 +6,9 @@ import { AuthService } from "../../services/auth.service";
     templateUrl: 'account.html'
 })
 export class AccountPage {
-    constructor(@Inject(AuthService) public auth: AuthService) { }
+    user: any = {};
+
+    constructor(@Inject(AuthService) public auth: AuthService) {
+        this.user = JSON.parse(JSON.stringify(this.auth.user));
+    }
 }

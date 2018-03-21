@@ -15,12 +15,12 @@ export class TabPages {
 
     pages: Array<{ title: string, component: any }> = [];
 
-    tabs: any = {
-        home: ['Hội thoại', HomePage],
-        friend: ['Bạn bè', FriendPage],
-        connect: ['Kết nối', ListUserPage],
-        account: ['Tài khoản', AccountPage]
-    };
+    // tabs: any = {
+    //     home: ['Hội thoại', HomePage],
+    //     friend: ['Bạn bè', FriendPage],
+    //     connect: ['Kết nối', ListUserPage],
+    //     account: ['Tài khoản', AccountPage],
+    // };
 
     rootPage: any = HomePage;
 
@@ -30,6 +30,7 @@ export class TabPages {
             { title: 'Hội thoại', component: HomePage },
             { title: 'Bạn bè', component: FriendPage },
             { title: 'Kết nối', component: ListUserPage },
+            { title: 'Tài khoản', component: AccountPage },
         ];
     }
 

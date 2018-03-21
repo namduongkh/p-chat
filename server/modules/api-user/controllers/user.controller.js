@@ -4,15 +4,72 @@ const User = mongoose.model('User');
 const Friendship = mongoose.model('Friendship');
 
 exports.login = function(req, res) {
-    let { name } = req.body;
-    User.findOne({ name: name })
+    let { username, password } = req.body;
+    User.findOne({ username: username })
+        .then(user => {
+            if (user) {
+                user.authenticate(password, function(err, result) {
+                    if (result) {
+                        user.password = 'hash';
+                        return res.json({ status: true, data: user });
+                    } else {
+                        return res.json({ status: false, message: 'Password không chính xác!' });
+                    }
+                });
+            } else {
+                return res.json({ status: false, message: 'Không tồn tại tài khoản!' });
+            }
+            // if (!user) {
+            //     user = new User({ name: name });
+            //     user.save();
+            // }
+            // res.json(user);
+        });
+};
+
+exports.register = function(req, res) {
+    let { name, username, password } = req.body;
+    User.findOne({
+            username: username
+        })
         .lean()
         .then(user => {
-            if (!user) {
-                user = new User({ name: name });
-                user.save();
+            if (user) {
+                return res.json({
+                    status: false,
+                    message: 'Username đã tồn tại'
+                });
+            } else {
+                user = new User(req.body);
+                user.hashPassword(password, function(err, hash) {
+                    user.password = hash;
+                    user.save().then(user => {
+                        user.password = 'hash';
+                        res.json({ status: true, data: user });
+                    });
+                });
             }
-            res.json(user);
+        });
+};
+
+exports.update = function(req, res) {
+    let { _id } = req.body;
+    User.findOne({
+            _id: _id
+        })
+        .then(user => {
+            if (user) {
+                user = _.extend(user, req.body);
+                user.save().then(user => {
+                    user.password = 'hash';
+                    return res.json({ status: true, data: user });
+                });
+            } else {
+                return res.json({
+                    status: false,
+                    message: 'Không tồn tại người dùng!'
+                });
+            }
         });
 };
 

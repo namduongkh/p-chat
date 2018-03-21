@@ -1,13 +1,24 @@
-<ion-header>
+<!-- <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
         <ion-title>Đăng nhập</ion-title>
     </ion-navbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
-    <ion-input placeholder="Tên đăng nhập..." type="text" [(ngModel)]="name" (keyup.enter)="auth.login(name)"></ion-input>
-    <button ion-button (click)="auth.login(name)" full>Đăng nhập</button>
+    <img src="assets/imgs/logo.png">
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="login.username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="login.password" (keyup.enter)="auth.login(login)"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-button (click)="auth.login(login)" full>Đăng nhập</button>
+    <button ion-button full clear (click)="goToRegister()">Đăng ký</button>
 </ion-content>

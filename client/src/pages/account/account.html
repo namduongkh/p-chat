@@ -3,11 +3,27 @@
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Tài khoản</ion-title>
+        <ion-title>{{auth.user.name}}</ion-title>
+        <button ion-button menuToggle (click)="auth.logout()">
+            <ion-icon name="log-out"></ion-icon>
+        </button>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <h3>Xin chào {{auth.user.name}}!</h3>
-    <button ion-button full (click)="auth.logout()">Đăng xuất</button>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="user.username" disabled></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Bio</ion-label>
+            <ion-textarea [(ngModel)]="user.bio"></ion-textarea>
+        </ion-item>
+    </ion-list>
+    <button ion-button full (click)="auth.update(user)">Cập nhật</button>
 </ion-content>

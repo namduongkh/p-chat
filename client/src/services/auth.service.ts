@@ -13,7 +13,7 @@ export class AuthService {
     constructor(@Inject(SocketService) private socket: SocketService,
         private store: Store<AppState>,
         private userSvc: UserService) {
-            
+
         this.store.pipe(select('user')).subscribe(user => {
             this.user = user || {};
             if (this.user && this.user.socketId && !this.socket.io) {
@@ -23,6 +23,7 @@ export class AuthService {
     }
 
     dispatchLogin(user) {
+        // console.log('dispatchLogin', user);
         this.socket.loginUser(user, (result) => {
             this.store.dispatch({ type: ActionType.USER_LOGIN, user: result });
         });
@@ -31,21 +32,19 @@ export class AuthService {
     connectSocket(user) {
         this.socket.connect();
         this.socket.onConnect(() => {
+            // console.log('onConnect');
             this.dispatchLogin(user);
         });
     }
 
-    public login(name) {
-        if (name) {
+    public login(login) {
+        if (login) {
             this.userSvc
-                .login(name)
-                .subscribe(user => {
-                    // console.log('user', user);
-                    // let user = { name };
-                    if (!this.socket || !this.socket.io || !this.socket.io.id) {
-                        this.connectSocket(user);
-                    } else {
-                        this.dispatchLogin(user);
+                .login(login)
+                .subscribe((result: { status, data }) => {
+                    // console.log('login result', result);
+                    if (result.status) {
+                        this.afterLogin(result.data);
                     }
                 });
         }
@@ -54,5 +53,39 @@ export class AuthService {
     public logout() {
         this.socket.disconnect();
         this.store.dispatch({ type: ActionType.USER_LOGOUT });
+    }
+
+    public register(register) {
+        if (register) {
+            this.userSvc
+                .register(register)
+                .subscribe((result: { status, data }) => {
+                    // console.log('register result', result);
+                    if (result.status) {
+                        this.afterLogin(result.data);
+                    }
+                });
+        }
+    }
+
+    public update(update) {
+        if (update) {
+            this.userSvc
+                .update(update)
+                .subscribe((result: { status, data }) => {
+                    if (result.status) {
+                        this.user = result.data;
+                        this.store.dispatch({ type: ActionType.USER_UPDATE, user: this.user });
+                    }
+                });
+        }
+    }
+
+    afterLogin(user) {
+        if (!this.socket || !this.socket.io || !this.socket.io.id) {
+            this.connectSocket(user);
+        } else {
+            this.dispatchLogin(user);
+        }
     }
 }

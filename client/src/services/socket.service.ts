@@ -10,6 +10,10 @@ export class SocketService {
 
     public connect() {
         this.io = io('http://localhost:8888');
+        this.io.on('error', err => {
+            console.log('error', err);
+            this.io.close();
+        });
         return this.io;
     }
 
