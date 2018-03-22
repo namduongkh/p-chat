@@ -61,6 +61,7 @@ exports.update = function(req, res) {
         })
         .then(user => {
             if (user) {
+                delete req.body.password;
                 user = _.extend(user, req.body);
                 user.save().then(user => {
                     user.password = 'hash';
