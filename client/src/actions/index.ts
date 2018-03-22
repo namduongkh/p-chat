@@ -6,4 +6,8 @@ export const ActionType = {
     USER_LOGIN: 'USER_LOGIN',
     USER_LOGOUT: 'USER_LOGOUT',
     USER_UPDATE: 'USER_UPDATE',
+
+    JOIN_ROOM: 'JOIN_ROOM',
+    LEAVE_ROOM: 'LEAVE_ROOM',
+    LEAVE_ALL_ROOM: 'LEAVE_ALL_ROOM',
 };

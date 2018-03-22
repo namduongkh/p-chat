@@ -31,7 +31,11 @@ exports.new = function(app) {
                     })
                     .then(conv => {
                         conv.modified = new Date();
-                        conv.enable[message.from] = true;
+                        conv.enable = {};
+                        for (let i of conv.users) {
+                            conv.enable[i] = true;
+                        }
+                        // console.log('conv.enable', conv.enable);
                         conv.save();
                     });
                 return Message.findOne({ _id: message._id })

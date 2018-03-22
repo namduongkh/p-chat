@@ -15,8 +15,9 @@ export class AuthService {
         private userSvc: UserService) {
 
         this.store.pipe(select('user')).subscribe(user => {
+            // console.log('user', user);
             this.user = user || {};
-            if (this.user && this.user.socketId && !this.socket.io) {
+            if (this.user && this.user._id && !this.socket.io) {
                 this.connectSocket(this.user);
             }
         });
@@ -24,17 +25,17 @@ export class AuthService {
 
     dispatchLogin(user) {
         // console.log('dispatchLogin', user);
-        this.socket.loginUser(user, (result) => {
-            this.store.dispatch({ type: ActionType.USER_LOGIN, user: result });
-        });
+        // this.socket.loginUser(user, (result) => {
+        this.store.dispatch({ type: ActionType.USER_LOGIN, user: user });
+        // });
     }
 
     connectSocket(user) {
-        this.socket.connect();
-        this.socket.onConnect(() => {
+        this.socket.connect(() => {
             // console.log('onConnect');
             this.dispatchLogin(user);
         });
+        // this.socket.onConnect();
     }
 
     public login(login) {

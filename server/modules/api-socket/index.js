@@ -10,6 +10,8 @@ module.exports = function(app) {
             SocketController.userLogout(socket.id);
             // SocketController.userListChange(socket);
         });
+
+        SocketController.room(app, socket);
     });
 
     // app.io.route('user', {
@@ -27,5 +29,5 @@ module.exports = function(app) {
     //     }
     // });
 
-    app.io.route('room', SocketController.room(app));
+    // app.io.route('room', SocketController.room(app));
 };
