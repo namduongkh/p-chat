@@ -75,13 +75,16 @@ export class ConversationPage implements OnInit, OnDestroy {
             this.changeMessage(null, null);
             this.scrollBottom(true);
             this.seen = false;
+            this.pushMessage(result);
         });
     }
 
     joinConversation(id) {
         this.socket.joinRoom(id, () => {
             this.socket.on('message:new', function (data) {
-                this.pushMessage(data);
+                if (data.from._id !== this.auth.user._id) {
+                    this.pushMessage(data);
+                }
                 this.lastFromUser = data.from._id;
                 this.checkSeen();
             }.bind(this));
@@ -97,7 +100,7 @@ export class ConversationPage implements OnInit, OnDestroy {
         });
     }
 
-    pushMessage(data, noPush) {
+    pushMessage(data, noPush = false) {
         if (noPush) {
             this.messages = data || [];
         } else {
