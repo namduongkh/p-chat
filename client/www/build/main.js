@@ -36,9 +36,9 @@ var CommonService = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -102,12 +102,12 @@ var HomePage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_conversation_service__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__conversation_conversation__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_friendship_service__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__conversation_conversation__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_friendship_service__ = __webpack_require__(52);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -235,7 +235,7 @@ var UserAccountPage = (function () {
     };
     UserAccountPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
-            selector: 'page-user-account',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/'<ion-content id="mod-user-account-content">\n    <div class="cover"></div>\n    <div class="avatar-name">\n        <img class="avatar" src="assets/imgs/logo.png" />\n        <div class="name-content">\n            <h3 class="name">\n                {{userInfo.name}}\n            </h3>\n            <em>{{userInfo.bio}}</em>\n        </div>\n    </div>\n</ion-content>\n<ion-footer no-padding no-margin id="mod-user-account-footer">\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && !userInfo.itMe">\n        <div class="action">\n            <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button>\n            <button *ngIf="!userInfo.friendshipId" ion-button clear full no-margin (click)="addFriend(userInfo._id)">Kết bạn</button>\n            <button *ngIf="userInfo.friendshipId" ion-button clear full no-margin (click)="removeFriend(userInfo.friendshipId)">Hủy kết bạn</button>\n            <button ion-button clear full no-margin (click)="messageNow(userInfo._id)">Nhắn tin</button>\n        </div>\n    </ion-toolbar>\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && userInfo.itMe">\n        <div class="action">\n            <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button>\n            <button ion-button clear full no-margin (click)="editInfo()">Chỉnh sửa</button>\n            <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button>\n        </div>\n    </ion-toolbar>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/
+            selector: 'page-user-account',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/'<ion-content id="mod-user-account-content">\n    <div class="nav-bar">\n        <button ion-button clear full no-margin (click)="openMenu()" icon-only color="light">\n            <ion-icon [name]="menuIcon"></ion-icon>\n        </button>\n        <button *ngIf="userInfo && userInfo.itMe" ion-button clear full no-margin (click)="auth.logout()" icon-only color="light">\n            <ion-icon name="log-out"></ion-icon>\n        </button>\n    </div>\n    <div class="cover"></div>\n    <div class="avatar-name">\n        <img class="avatar" src="assets/imgs/logo.png" />\n        <div class="name-content">\n            <h3 class="name">\n                {{userInfo.name}}\n            </h3>\n            <em>{{userInfo.bio}}</em>\n        </div>\n    </div>\n</ion-content>\n<ion-footer no-padding no-margin id="mod-user-account-footer">\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && !userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button *ngIf="!userInfo.friendshipId" ion-button clear full no-margin (click)="addFriend(userInfo._id)">Kết bạn</button>\n            <button *ngIf="userInfo.friendshipId" ion-button clear full no-margin (click)="removeFriend(userInfo.friendshipId)">Hủy kết bạn</button>\n            <button ion-button clear full no-margin (click)="messageNow(userInfo._id)">Nhắn tin</button>\n        </div>\n    </ion-toolbar>\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button ion-button clear full no-margin (click)="editInfo()">Chỉnh sửa</button>\n            <!-- <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button> -->\n        </div>\n    </ion-toolbar>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */],
@@ -261,8 +261,8 @@ var UserAccountPage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserLoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register__ = __webpack_require__(300);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -465,54 +465,14 @@ var AuthService = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnswerInvitationPopover; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var AnswerInvitationPopover = (function () {
-    function AnswerInvitationPopover(viewCtrl) {
-        this.viewCtrl = viewCtrl;
-        // console.log('viewCtrl', this.viewCtrl);
-    }
-    AnswerInvitationPopover.prototype.action = function (actionName) {
-        this.viewCtrl.data.action(actionName);
-        this.viewCtrl.dismiss();
-    };
-    AnswerInvitationPopover = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <button ion-button full clear no-margin (click)=\"action('accept')\">\u0110\u1ED3ng \u00FD</button>\n        <button ion-button full clear no-margin border-top (click)=\"action('unfiend')\">H\u1EE7y y\u00EAu c\u1EA7u</button>\n    "
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ViewController */]])
-    ], AnswerInvitationPopover);
-    return AnswerInvitationPopover;
-}());
-
-//# sourceMappingURL=answer-invitation.js.map
-
-/***/ }),
-
-/***/ 295:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabPages; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__friend_friend__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__list_user_list_user__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__friend_friend__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__list_user_list_user__ = __webpack_require__(297);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__user_account__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(20);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -577,14 +537,14 @@ var TabPages = (function () {
 
 /***/ }),
 
-/***/ 296:
+/***/ 295:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessageService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -640,17 +600,18 @@ var MessageService = (function (_super) {
 
 /***/ }),
 
-/***/ 297:
+/***/ 296:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FriendPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_conversation_service__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__invitation_list__ = __webpack_require__(298);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -663,6 +624,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+
 
 
 
@@ -697,22 +659,23 @@ var FriendPage = (function () {
     };
     FriendPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button> -->\n        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/
+            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button> -->\n        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>\n        <button ion-button color="light" disabled full *ngIf="!list || !list.length">\n            Chưa có bạn bè nào!\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/,
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_6__invitation_list__["a" /* InvitationList */]
+            ]
         }),
         __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_5__services_conversation_service__["a" /* ConversationService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_conversation_service__["a" /* ConversationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_conversation_service__["a" /* ConversationService */]) === "function" && _d || Object])
     ], FriendPage);
     return FriendPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=friend.js.map
 
 /***/ }),
 
-/***/ 298:
+/***/ 297:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -721,11 +684,10 @@ var FriendPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__conversation_conversation__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user_handle_popover__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_friendship_service__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__answer_invitation__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__conversation_conversation__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_friendship_service__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__friend_invitation_list__ = __webpack_require__(298);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -735,7 +697,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -790,54 +751,19 @@ var ListUserPage = (function () {
             }).present();
         });
     };
-    ListUserPage.prototype.presentPopover = function (myEvent, userId) {
-        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_6__user_handle_popover__["a" /* UserHandlePopover */], {
-            action: function (actionName) {
-                switch (actionName) {
-                    case 'conversation':
-                        return this.createConversation(userId);
-                    case 'invite':
-                        return this.inviteFriend(userId);
-                }
-            }.bind(this)
-        });
-        popover.present({
-            ev: myEvent
-        });
-    };
-    ListUserPage.prototype.answerInvitation = function (myEvent, invitationId) {
-        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_8__answer_invitation__["a" /* AnswerInvitationPopover */], {
-            action: function (actionName) {
-                var _this = this;
-                // switch (actionName) {
-                //   case 'yes':
-                //     return this.createConversation(userId);
-                //   case 'no':
-                //     return this.inviteFriend(userId);
-                // }
-                this.friendshipSvc[actionName](invitationId).subscribe(function (result) {
-                    _this.alertCtrl.create({
-                        title: 'Thông báo!',
-                        subTitle: result.message,
-                        buttons: ['OK']
-                    }).present();
-                });
-            }.bind(this)
-        });
-        popover.present({
-            ev: myEvent
-        });
-    };
     ListUserPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="invitations && invitations.length">\n        <ion-list-header>Lời mời kết bạn</ion-list-header>\n        <!-- <button ion-item *ngFor="let invitation of invitations" (click)="answerInvitation($event, invitation._id)">\n            <strong>{{invitation.from.name}}</strong>\n            <div><em>Đã gửi lời mời kết bạn</em></div>\n        </button> -->\n        <user-item *ngFor="let invitation of invitations" [user]="invitation.from" [invitationId]="invitation._id"></user-item>\n    </ion-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <user-item *ngFor="let user of users" [user]="user"></user-item>\n        <!-- <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button> -->\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/
+            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <user-item *ngFor="let user of users" [user]="user"></user-item>\n        <!-- <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button> -->\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/,
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_7__friend_invitation_list__["a" /* InvitationList */]
+            ]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["j" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */],
             __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__["a" /* ConversationService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* PopoverController */],
-            __WEBPACK_IMPORTED_MODULE_7__services_friendship_service__["a" /* FriendshipService */],
+            __WEBPACK_IMPORTED_MODULE_6__services_friendship_service__["a" /* FriendshipService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */]])
     ], ListUserPage);
     return ListUserPage;
@@ -847,13 +773,13 @@ var ListUserPage = (function () {
 
 /***/ }),
 
-/***/ 299:
+/***/ 298:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserHandlePopover; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvitationList; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_friendship_service__ = __webpack_require__(52);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -865,29 +791,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var UserHandlePopover = (function () {
-    function UserHandlePopover(viewCtrl) {
-        this.viewCtrl = viewCtrl;
-        // console.log('viewCtrl', this.viewCtrl);
+var InvitationList = (function () {
+    function InvitationList(friendshipSvc) {
+        var _this = this;
+        this.friendshipSvc = friendshipSvc;
+        this.invitations = [];
+        this.friendshipSvc.invitations().subscribe(function (list) {
+            _this.invitations = list || [];
+        });
     }
-    UserHandlePopover.prototype.action = function (actionName) {
-        this.viewCtrl.data.action(actionName);
-        this.viewCtrl.dismiss();
-    };
-    UserHandlePopover = __decorate([
+    InvitationList = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            template: "\n        <button ion-button full clear no-margin (click)=\"action('invite')\">K\u1EBFt b\u1EA1n</button>\n        <button ion-button full clear no-margin border-top (click)=\"action('conversation')\">H\u1ED9i tho\u1EA1i ngay</button>\n    "
+            selector: 'invitation-list',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/invitation-list.html"*/'<ion-list *ngIf="invitations && invitations.length">\n    <ion-list-header>Lời mời kết bạn</ion-list-header>\n    <user-item *ngFor="let invitation of invitations" [user]="invitation.from" [invitationId]="invitation._id"></user-item>\n</ion-list>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/invitation-list.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ViewController */]])
-    ], UserHandlePopover);
-    return UserHandlePopover;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */]])
+    ], InvitationList);
+    return InvitationList;
 }());
 
-//# sourceMappingURL=user-handle.popover.js.map
+//# sourceMappingURL=invitation-list.js.map
 
 /***/ }),
 
-/***/ 300:
+/***/ 299:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -928,13 +854,13 @@ var UserEditPage = (function () {
 
 /***/ }),
 
-/***/ 301:
+/***/ 300:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserRegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_auth_service__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -977,13 +903,13 @@ var UserRegisterPage = (function () {
 
 /***/ }),
 
-/***/ 302:
+/***/ 301:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(308);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -991,7 +917,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 309:
+/***/ 308:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1002,8 +928,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(251);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_socket_service__ = __webpack_require__(74);
@@ -1011,28 +937,27 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_user_service__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_conversation_service__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngrx_store_devtools__ = __webpack_require__(382);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngrx_store_devtools__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__ = __webpack_require__(385);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ngrx_effects__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reducers__ = __webpack_require__(486);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_friendship_service__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_list_user_answer_invitation__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__app_component__ = __webpack_require__(489);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_list_list__ = __webpack_require__(491);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_room_room__ = __webpack_require__(492);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_list_user_list_user__ = __webpack_require__(298);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_conversation_conversation__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_message_service__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_friend_friend__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_list_user_user_handle_popover__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_list_user_user_item__ = __webpack_require__(493);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_tabs_tabs__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_user_login__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_user_account__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_user_register__ = __webpack_require__(301);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_user_edit__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reducers__ = __webpack_require__(485);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_friendship_service__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_home_home__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_list_list__ = __webpack_require__(490);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_room_room__ = __webpack_require__(491);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_list_user_list_user__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_conversation_conversation__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_message_service__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_friend_friend__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_list_user_user_item__ = __webpack_require__(492);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_tabs_tabs__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_user_login__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_user_account__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_user_register__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_user_edit__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_friend_invitation_list__ = __webpack_require__(298);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1054,7 +979,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // End services
 //Store
-
 
 
 
@@ -1098,26 +1022,25 @@ var AppModule = (function () {
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_17__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_list_list__["a" /* ListPage */],
-                __WEBPACK_IMPORTED_MODULE_20__pages_room_room__["a" /* RoomPage */],
-                __WEBPACK_IMPORTED_MODULE_21__pages_list_user_list_user__["a" /* ListUserPage */],
-                __WEBPACK_IMPORTED_MODULE_22__pages_conversation_conversation__["a" /* ConversationPage */],
-                __WEBPACK_IMPORTED_MODULE_24__pages_friend_friend__["a" /* FriendPage */],
-                __WEBPACK_IMPORTED_MODULE_25__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
-                __WEBPACK_IMPORTED_MODULE_26__pages_list_user_user_item__["a" /* UserItem */],
-                __WEBPACK_IMPORTED_MODULE_27__pages_tabs_tabs__["a" /* TabPages */],
-                __WEBPACK_IMPORTED_MODULE_28__pages_user_login__["a" /* UserLoginPage */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_user_account__["a" /* UserAccountPage */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_user_register__["a" /* UserRegisterPage */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_user_edit__["a" /* UserEditPage */],
+                __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_list_list__["a" /* ListPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_room_room__["a" /* RoomPage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_list_user_list_user__["a" /* ListUserPage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_conversation_conversation__["a" /* ConversationPage */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_friend_friend__["a" /* FriendPage */],
+                __WEBPACK_IMPORTED_MODULE_24__pages_list_user_user_item__["a" /* UserItem */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_tabs_tabs__["a" /* TabPages */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_user_login__["a" /* UserLoginPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_user_account__["a" /* UserAccountPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_user_register__["a" /* UserRegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_user_edit__["a" /* UserEditPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_friend_invitation_list__["a" /* InvitationList */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_17__app_component__["a" /* MyApp */], {}, {
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
                 // StoreModule.forRoot(Reducers),
@@ -1132,20 +1055,18 @@ var AppModule = (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_17__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_18__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_19__pages_list_list__["a" /* ListPage */],
-                __WEBPACK_IMPORTED_MODULE_20__pages_room_room__["a" /* RoomPage */],
-                __WEBPACK_IMPORTED_MODULE_21__pages_list_user_list_user__["a" /* ListUserPage */],
-                __WEBPACK_IMPORTED_MODULE_22__pages_conversation_conversation__["a" /* ConversationPage */],
-                __WEBPACK_IMPORTED_MODULE_24__pages_friend_friend__["a" /* FriendPage */],
-                __WEBPACK_IMPORTED_MODULE_25__pages_list_user_user_handle_popover__["a" /* UserHandlePopover */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_list_user_answer_invitation__["a" /* AnswerInvitationPopover */],
-                __WEBPACK_IMPORTED_MODULE_27__pages_tabs_tabs__["a" /* TabPages */],
-                __WEBPACK_IMPORTED_MODULE_28__pages_user_login__["a" /* UserLoginPage */],
-                __WEBPACK_IMPORTED_MODULE_29__pages_user_account__["a" /* UserAccountPage */],
-                __WEBPACK_IMPORTED_MODULE_30__pages_user_register__["a" /* UserRegisterPage */],
-                __WEBPACK_IMPORTED_MODULE_31__pages_user_edit__["a" /* UserEditPage */],
+                __WEBPACK_IMPORTED_MODULE_16__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_list_list__["a" /* ListPage */],
+                __WEBPACK_IMPORTED_MODULE_19__pages_room_room__["a" /* RoomPage */],
+                __WEBPACK_IMPORTED_MODULE_20__pages_list_user_list_user__["a" /* ListUserPage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_conversation_conversation__["a" /* ConversationPage */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_friend_friend__["a" /* FriendPage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_tabs_tabs__["a" /* TabPages */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_user_login__["a" /* UserLoginPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_user_account__["a" /* UserAccountPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_user_register__["a" /* UserRegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_user_edit__["a" /* UserEditPage */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
@@ -1154,7 +1075,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_7__services_auth_service__["a" /* AuthService */],
                 __WEBPACK_IMPORTED_MODULE_8__services_user_service__["a" /* UserService */],
                 __WEBPACK_IMPORTED_MODULE_9__services_conversation_service__["a" /* ConversationService */],
-                __WEBPACK_IMPORTED_MODULE_23__services_message_service__["a" /* MessageService */],
+                __WEBPACK_IMPORTED_MODULE_22__services_message_service__["a" /* MessageService */],
                 __WEBPACK_IMPORTED_MODULE_15__services_friendship_service__["a" /* FriendshipService */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicErrorHandler */] }
             ]
@@ -1167,19 +1088,19 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 373:
+/***/ 372:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 486:
+/***/ 485:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(487);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__details_RoomsReducer__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(486);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__details_RoomsReducer__ = __webpack_require__(487);
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -1190,7 +1111,7 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 487:
+/***/ 486:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1216,7 +1137,7 @@ function UserReducer(state, action) {
 
 /***/ }),
 
-/***/ 488:
+/***/ 487:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1243,18 +1164,18 @@ function RoomsReducer(state, action) {
 
 /***/ }),
 
-/***/ 489:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(251);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tabs_tabs__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tabs_tabs__ = __webpack_require__(294);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_user_login__ = __webpack_require__(153);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1333,13 +1254,13 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 491:
+/***/ 490:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1390,7 +1311,7 @@ var ListPage = (function () {
 
 /***/ }),
 
-/***/ 492:
+/***/ 491:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1452,17 +1373,17 @@ var RoomPage = (function () {
 
 /***/ }),
 
-/***/ 493:
+/***/ 492:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserItem; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__conversation_conversation__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_account__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_friendship_service__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_friendship_service__ = __webpack_require__(52);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1583,7 +1504,7 @@ var UserItem = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_service__ = __webpack_require__(147);
 var __extends = (this && this.__extends) || (function () {
@@ -1649,14 +1570,107 @@ var ConversationService = (function (_super) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FriendshipService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var FriendshipService = (function (_super) {
+    __extends(FriendshipService, _super);
+    function FriendshipService(store, http) {
+        var _this = _super.call(this, store, 'friendship', http) || this;
+        _this.store = store;
+        _this.http = http;
+        return _this;
+    }
+    FriendshipService.prototype.list = function () {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.get(this.apiUrl + '/list', {
+            params: {
+                myId: myId
+            }
+        });
+    };
+    FriendshipService.prototype.invite = function (friendId) {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.post(this.apiUrl + '/invite', {
+            myId: myId,
+            friendId: friendId
+        });
+    };
+    FriendshipService.prototype.accept = function (friendshipId) {
+        return this.http.post(this.apiUrl + '/accept', {
+            friendshipId: friendshipId
+        });
+    };
+    FriendshipService.prototype.unfriend = function (friendshipId) {
+        return this.http.post(this.apiUrl + '/unfriend', {
+            friendshipId: friendshipId
+        });
+    };
+    FriendshipService.prototype.invitations = function () {
+        var myId;
+        if (this.user && this.user._id) {
+            myId = this.user._id;
+        }
+        return this.http.get(this.apiUrl + '/invitations', {
+            params: {
+                myId: myId
+            }
+        });
+    };
+    FriendshipService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], FriendshipService);
+    return FriendshipService;
+}(__WEBPACK_IMPORTED_MODULE_0__common_service__["a" /* CommonService */]));
+
+//# sourceMappingURL=friendship.service.js.map
+
+/***/ }),
+
+/***/ 53:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConversationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_socket_service__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(490);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(489);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1834,7 +1848,7 @@ var ConversationPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
     ], ConversationPage.prototype, "content", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('messageInput'),
@@ -1844,106 +1858,16 @@ var ConversationPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-conversation',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div text-right *ngIf="seen"><em>Đã xem</em></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]])
     ], ConversationPage);
     return ConversationPage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=conversation.js.map
-
-/***/ }),
-
-/***/ 62:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FriendshipService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_service__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var FriendshipService = (function (_super) {
-    __extends(FriendshipService, _super);
-    function FriendshipService(store, http) {
-        var _this = _super.call(this, store, 'friendship', http) || this;
-        _this.store = store;
-        _this.http = http;
-        return _this;
-    }
-    FriendshipService.prototype.list = function () {
-        var myId;
-        if (this.user && this.user._id) {
-            myId = this.user._id;
-        }
-        return this.http.get(this.apiUrl + '/list', {
-            params: {
-                myId: myId
-            }
-        });
-    };
-    FriendshipService.prototype.invite = function (friendId) {
-        var myId;
-        if (this.user && this.user._id) {
-            myId = this.user._id;
-        }
-        return this.http.post(this.apiUrl + '/invite', {
-            myId: myId,
-            friendId: friendId
-        });
-    };
-    FriendshipService.prototype.accept = function (friendshipId) {
-        return this.http.post(this.apiUrl + '/accept', {
-            friendshipId: friendshipId
-        });
-    };
-    FriendshipService.prototype.unfriend = function (friendshipId) {
-        return this.http.post(this.apiUrl + '/unfriend', {
-            friendshipId: friendshipId
-        });
-    };
-    FriendshipService.prototype.invitations = function () {
-        var myId;
-        if (this.user && this.user._id) {
-            myId = this.user._id;
-        }
-        return this.http.get(this.apiUrl + '/invitations', {
-            params: {
-                myId: myId
-            }
-        });
-    };
-    FriendshipService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
-    ], FriendshipService);
-    return FriendshipService;
-}(__WEBPACK_IMPORTED_MODULE_0__common_service__["a" /* CommonService */]));
-
-//# sourceMappingURL=friendship.service.js.map
 
 /***/ }),
 
@@ -1952,7 +1876,7 @@ var FriendshipService = (function (_super) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocketService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(354);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(25);
@@ -2087,7 +2011,7 @@ var ActionType = {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(62);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -2142,5 +2066,5 @@ var UserService = (function () {
 
 /***/ })
 
-},[302]);
+},[301]);
 //# sourceMappingURL=main.js.map

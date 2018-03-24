@@ -1,4 +1,12 @@
 <ion-content id="mod-user-account-content">
+    <div class="nav-bar">
+        <button ion-button clear full no-margin (click)="openMenu()" icon-only color="light">
+            <ion-icon [name]="menuIcon"></ion-icon>
+        </button>
+        <button *ngIf="userInfo && userInfo.itMe" ion-button clear full no-margin (click)="auth.logout()" icon-only color="light">
+            <ion-icon name="log-out"></ion-icon>
+        </button>
+    </div>
     <div class="cover"></div>
     <div class="avatar-name">
         <img class="avatar" src="assets/imgs/logo.png" />
@@ -13,9 +21,9 @@
 <ion-footer no-padding no-margin id="mod-user-account-footer">
     <ion-toolbar no-padding no-margin *ngIf="userInfo && !userInfo.itMe">
         <div class="action">
-            <button ion-button clear full no-margin (click)="openMenu()" icon-only>
+            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>
                 <ion-icon [name]="menuIcon"></ion-icon>
-            </button>
+            </button> -->
             <button *ngIf="!userInfo.friendshipId" ion-button clear full no-margin (click)="addFriend(userInfo._id)">Kết bạn</button>
             <button *ngIf="userInfo.friendshipId" ion-button clear full no-margin (click)="removeFriend(userInfo.friendshipId)">Hủy kết bạn</button>
             <button ion-button clear full no-margin (click)="messageNow(userInfo._id)">Nhắn tin</button>
@@ -23,11 +31,11 @@
     </ion-toolbar>
     <ion-toolbar no-padding no-margin *ngIf="userInfo && userInfo.itMe">
         <div class="action">
-            <button ion-button clear full no-margin (click)="openMenu()" icon-only>
+            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>
                 <ion-icon [name]="menuIcon"></ion-icon>
-            </button>
+            </button> -->
             <button ion-button clear full no-margin (click)="editInfo()">Chỉnh sửa</button>
-            <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button>
+            <!-- <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button> -->
         </div>
     </ion-toolbar>
 </ion-footer>

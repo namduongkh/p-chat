@@ -5,13 +5,15 @@ import { AppState } from '../../reducers/AppState';
 import { ConversationService } from '../../services/conversation.service';
 import { NavController, PopoverController, AlertController } from 'ionic-angular';
 import { ConversationPage } from '../conversation/conversation';
-import { UserHandlePopover } from './user-handle.popover';
 import { FriendshipService } from '../../services/friendship.service';
-import { AnswerInvitationPopover } from './answer-invitation';
+import { InvitationList } from '../friend/invitation-list';
 
 @Component({
   selector: 'page-list-user',
-  templateUrl: 'list-user.html'
+  templateUrl: 'list-user.html',
+  entryComponents: [
+    InvitationList
+  ]
 })
 export class ListUserPage {
   users: any = [];
@@ -60,45 +62,45 @@ export class ListUserPage {
     });
   }
 
-  presentPopover(myEvent, userId) {
-    let popover = this.popoverCtrl.create(UserHandlePopover, {
-      action: function (actionName) {
-        switch (actionName) {
-          case 'conversation':
-            return this.createConversation(userId);
-          case 'invite':
-            return this.inviteFriend(userId);
-        }
-      }.bind(this)
-    });
+  // presentPopover(myEvent, userId) {
+  //   let popover = this.popoverCtrl.create(UserHandlePopover, {
+  //     action: function (actionName) {
+  //       switch (actionName) {
+  //         case 'conversation':
+  //           return this.createConversation(userId);
+  //         case 'invite':
+  //           return this.inviteFriend(userId);
+  //       }
+  //     }.bind(this)
+  //   });
 
-    popover.present({
-      ev: myEvent
-    });
-  }
+  //   popover.present({
+  //     ev: myEvent
+  //   });
+  // }
 
-  answerInvitation(myEvent, invitationId) {
-    let popover = this.popoverCtrl.create(AnswerInvitationPopover, {
-      action: function (actionName) {
-        // switch (actionName) {
-        //   case 'yes':
-        //     return this.createConversation(userId);
-        //   case 'no':
-        //     return this.inviteFriend(userId);
-        // }
-        this.friendshipSvc[actionName](invitationId).subscribe(result => {
-          this.alertCtrl.create({
-            title: 'Thông báo!',
-            subTitle: result.message,
-            buttons: ['OK']
-          }).present();
-        });
-      }.bind(this)
-    });
+  // answerInvitation(myEvent, invitationId) {
+  //   let popover = this.popoverCtrl.create(AnswerInvitationPopover, {
+  //     action: function (actionName) {
+  //       // switch (actionName) {
+  //       //   case 'yes':
+  //       //     return this.createConversation(userId);
+  //       //   case 'no':
+  //       //     return this.inviteFriend(userId);
+  //       // }
+  //       this.friendshipSvc[actionName](invitationId).subscribe(result => {
+  //         this.alertCtrl.create({
+  //           title: 'Thông báo!',
+  //           subTitle: result.message,
+  //           buttons: ['OK']
+  //         }).present();
+  //       });
+  //     }.bind(this)
+  //   });
 
-    popover.present({
-      ev: myEvent
-    });
-  }
+  //   popover.present({
+  //     ev: myEvent
+  //   });
+  // }
 
 }

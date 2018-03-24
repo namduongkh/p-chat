@@ -22,7 +22,6 @@ import { EffectsModule } from '@ngrx/effects';
 import Reducers from '../reducers';
 import { AppState } from '../reducers/AppState';
 import { FriendshipService } from '../services/friendship.service';
-import { AnswerInvitationPopover } from '../pages/list-user/answer-invitation';
 
 export const reducers: ActionReducerMap<AppState> = Reducers;
 
@@ -51,13 +50,13 @@ import { ListUserPage } from '../pages/list-user/list-user';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { MessageService } from '../services/message.service';
 import { FriendPage } from '../pages/friend/friend';
-import { UserHandlePopover } from '../pages/list-user/user-handle.popover';
 import { UserItem } from '../pages/list-user/user-item';
 import { TabPages } from '../pages/tabs/tabs';
 import { UserLoginPage } from '../pages/user/login';
 import { UserAccountPage } from '../pages/user/account';
 import { UserRegisterPage } from '../pages/user/register';
 import { UserEditPage } from '../pages/user/edit';
+import { InvitationList } from '../pages/friend/invitation-list';
 // End components
 
 @NgModule({
@@ -69,14 +68,13 @@ import { UserEditPage } from '../pages/user/edit';
     ListUserPage,
     ConversationPage,
     FriendPage,
-    UserHandlePopover,
-    AnswerInvitationPopover,
     UserItem,
     TabPages,
     UserLoginPage,
     UserAccountPage,
     UserRegisterPage,
     UserEditPage,
+    InvitationList
   ],
   imports: [
     BrowserModule,
@@ -101,8 +99,6 @@ import { UserEditPage } from '../pages/user/edit';
     ListUserPage,
     ConversationPage,
     FriendPage,
-    UserHandlePopover,
-    AnswerInvitationPopover,
     TabPages,
     UserLoginPage,
     UserAccountPage,

@@ -25747,9 +25747,31 @@ ion-navbar.toolbar {
   min-width: 24px;
 }
 
+#mod-user-account-content .nav-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.2)), to(transparent));
+  background: linear-gradient(rgba(0, 0, 0, 0.2), transparent);
+}
+
+#mod-user-account-content .nav-bar button {
+  max-width: 50px;
+}
+
 #mod-user-account-content .cover {
   height: 100px;
-  background-color: red;
+  background: -webkit-gradient(linear, left top, left bottom, from(blue), to(violet));
+  background: linear-gradient(blue, violet);
 }
 
 #mod-user-account-content .avatar-name {

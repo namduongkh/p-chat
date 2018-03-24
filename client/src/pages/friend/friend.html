@@ -8,11 +8,15 @@
 </ion-header>
 
 <ion-content>
+    <invitation-list></invitation-list>
     <ion-list>
         <ion-list-header>Tất cả bạn bè</ion-list-header>
         <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">
             <strong>{{friend.users[0].name}}</strong>
         </button> -->
         <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>
+        <button ion-button color="light" disabled full *ngIf="!list || !list.length">
+            Chưa có bạn bè nào!
+        </button>
     </ion-list>
 </ion-content>

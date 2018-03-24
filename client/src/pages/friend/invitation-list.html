@@ -1,0 +1,4 @@
+<ion-list *ngIf="invitations && invitations.length">
+    <ion-list-header>Lời mời kết bạn</ion-list-header>
+    <user-item *ngFor="let invitation of invitations" [user]="invitation.from" [invitationId]="invitation._id"></user-item>
+</ion-list>

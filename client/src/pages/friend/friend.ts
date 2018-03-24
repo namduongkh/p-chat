@@ -4,10 +4,14 @@ import { NavController } from "ionic-angular";
 import { ConversationPage } from "../conversation/conversation";
 import { AuthService } from "../../services/auth.service";
 import { ConversationService } from "../../services/conversation.service";
+import { InvitationList } from "./invitation-list";
 
 @Component({
     selector: 'page-friend',
-    templateUrl: 'friend.html'
+    templateUrl: 'friend.html',
+    entryComponents: [
+        InvitationList
+    ]
 })
 export class FriendPage implements OnInit {
     list: any = [];

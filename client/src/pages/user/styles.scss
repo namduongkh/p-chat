@@ -1,7 +1,19 @@
 #mod-user-account-content {
+    .nav-bar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        background: linear-gradient(rgba($color: #000000, $alpha: .2), transparent);
+        button {
+            max-width: 50px;
+        }
+    }
     .cover {
         height: 100px;
-        background-color: red;
+        background: linear-gradient(blue, violet);
     }
     .avatar-name {
         display: flex;
