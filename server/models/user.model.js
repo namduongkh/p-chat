@@ -14,7 +14,7 @@ var UserSchema = new Schema({
         type: String,
         required: 'Username là bắt buộc',
         trim: true,
-        unique: true
+        unique: 'Username đã bị trùng'
     },
     password: {
         type: String,
@@ -38,14 +38,14 @@ var UserSchema = new Schema({
         default: 'Hello everyone!'
     }
 }, {
-    versionKey: false // You should be aware of the outcome after set to false
-});
+        versionKey: false // You should be aware of the outcome after set to false
+    });
 
 UserSchema.methods = {
-    hashPassword: function(password, callback) {
+    hashPassword: function (password, callback) {
         bcrypt.hash(password, SALT_LENGTH, callback);
     },
-    authenticate: function(password, callback) {
+    authenticate: function (password, callback) {
         bcrypt.compare(password, this.password, callback);
     }
 }

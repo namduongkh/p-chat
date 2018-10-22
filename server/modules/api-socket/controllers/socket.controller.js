@@ -1,17 +1,17 @@
 let users = {};
 
-exports.userLogin = function(user) {
+exports.userLogin = function (user) {
     users[user.socketId] = user;
 };
 
-exports.userLogout = function(socketId) {
+exports.userLogout = function (socketId) {
     delete users[socketId];
 };
 
-exports.userList = function(socketId) {
+exports.userList = function (socketId) {
     let list = [];
     for (let i in users) {
-        let user = {...users[i] };
+        let user = { ...users[i] };
         if (socketId == i) {
             user.isYou = true;
         }
@@ -20,23 +20,23 @@ exports.userList = function(socketId) {
     return list;
 };
 
-exports.userListChange = function(socket) {
+exports.userListChange = function (socket) {
     socket.broadcast.emit('user:list-change');
 };
 
 exports.room = (app, socket) => {
 
-    socket.on('room:join', function(data, fn = function() {}) {
+    socket.on('room:join', function (data, fn = function () { }) {
         socket.join(data.room);
         fn('Has joined ' + data.room);
     });
 
-    socket.on('room:leave', function(data, fn = function() {}) {
+    socket.on('room:leave', function (data, fn = function () { }) {
         socket.leave(data.room);
         fn('Has leaved ' + data.room);
     });
 
-    socket.on('room:typing', function(data, fn = function() {}) {
+    socket.on('room:typing', function (data, fn = function () { }) {
         let eventName = data.status ? 'message:is-typing' : 'message:stop-typing';
         socket.in(data.conversationId).emit(eventName, {
             userId: data.userId,
@@ -45,7 +45,7 @@ exports.room = (app, socket) => {
         fn('Typing');
     });
 
-    socket.on('room:seen', function(data, fn = function() {}) {
+    socket.on('room:seen', function (data, fn = function () { }) {
         socket.in(data.conversationId).emit('message:seen', {
             userId: data.userId,
         });

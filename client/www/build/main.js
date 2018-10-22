@@ -79,7 +79,7 @@ var HomePage = (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Hội thoại</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="conversations && conversations.length">\n        <!-- <button ion-item *ngFor="let conv of conversations" (click)="openConversation(conv._id)">\n            <strong *ngFor="let user of conv.users">{{user.name}}</strong>\n        </button> -->\n        <user-item *ngFor="let conv of conversations" [user]="conv.users[0]" [conversationId]="conv._id"></user-item>\n    </ion-list>\n    <button *ngIf="conversations && !conversations.length" ion-button color="dark" clear full disabled>Chưa có cuộc hội thoại</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Hội thoại</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list *ngIf="conversations && conversations.length">\n        <!-- <button ion-item *ngFor="let conv of conversations" (click)="openConversation(conv._id)">\n            <strong *ngFor="let user of conv.users">{{user.name}}</strong>\n        </button> -->\n        <user-item *ngFor="let conv of conversations" [user]="conv.users[0]" [conversationId]="conv._id"></user-item>\n    </ion-list>\n    <button *ngIf="conversations && !conversations.length" ion-button color="dark" clear full disabled>Chưa có cuộc hội thoại</button>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/home/home.html"*/
         }),
         __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
@@ -123,7 +123,7 @@ var InvitationList = (function () {
     }
     InvitationList = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'invitation-list',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/invitation-list.html"*/'<ion-list *ngIf="invitations && invitations.length">\n    <ion-list-header>Lời mời kết bạn</ion-list-header>\n    <user-item *ngFor="let invitation of invitations" [user]="invitation.from" [invitationId]="invitation._id"></user-item>\n</ion-list>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/invitation-list.html"*/
+            selector: 'invitation-list',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/friend/invitation-list.html"*/'<ion-list *ngIf="invitations && invitations.length">\n    <ion-list-header>Lời mời kết bạn</ion-list-header>\n    <user-item *ngFor="let invitation of invitations" [user]="invitation.from" [invitationId]="invitation._id"></user-item>\n</ion-list>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/friend/invitation-list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_friendship_service__["a" /* FriendshipService */]])
     ], InvitationList);
@@ -141,10 +141,10 @@ var InvitationList = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserAccountPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__edit__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_conversation_service__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__conversation_conversation__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_friendship_service__ = __webpack_require__(52);
@@ -275,7 +275,7 @@ var UserAccountPage = (function () {
     };
     UserAccountPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
-            selector: 'page-user-account',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/'<ion-content id="mod-user-account-content">\n    <div class="nav-bar">\n        <button ion-button clear full no-margin (click)="openMenu()" icon-only color="light">\n            <ion-icon [name]="menuIcon"></ion-icon>\n        </button>\n        <button *ngIf="userInfo && userInfo.itMe" ion-button clear full no-margin (click)="auth.logout()" icon-only color="light">\n            <ion-icon name="log-out"></ion-icon>\n        </button>\n    </div>\n    <div class="cover"></div>\n    <div class="avatar-name">\n        <img class="avatar" src="assets/imgs/logo.png" />\n        <div class="name-content">\n            <h3 class="name">\n                {{userInfo.name}}\n            </h3>\n            <em>{{userInfo.bio}}</em>\n        </div>\n    </div>\n</ion-content>\n<ion-footer no-padding no-margin id="mod-user-account-footer">\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && !userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button *ngIf="!userInfo.friendshipId" ion-button clear full no-margin (click)="addFriend(userInfo._id)">Kết bạn</button>\n            <button *ngIf="userInfo.friendshipId" ion-button clear full no-margin (click)="removeFriend(userInfo.friendshipId)">Hủy kết bạn</button>\n            <button ion-button clear full no-margin (click)="messageNow(userInfo._id)">Nhắn tin</button>\n        </div>\n    </ion-toolbar>\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button ion-button clear full no-margin (click)="editInfo()">Chỉnh sửa</button>\n            <!-- <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button> -->\n        </div>\n    </ion-toolbar>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/account.html"*/
+            selector: 'page-user-account',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/account.html"*/'<ion-content id="mod-user-account-content">\n    <div class="nav-bar">\n        <button ion-button clear full no-margin (click)="openMenu()" icon-only color="light">\n            <ion-icon [name]="menuIcon"></ion-icon>\n        </button>\n        <button *ngIf="userInfo && userInfo.itMe" ion-button clear full no-margin (click)="auth.logout()" icon-only color="light">\n            <ion-icon name="log-out"></ion-icon>\n        </button>\n    </div>\n    <div class="cover"></div>\n    <div class="avatar-name">\n        <img class="avatar" src="assets/imgs/logo.png" />\n        <div class="name-content">\n            <h3 class="name">\n                {{userInfo.name}}\n            </h3>\n            <em>{{userInfo.bio}}</em>\n        </div>\n    </div>\n</ion-content>\n<ion-footer no-padding no-margin id="mod-user-account-footer">\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && !userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button *ngIf="!userInfo.friendshipId" ion-button clear full no-margin (click)="addFriend(userInfo._id)">Kết bạn</button>\n            <button *ngIf="userInfo.friendshipId" ion-button clear full no-margin (click)="removeFriend(userInfo.friendshipId)">Hủy kết bạn</button>\n            <button ion-button clear full no-margin (click)="messageNow(userInfo._id)">Nhắn tin</button>\n        </div>\n    </ion-toolbar>\n    <ion-toolbar no-padding no-margin *ngIf="userInfo && userInfo.itMe">\n        <div class="action">\n            <!-- <button ion-button clear full no-margin (click)="openMenu()" icon-only>\n                <ion-icon [name]="menuIcon"></ion-icon>\n            </button> -->\n            <button ion-button clear full no-margin (click)="editInfo()">Chỉnh sửa</button>\n            <!-- <button ion-button clear full no-margin (click)="auth.logout()">Đăng xuất</button> -->\n        </div>\n    </ion-toolbar>\n</ion-footer>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/account.html"*/
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */],
@@ -302,7 +302,7 @@ var UserAccountPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register__ = __webpack_require__(301);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -332,7 +332,7 @@ var UserLoginPage = (function () {
     };
     UserLoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-user-login',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/login.html"*/'<!-- <ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Đăng nhập</ion-title>\n    </ion-navbar>\n</ion-header> -->\n\n<ion-content>\n    <img src="assets/imgs/logo.png">\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="login.username"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" [(ngModel)]="login.password" (keyup.enter)="auth.login(login)"></ion-input>\n        </ion-item>\n    </ion-list>\n    <button ion-button (click)="auth.login(login)" full>Đăng nhập</button>\n    <button ion-button full clear (click)="goToRegister()">Đăng ký</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/login.html"*/
+            selector: 'page-user-login',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/login.html"*/'<!-- <ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Đăng nhập</ion-title>\n    </ion-navbar>\n</ion-header> -->\n\n<ion-content>\n    <img src="assets/imgs/logo.png">\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="login.username"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" [(ngModel)]="login.password" (keyup.enter)="auth.login(login)"></ion-input>\n        </ion-item>\n    </ion-list>\n    <button ion-button (click)="auth.login(login)" full>Đăng nhập</button>\n    <button ion-button full clear (click)="goToRegister()">Đăng ký</button>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/login.html"*/
         }),
         __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavParams */],
@@ -387,9 +387,9 @@ webpackEmptyAsyncContext.id = 212;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__socket_service__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_service__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user_service__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -501,15 +501,15 @@ var AuthService = (function () {
 
 /***/ }),
 
-/***/ 295:
+/***/ 296:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabPages; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__friend_friend__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__list_user_list_user__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__friend_friend__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__list_user_list_user__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_auth_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__user_account__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(20);
@@ -565,7 +565,7 @@ var TabPages = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["i" /* Nav */])
     ], TabPages.prototype, "nav", void 0);
     TabPages = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/tabs/tab-pages.html"*/'<!-- <ion-tabs>\n    <ion-tab tabTitle="{{tabs.home[0]}}" tabsHideOnSubPages="true" [root]="tabs.home[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.friend[0]}}" tabsHideOnSubPages="true" [root]="tabs.friend[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.connect[0]}}" tabsHideOnSubPages="true" [root]="tabs.connect[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.account[0]}}" tabsHideOnSubPages="true" [root]="tabs.account[1]"></ion-tab>\n</ion-tabs> -->\n\n<ion-menu [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <!-- <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title> -->\n            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n                {{p.title}}\n            </button>\n            <!-- <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button> -->\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/tabs/tab-pages.html"*/,
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/tabs/tab-pages.html"*/'<!-- <ion-tabs>\n    <ion-tab tabTitle="{{tabs.home[0]}}" tabsHideOnSubPages="true" [root]="tabs.home[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.friend[0]}}" tabsHideOnSubPages="true" [root]="tabs.friend[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.connect[0]}}" tabsHideOnSubPages="true" [root]="tabs.connect[1]"></ion-tab>\n    <ion-tab tabTitle="{{tabs.account[0]}}" tabsHideOnSubPages="true" [root]="tabs.account[1]"></ion-tab>\n</ion-tabs> -->\n\n<ion-menu [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <!-- <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title> -->\n            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n                {{p.title}}\n            </button>\n            <!-- <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button> -->\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/tabs/tab-pages.html"*/,
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__services_auth_service__["a" /* AuthService */]])
@@ -577,7 +577,7 @@ var TabPages = (function () {
 
 /***/ }),
 
-/***/ 296:
+/***/ 297:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -640,7 +640,7 @@ var MessageService = (function (_super) {
 
 /***/ }),
 
-/***/ 297:
+/***/ 298:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -699,7 +699,7 @@ var FriendPage = (function () {
     };
     FriendPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-friend',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button> -->\n        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>\n        <button ion-button color="light" disabled full *ngIf="!list || !list.length">\n            Chưa có bạn bè nào!\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/friend/friend.html"*/,
+            selector: 'page-friend',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/friend/friend.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Bạn bè</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Tất cả bạn bè</ion-list-header>\n        <!-- <button ion-item  (click)="createConversation(friend.users[0]._id)">\n            <strong>{{friend.users[0].name}}</strong>\n        </button> -->\n        <user-item *ngFor="let friend of list" [user]="friend.users[0]"></user-item>\n        <button ion-button color="light" disabled full *ngIf="!list || !list.length">\n            Chưa có bạn bè nào!\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/friend/friend.html"*/,
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_6__invitation_list__["a" /* InvitationList */]
             ]
@@ -717,13 +717,13 @@ var FriendPage = (function () {
 
 /***/ }),
 
-/***/ 298:
+/***/ 299:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListUserPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_conversation_service__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(20);
@@ -795,7 +795,7 @@ var ListUserPage = (function () {
     };
     ListUserPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list-user',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <user-item *ngFor="let user of users" [user]="user"></user-item>\n        <!-- <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button> -->\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/list-user.html"*/,
+            selector: 'page-list-user',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list-user/list-user.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>Kết nối</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <invitation-list></invitation-list>\n    <ion-list>\n        <ion-list-header>Có thể bạn biết</ion-list-header>\n        <user-item *ngFor="let user of users" [user]="user"></user-item>\n        <!-- <button ion-item *ngFor="let user of users" (click)="presentPopover($event, user._id)">\n            <strong>{{user.name}} <em *ngIf="user.isYou">(Bạn)</em></strong>\n        </button> -->\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list-user/list-user.html"*/,
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_7__friend_invitation_list__["a" /* InvitationList */]
             ]
@@ -815,7 +815,7 @@ var ListUserPage = (function () {
 
 /***/ }),
 
-/***/ 299:
+/***/ 300:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -844,7 +844,7 @@ var UserEditPage = (function () {
     }
     UserEditPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-user-edit',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/edit.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n          <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>{{auth.user.name}}</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="user.username" disabled></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Name</ion-label>\n            <ion-input type="text" [(ngModel)]="user.name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Bio</ion-label>\n            <ion-textarea [(ngModel)]="user.bio"></ion-textarea>\n        </ion-item>\n    </ion-list>\n    <button ion-button full (click)="auth.update(user)">Cập nhật</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/edit.html"*/
+            selector: 'page-user-edit',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/edit.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n          <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>{{auth.user.name}}</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="user.username" disabled></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Name</ion-label>\n            <ion-input type="text" [(ngModel)]="user.name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Bio</ion-label>\n            <ion-textarea [(ngModel)]="user.bio"></ion-textarea>\n        </ion-item>\n    </ion-list>\n    <button ion-button full (click)="auth.update(user)">Cập nhật</button>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/edit.html"*/
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]])
@@ -856,7 +856,7 @@ var UserEditPage = (function () {
 
 /***/ }),
 
-/***/ 300:
+/***/ 301:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -892,7 +892,7 @@ var UserRegisterPage = (function () {
     };
     UserRegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-user-register',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/register.html"*/'<ion-content>\n    <img src="assets/imgs/logo.png">\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Name</ion-label>\n            <ion-input type="text" [(ngModel)]="register.name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="register.username"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" [(ngModel)]="register.password"></ion-input>\n        </ion-item>\n    </ion-list>\n    <button ion-button full (click)="auth.register(register)">Đăng ký</button>\n    <button ion-button (click)="backToLogin()" full clear item-center>Đăng nhập</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/user/register.html"*/
+            selector: 'page-user-register',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/register.html"*/'<ion-content>\n    <img src="assets/imgs/logo.png">\n    <ion-list>\n        <ion-item>\n            <ion-label floating>Name</ion-label>\n            <ion-input type="text" [(ngModel)]="register.name"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Username</ion-label>\n            <ion-input type="text" [(ngModel)]="register.username"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Password</ion-label>\n            <ion-input type="password" [(ngModel)]="register.password"></ion-input>\n        </ion-item>\n    </ion-list>\n    <button ion-button full (click)="auth.register(register)">Đăng ký</button>\n    <button ion-button (click)="backToLogin()" full clear item-center>Đăng nhập</button>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/user/register.html"*/
         }),
         __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_3__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
@@ -905,13 +905,13 @@ var UserRegisterPage = (function () {
 
 /***/ }),
 
-/***/ 301:
+/***/ 302:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(302);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(309);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -919,7 +919,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 308:
+/***/ 309:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -936,29 +936,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_socket_service__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_user_service__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_user_service__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_conversation_service__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngrx_store_devtools__ = __webpack_require__(381);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__ = __webpack_require__(385);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngrx_store_devtools__ = __webpack_require__(385);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__ = __webpack_require__(389);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_ngrx_store_ionic_storage__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ngrx_effects__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reducers__ = __webpack_require__(485);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reducers__ = __webpack_require__(487);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_friendship_service__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__app_component__ = __webpack_require__(490);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_home_home__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_list_list__ = __webpack_require__(490);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_room_room__ = __webpack_require__(491);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_list_user_list_user__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_list_list__ = __webpack_require__(492);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_room_room__ = __webpack_require__(493);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_list_user_list_user__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_conversation_conversation__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_message_service__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_friend_friend__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_list_user_user_item__ = __webpack_require__(492);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_tabs_tabs__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_message_service__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_friend_friend__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_list_user_user_item__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_tabs_tabs__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_user_login__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_user_account__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_user_register__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_user_edit__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_user_register__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_user_edit__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_friend_invitation_list__ = __webpack_require__(152);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1090,19 +1090,19 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 372:
+/***/ 376:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 485:
+/***/ 487:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(486);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__details_RoomsReducer__ = __webpack_require__(487);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__details_UserReducer__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__details_RoomsReducer__ = __webpack_require__(489);
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -1113,12 +1113,12 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 486:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = UserReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(79);
 
 function UserReducer(state, action) {
     switch (action.type) {
@@ -1139,12 +1139,12 @@ function UserReducer(state, action) {
 
 /***/ }),
 
-/***/ 487:
+/***/ 489:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = RoomsReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(79);
 
 function RoomsReducer(state, action) {
     if (state === void 0) { state = {}; }
@@ -1166,7 +1166,7 @@ function RoomsReducer(state, action) {
 
 /***/ }),
 
-/***/ 488:
+/***/ 490:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1177,7 +1177,7 @@ function RoomsReducer(state, action) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tabs_tabs__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tabs_tabs__ = __webpack_require__(296);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_user_login__ = __webpack_require__(154);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1240,7 +1240,7 @@ var MyApp = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/'<!-- <ion-menu [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title>\n            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              {{p.title}}\n            </button>\n            <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button>\n        </ion-list>\n    </ion-content>\n</ion-menu> -->\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<!-- <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav> -->\n<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/app/app.html"*/'<!-- <ion-menu [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title *ngIf="!auth.user || !auth.user._id">Chưa đăng nhập</ion-title>\n            <ion-title *ngIf="auth.user && auth.user._id">{{auth.user.name}}</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n              {{p.title}}\n            </button>\n            <button menuClose *ngIf="auth.user && auth.user._id" ion-item (click)="auth.logout()">Đăng xuất</button>\n        </ion-list>\n    </ion-content>\n</ion-menu> -->\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<!-- <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav> -->\n<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/app/app.html"*/
         }),
         __param(4, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
@@ -1256,7 +1256,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 490:
+/***/ 492:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1301,7 +1301,7 @@ var ListPage = (function () {
     };
     ListPage = ListPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-list',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list/list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list/list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
     ], ListPage);
@@ -1313,7 +1313,7 @@ var ListPage = (function () {
 
 /***/ }),
 
-/***/ 491:
+/***/ 493:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1363,7 +1363,7 @@ var RoomPage = (function () {
     };
     RoomPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-room',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/room/room.html"*/
+            selector: 'page-room',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/room/room.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Room</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <p *ngFor="let message of messages">\n        <strong>{{message.from}}:</strong>\n        <span>{{message.msg}}</span>\n    </p>\n    <ion-input type="text" [(ngModel)]="msg"></ion-input>\n    <button ion-button (click)="sendMessage(msg)">Gửi</button>\n</ion-content>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/room/room.html"*/
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_socket_service__["a" /* SocketService */]])
@@ -1375,7 +1375,7 @@ var RoomPage = (function () {
 
 /***/ }),
 
-/***/ 492:
+/***/ 494:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1483,7 +1483,7 @@ var UserItem = (function () {
     ], UserItem.prototype, "invitationId", void 0);
     UserItem = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'user-item',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/user-item.html"*/'<ion-item (click)="handleUserItem(user)">\n    <ion-avatar item-start>\n        <img src="assets/imgs/logo.png">\n    </ion-avatar>\n    <h2>{{user.name}}</h2>\n    <p>{{user.bio}}</p>\n</ion-item>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/list-user/user-item.html"*/
+            selector: 'user-item',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list-user/user-item.html"*/'<ion-item (click)="handleUserItem(user)">\n    <ion-avatar item-start>\n        <img src="assets/imgs/logo.png">\n    </ion-avatar>\n    <h2>{{user.name}}</h2>\n    <p>{{user.bio}}</p>\n</ion-item>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/list-user/user-item.html"*/
         }),
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */],
@@ -1669,10 +1669,10 @@ var FriendshipService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_message_service__ = __webpack_require__(297);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_socket_service__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(489);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(491);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1858,7 +1858,7 @@ var ConversationPage = (function () {
     ], ConversationPage.prototype, "messageInput", void 0);
     ConversationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-conversation',template:/*ion-inline-start:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div text-right *ngIf="seen"><em>Đã xem</em></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Volumes/Phong's Datas/Develops/Ionic/p-chat/client/src/pages/conversation/conversation.html"*/,
+            selector: 'page-conversation',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div text-right *ngIf="seen"><em>Đã xem</em></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/conversation/conversation.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
@@ -1878,11 +1878,11 @@ var ConversationPage = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SocketService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(354);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client__ = __webpack_require__(355);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions__ = __webpack_require__(79);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1978,17 +1978,16 @@ var SocketService = (function () {
     };
     SocketService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
     ], SocketService);
     return SocketService;
-    var _a;
 }());
 
 //# sourceMappingURL=socket.service.js.map
 
 /***/ }),
 
-/***/ 78:
+/***/ 79:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2008,7 +2007,7 @@ var ActionType = {
 
 /***/ }),
 
-/***/ 79:
+/***/ 80:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2069,5 +2068,5 @@ var UserService = (function () {
 
 /***/ })
 
-},[301]);
+},[302]);
 //# sourceMappingURL=main.js.map
