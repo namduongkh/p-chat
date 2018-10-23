@@ -3,5 +3,12 @@
     "env": {
         "NODE_ENV": "development"
     },
-    "ext": "js ts json html css"
+    "ignore": [
+        "public/",
+        "var/",
+        "node_modules/",
+        "templates/scss/**",
+        "templates/vue/**"
+    ],
+    "ext": "js ts json html css vue"
 }
