@@ -1,1 +1,39 @@
 @import "~bootstrap/scss/bootstrap";
+
+#conversation-footer {
+    .message-input {
+        margin: 0;
+    }
+    .typing {
+        padding: 2px 5px;
+        background-color: #efefef;
+        display: inline;
+    }
+}
+
+#conversation-content {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100%;
+    .not-you {
+        text-align: left;
+        .message-content {
+            background-color: #efefef;
+        }
+    }
+    .it-you {
+        text-align: right;
+        .message-content {
+            background-color: limegreen;
+            color: #fff;
+        }
+    }
+    .message-content {
+        display: inline-block;
+        border-radius: 100px;
+        padding: 5px 10px;
+        margin: 1px;
+        max-width: 80%;
+        min-width: 24px;
+    }
+}

@@ -30,17 +30,13 @@ exports.login = function (req, res) {
 };
 
 exports.register = function (req, res) {
-    let { name, username, password, autoLogin } = req.body;
-    delete req.body;
+    let { name, username, password } = req.body;
     User.findOne({
         username: username
     })
         .lean()
         .then(user => {
             if (user) {
-                if (autoLogin) {
-                    res.json({ status: true, data: user });
-                }
                 return res.json({
                     status: false,
                     message: 'Username đã tồn tại'

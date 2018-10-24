@@ -7303,4 +7303,38 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6; } }
 
+#conversation-footer .message-input {
+  margin: 0; }
+
+#conversation-footer .typing {
+  padding: 2px 5px;
+  background-color: #efefef;
+  display: inline; }
+
+#conversation-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  min-height: 100%; }
+  #conversation-content .not-you {
+    text-align: left; }
+    #conversation-content .not-you .message-content {
+      background-color: #efefef; }
+  #conversation-content .it-you {
+    text-align: right; }
+    #conversation-content .it-you .message-content {
+      background-color: limegreen;
+      color: #fff; }
+  #conversation-content .message-content {
+    display: inline-block;
+    border-radius: 100px;
+    padding: 5px 10px;
+    margin: 1px;
+    max-width: 80%;
+    min-width: 24px; }
+
 /*# sourceMappingURL=../main.map*/
