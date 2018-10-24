@@ -8,6 +8,7 @@ const ENTRIES = require('./config/entries');
 const LOADERS = require('./config/loaders');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const extractStyle = require('./config/extractStyle');
+const ExtLibs = require('./config/variables.js');
 
 module.exports = (env, debug) => {
     return {
@@ -27,6 +28,7 @@ module.exports = (env, debug) => {
         module: {
             rules: LOADERS(env)
         },
+        externals: ExtLibs.externals,
         plugins: [
             extractStyle,
             // new ExtractTextPlugin("styles.css"),

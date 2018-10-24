@@ -5,12 +5,12 @@ const async = require('async');
 const User = mongoose.model('User');
 const Friendship = mongoose.model('Friendship');
 
-exports.login = function(req, res) {
+exports.login = function (req, res) {
     let { username, password } = req.body;
     User.findOne({ username: username })
         .then(user => {
             if (user) {
-                user.authenticate(password, function(err, result) {
+                user.authenticate(password, function (err, result) {
                     if (result) {
                         user.password = 'hash';
                         return res.json({ status: true, data: user });
@@ -29,21 +29,25 @@ exports.login = function(req, res) {
         });
 };
 
-exports.register = function(req, res) {
-    let { name, username, password } = req.body;
+exports.register = function (req, res) {
+    let { name, username, password, autoLogin } = req.body;
+    delete req.body;
     User.findOne({
-            username: username
-        })
+        username: username
+    })
         .lean()
         .then(user => {
             if (user) {
+                if (autoLogin) {
+                    res.json({ status: true, data: user });
+                }
                 return res.json({
                     status: false,
                     message: 'Username đã tồn tại'
                 });
             } else {
                 user = new User(req.body);
-                user.hashPassword(password, function(err, hash) {
+                user.hashPassword(password, function (err, hash) {
                     user.password = hash;
                     user.save().then(user => {
                         user.password = 'hash';
@@ -54,11 +58,11 @@ exports.register = function(req, res) {
         });
 };
 
-exports.update = function(req, res) {
+exports.update = function (req, res) {
     let { _id } = req.body;
     User.findOne({
-            _id: _id
-        })
+        _id: _id
+    })
         .then(user => {
             if (user) {
                 delete req.body.password;
@@ -77,17 +81,17 @@ exports.update = function(req, res) {
 };
 
 exports.userList = [
-    function(req, res, next) {
+    function (req, res, next) {
         let { myId } = req.query;
         if (myId && myId != 'undefined') {
             Friendship.find({
-                    $or: [{
-                        from: myId
-                    }, {
-                        to: myId
-                    }],
-                    type: 'accepted'
-                })
+                $or: [{
+                    from: myId
+                }, {
+                    to: myId
+                }],
+                type: 'accepted'
+            })
                 .sort('-created')
                 .populate({
                     path: 'users',
@@ -110,7 +114,7 @@ exports.userList = [
             next();
         }
     },
-    function(req, res) {
+    function (req, res) {
         let { myId } = req.query;
         let options = {};
         // if (myId && myId != 'undefined') {
@@ -127,18 +131,18 @@ exports.userList = [
     }
 ];
 
-exports.info = function(req, res) {
+exports.info = function (req, res) {
     let { userId, myId } = req.query;
 
     if (userId && userId != 'undefined') {
         async.parallel({
-            checkFriend: function(next) {
+            checkFriend: function (next) {
                 if (myId && myId != 'undefined' && myId != userId) {
                     let users = [userId, myId];
                     Friendship.findOne({
-                            users: { $length: users.length },
-                            users: { $all: users }
-                        })
+                        users: { $length: users.length },
+                        users: { $all: users }
+                    })
                         .lean()
                         .then(friendship => {
                             if (friendship) {
@@ -151,7 +155,7 @@ exports.info = function(req, res) {
                     next(null, false);
                 }
             },
-            getInfo: function(next) {
+            getInfo: function (next) {
                 User.findOne({ _id: userId })
                     .lean()
                     .then(user => {
@@ -163,7 +167,7 @@ exports.info = function(req, res) {
                         }
                     });
             }
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 res.json({ status: false, message: err });
             } else {
