@@ -18,7 +18,7 @@ export default {
   created() {},
   methods: {
     gotoConversation(users) {
-      this.$router.push({ name: "conversation", params: { users } });
+      this.$router.push({ name: "conversation", query: { users } });
     }
   }
 };

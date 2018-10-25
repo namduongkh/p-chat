@@ -19,11 +19,11 @@
             <em><span v-for="item in typingUsers" :key="item._id">{{item.userName}}</span> đang nhập...</em>
         </div>
         <div class="row">
-            <div class="col-xs-10">
+            <div class="col-sm-10" style="padding-right: 0">
                 <input type="text" id="message-input" class="message-input form-control" margin no-margin-left v-model="message" placeholder="Viết gì đó..." @keyup.enter="sendMessage(message)" @change="changeMessage($event, message)" />
             </div>
-            <div class="col-xs-2">
-                <button class="send-btn btn btn-primary" @click="sendMessage(message)">Gửi</button>
+            <div class="col-sm-2" style="padding-left: 0">
+                <button class="send-btn btn btn-primary btn-block" @click="sendMessage(message)">Gửi</button>
             </div>
         </div>
     </div>
@@ -103,6 +103,9 @@ export default {
         this.changeMessage(null, null);
         this.scrollBottom(true);
         this.seen = false;
+        if (message == "run-demo-employee") {
+          return;
+        }
         this.pushMessage(resp.data);
       });
     },
@@ -132,6 +135,27 @@ export default {
         this.socket.on(
           "message:new",
           function(data) {
+            if (data.content == "run-demo-boss") {
+              setTimeout(() => {
+                let demoMessages = [
+                  "Dạ em đã giao cho khách rồi sếp ạ! Khách rất hài lòng về dự án lần này.",
+                  "Ôi, càm ơn sếp 😍! Hoàn thành tốt công việc là điều em phải làm mà",
+                  "Dạ em cảm ơn sếp nhiều",
+                  "Tuyệt vời, em thật hạnh phúc khi có 1 người sếp tâm lý như sếp 😘"
+                ];
+                let i = 0;
+                this.sendMessage(demoMessages[i]);
+                i++;
+                let interval = setInterval(() => {
+                  this.sendMessage(demoMessages[i]);
+                  i++;
+                  if (i == demoMessages.length) {
+                    clearInterval(interval);
+                  }
+                }, 8000);
+              }, 4000);
+              return;
+            }
             if (data.from._id !== this.user._id) {
               this.pushMessage(data);
             }
@@ -164,16 +188,16 @@ export default {
     }
   },
   created() {
-    if (this.$route.params.users) {
-      this.user._id = this.$route.params.users[0];
+    if (this.$route.query.users) {
+      this.user._id = this.$route.query.users[0];
       Axios.post(Config.apiUrl + "/conversation/create", {
-        users: this.$route.params.users
+        users: this.$route.query.users
       }).then(resp => {
         if (resp.data) {
           Axios.post(Config.apiUrl + "/conversation/detail", {
-            users: this.$route.params.users,
+            users: this.$route.query.users,
             conversationId: resp.data._id,
-            user: this.$route.params.users[0]
+            user: this.$route.query.users[0]
           }).then(resp => {
             if (resp.data) {
               this.detail = resp.data;

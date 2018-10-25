@@ -1984,6 +1984,9 @@ exports.default = {
         _this.changeMessage(null, null);
         _this.scrollBottom(true);
         _this.seen = false;
+        if (message == "run-demo-employee") {
+          return;
+        }
         _this.pushMessage(resp.data);
       });
     },
@@ -2019,6 +2022,24 @@ exports.default = {
 
       this.socket.emit("room:join", { room: room }, function () {
         _this3.socket.on("message:new", function (data) {
+          var _this4 = this;
+
+          if (data.content == "run-demo-boss") {
+            setTimeout(function () {
+              var demoMessages = ["Dạ em đã giao cho khách rồi sếp ạ! Khách rất hài lòng về dự án lần này.", "Ôi, càm ơn sếp 😍! Hoàn thành tốt công việc là điều em phải làm mà", "Dạ em cảm ơn sếp nhiều", "Tuyệt vời, em thật hạnh phúc khi có 1 người sếp tâm lý như sếp 😘"];
+              var i = 0;
+              _this4.sendMessage(demoMessages[i]);
+              i++;
+              var interval = setInterval(function () {
+                _this4.sendMessage(demoMessages[i]);
+                i++;
+                if (i == demoMessages.length) {
+                  clearInterval(interval);
+                }
+              }, 8000);
+            }, 4000);
+            return;
+          }
           if (data.from._id !== this.user._id) {
             this.pushMessage(data);
           }
@@ -2047,26 +2068,26 @@ exports.default = {
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
-    if (this.$route.params.users) {
-      this.user._id = this.$route.params.users[0];
+    if (this.$route.query.users) {
+      this.user._id = this.$route.query.users[0];
       _axios2.default.post(_config2.default.apiUrl + "/conversation/create", {
-        users: this.$route.params.users
+        users: this.$route.query.users
       }).then(function (resp) {
         if (resp.data) {
           _axios2.default.post(_config2.default.apiUrl + "/conversation/detail", {
-            users: _this4.$route.params.users,
+            users: _this5.$route.query.users,
             conversationId: resp.data._id,
-            user: _this4.$route.params.users[0]
+            user: _this5.$route.query.users[0]
           }).then(function (resp) {
             if (resp.data) {
-              _this4.detail = resp.data;
-              _this4.onTyping();
-              _this4.joinConversation(resp.data._id);
+              _this5.detail = resp.data;
+              _this5.onTyping();
+              _this5.joinConversation(resp.data._id);
               _axios2.default.get(_config2.default.apiUrl + ("/message/list?conversationId=" + resp.data._id)).then(function (resp) {
                 if (resp.data) {
-                  _this4.messages = resp.data;
+                  _this5.messages = resp.data;
                 }
               });
             }
@@ -2121,7 +2142,7 @@ exports.default = {
 
   methods: {
     gotoConversation: function gotoConversation(users) {
-      this.$router.push({ name: "conversation", params: { users: users } });
+      this.$router.push({ name: "conversation", query: { users: users } });
     }
   }
 };
@@ -46150,62 +46171,70 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-10" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.message,
-                expression: "message"
-              }
-            ],
-            staticClass: "message-input form-control",
-            attrs: {
-              type: "text",
-              id: "message-input",
-              margin: "",
-              "no-margin-left": "",
-              placeholder: "Viết gì đó..."
-            },
-            domProps: { value: _vm.message },
-            on: {
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
+        _c(
+          "div",
+          { staticClass: "col-sm-10", staticStyle: { "padding-right": "0" } },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.message,
+                  expression: "message"
                 }
-                _vm.sendMessage(_vm.message)
+              ],
+              staticClass: "message-input form-control",
+              attrs: {
+                type: "text",
+                id: "message-input",
+                margin: "",
+                "no-margin-left": "",
+                placeholder: "Viết gì đó..."
               },
-              change: function($event) {
-                _vm.changeMessage($event, _vm.message)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.message = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-xs-2" }, [
-          _c(
-            "button",
-            {
-              staticClass: "send-btn btn btn-primary",
+              domProps: { value: _vm.message },
               on: {
-                click: function($event) {
+                keyup: function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
                   _vm.sendMessage(_vm.message)
+                },
+                change: function($event) {
+                  _vm.changeMessage($event, _vm.message)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.message = $event.target.value
                 }
               }
-            },
-            [_vm._v("Gửi")]
-          )
-        ])
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm-2", staticStyle: { "padding-left": "0" } },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "send-btn btn btn-primary btn-block",
+                on: {
+                  click: function($event) {
+                    _vm.sendMessage(_vm.message)
+                  }
+                }
+              },
+              [_vm._v("Gửi")]
+            )
+          ]
+        )
       ])
     ])
   ])
@@ -60925,14 +60954,16 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!******************************************************************************************!*\
-  !*** multi ./templates/js/index.js ./templates/js/router.js ./templates/scss/style.scss ***!
-  \******************************************************************************************/
+/*!********************************************************************************************************************************************!*\
+  !*** multi ./templates/js/config.js ./templates/js/index.js ./templates/js/router.js ./templates/js/socket.js ./templates/scss/style.scss ***!
+  \********************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(/*! /Users/phongnguyen/Develops/Nodejs/p-chat/server/templates/js/config.js */"./templates/js/config.js");
 __webpack_require__(/*! /Users/phongnguyen/Develops/Nodejs/p-chat/server/templates/js/index.js */"./templates/js/index.js");
 __webpack_require__(/*! /Users/phongnguyen/Develops/Nodejs/p-chat/server/templates/js/router.js */"./templates/js/router.js");
+__webpack_require__(/*! /Users/phongnguyen/Develops/Nodejs/p-chat/server/templates/js/socket.js */"./templates/js/socket.js");
 module.exports = __webpack_require__(/*! /Users/phongnguyen/Develops/Nodejs/p-chat/server/templates/scss/style.scss */"./templates/scss/style.scss");
 
 

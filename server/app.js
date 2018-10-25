@@ -16,5 +16,5 @@ app.io = require('socket.io')(server);
 require('./lib/bootstrap')(app);
 
 server.listen(port, function () {
-    console.log('Server đang chạy cổng: %d', port);
+    console.log('Server đang chạy port: %d', port);
 });

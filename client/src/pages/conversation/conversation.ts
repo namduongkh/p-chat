@@ -75,6 +75,9 @@ export class ConversationPage implements OnInit, OnDestroy {
             this.changeMessage(null, null);
             this.scrollBottom(true);
             this.seen = false;
+            if (message == "run-demo-boss") {
+                return;
+            }
             this.pushMessage(result);
         });
     }
@@ -82,6 +85,29 @@ export class ConversationPage implements OnInit, OnDestroy {
     joinConversation(id) {
         this.socket.joinRoom(id, () => {
             this.socket.on('message:new', function (data) {
+                if (data.content == "run-demo-employee") {
+                    setTimeout(() => {
+                        this.sendMessage("run-demo-boss");
+                        let demoMessages = [
+                            "Chào em! Dự án vừa rồi tới đâu rồi em?",
+                            "👍 Tốt lắm! Em đã vất vả nhiều rồi, sắp tới anh sẽ tăng lương cho em",
+                            "Ừ, anh thấy chú đã cố gắng rất nhiều, đó là điều chú xứng đáng nhận được",
+                            "Tháng sau sẽ có 1 dự án mới, tuần sau anh cho chú nghỉ phép 2 tuần, anh mua 2 vé máy bay rồi, chú tranh thủ dẫn bạn gái đi châu Âu chơi rồi về tiếp tục chiến",
+                            "Anh cũng thật hạnh phúc vì có 1 nhân viên xuất sắc như em 😄"
+                        ];
+                        let i = 0;
+                        this.sendMessage(demoMessages[i]);
+                        i++;
+                        let interval = setInterval(() => {
+                            this.sendMessage(demoMessages[i]);
+                            i++;
+                            if (i == demoMessages.length) {
+                                clearInterval(interval);
+                            }
+                        }, 8000);
+                    }, 0);
+                    return;
+                }
                 if (data.from._id !== this.auth.user._id) {
                     this.pushMessage(data);
                 }

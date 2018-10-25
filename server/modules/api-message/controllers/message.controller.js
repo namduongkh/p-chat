@@ -30,6 +30,7 @@ exports.new = function(app) {
                         _id: message.conversation
                     })
                     .then(conv => {
+                        // console.log(111, conv);
                         conv.modified = new Date();
                         conv.enable = {};
                         for (let i of conv.users) {

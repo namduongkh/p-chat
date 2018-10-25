@@ -1747,6 +1747,9 @@ var ConversationPage = (function () {
             _this.changeMessage(null, null);
             _this.scrollBottom(true);
             _this.seen = false;
+            if (message == "run-demo-boss") {
+                return;
+            }
             _this.pushMessage(result);
         });
     };
@@ -1754,6 +1757,30 @@ var ConversationPage = (function () {
         var _this = this;
         this.socket.joinRoom(id, function () {
             _this.socket.on('message:new', function (data) {
+                var _this = this;
+                if (data.content == "run-demo-employee") {
+                    setTimeout(function () {
+                        _this.sendMessage("run-demo-boss");
+                        var demoMessages = [
+                            "Chào em! Dự án vừa rồi tới đâu rồi em?",
+                            "👍 Tốt lắm! Em đã vất vả nhiều rồi, sắp tới anh sẽ tăng lương cho em",
+                            "Ừ, anh thấy chú đã cố gắng rất nhiều, đó là điều chú xứng đáng nhận được",
+                            "Tháng sau sẽ có 1 dự án mới, tuần sau anh cho chú nghỉ phép 2 tuần, anh mua 2 vé máy bay rồi, chú tranh thủ dẫn bạn gái đi châu Âu chơi rồi về tiếp tục chiến",
+                            "Anh cũng thật hạnh phúc vì có 1 nhân viên xuất sắc như em 😄"
+                        ];
+                        var i = 0;
+                        _this.sendMessage(demoMessages[i]);
+                        i++;
+                        var interval = setInterval(function () {
+                            _this.sendMessage(demoMessages[i]);
+                            i++;
+                            if (i == demoMessages.length) {
+                                clearInterval(interval);
+                            }
+                        }, 8000);
+                    }, 0);
+                    return;
+                }
                 if (data.from._id !== this.auth.user._id) {
                     this.pushMessage(data);
                 }
@@ -1850,7 +1877,7 @@ var ConversationPage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]) === "function" && _a || Object)
     ], ConversationPage.prototype, "content", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('messageInput'),
@@ -1860,13 +1887,10 @@ var ConversationPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-conversation',template:/*ion-inline-start:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/conversation/conversation.html"*/'<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>\n            <span *ngFor="let user of detail.users">{{user.name}}</span>\n        </ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <div id="conversation-content">\n        <div margin-bottom></div>\n        <div text-right *ngIf="seen"><em>Đã xem</em></div>\n        <div class="message-list">\n            <div *ngFor="let message of messages" (click)="showTimeId = message._id" [ngClass]="{\'not-you\': message.from._id != auth.user._id, \'it-you\': message.from._id == auth.user._id}">\n                <div class="message-content">\n                    <span>{{message.content}}</span>\n                </div>\n                <div *ngIf="showTimeId == message._id" margin-bottom>\n                    <em>({{message.created | date:\'dd/MM/yyyy HH:mm:ss\'}})</em>\n                </div>\n            </div>\n        </div>\n    </div>\n</ion-content>\n\n<ion-footer id="conversation-footer">\n    <div *ngIf="typingUsers && typingUsers.length" class="typing">\n        <em><span *ngFor="let item of typingUsers">{{item.userName}}</span> đang nhập...</em>\n    </div>\n    <ion-grid no-padding no-margin>\n        <ion-row no-padding no-margin>\n            <ion-col col-10 border-top>\n                <ion-input #messageInput class="message-input" margin no-margin-left type="text" [(ngModel)]="message" placeholder="Viết gì đó..." (keyup.enter)="sendMessage(message)" (ngModelChange)="changeMessage($event, message)" (ionFocus)="messageInputFocus(true)"></ion-input>\n            </ion-col>\n            <ion-col col-2 no-padding no-margin>\n                <button class="send-btn" no-padding no-margin full-height full ion-button small (click)="sendMessage(message)">Gửi</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-footer>'/*ion-inline-end:"/Users/phongnguyen/Develops/Nodejs/p-chat/client/src/pages/conversation/conversation.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */],
-            __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */],
-            __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */],
-            __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_conversation_service__["a" /* ConversationService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_message_service__["a" /* MessageService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_socket_service__["a" /* SocketService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_auth_service__["a" /* AuthService */]) === "function" && _f || Object])
     ], ConversationPage);
     return ConversationPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=conversation.js.map

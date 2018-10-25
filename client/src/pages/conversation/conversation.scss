@@ -22,13 +22,14 @@
     .it-you {
         text-align: right;
         .message-content {
+            text-align: left;
             background-color: limegreen;
             color: #fff;
         }
     }
     .message-content {
         display: inline-block;
-        border-radius: 100px;
+        border-radius: 10px;
         padding: 5px 10px;
         margin: 1px;
         max-width: 80%;

@@ -26,7 +26,7 @@ module.exports = function (app) {
 
     const isDev = app.get('env') === 'development';
     app.set('views', Path.resolve(__dirname, '../templates'));
-    const njk = expressNunjucks(app, {
+    expressNunjucks(app, {
         watch: isDev,
         noCache: isDev
     });
