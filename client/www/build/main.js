@@ -1765,7 +1765,7 @@ var ConversationPage = (function () {
                             "Chào em! Dự án vừa rồi tới đâu rồi em?",
                             "👍 Tốt lắm! Em đã vất vả nhiều rồi, sắp tới anh sẽ tăng lương cho em",
                             "Ừ, anh thấy chú đã cố gắng rất nhiều, đó là điều chú xứng đáng nhận được",
-                            "Tháng sau sẽ có 1 dự án mới, tuần sau anh cho chú nghỉ phép 2 tuần, anh mua 2 vé máy bay rồi, chú tranh thủ dẫn bạn gái đi châu Âu chơi rồi về tiếp tục chiến",
+                            "Anh đặt 2 vé máy bay với resort 5 sao ở Maldives rồi, tuần sau chú được off 1 tuần dẫn gấu đi chơi nhé rồi về nhận hợp đồng mới",
                             "Anh cũng thật hạnh phúc vì có 1 nhân viên xuất sắc như em 😄"
                         ];
                         var i = 0;
